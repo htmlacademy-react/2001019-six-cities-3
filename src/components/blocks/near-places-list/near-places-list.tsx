@@ -1,23 +1,23 @@
 import {mockOffers} from '../../../mock/offers.ts';
 import OfferCard from '../offer-card/offer-card.tsx';
 
-function OfferList(): JSX.Element {
+function NearPlacesList(): JSX.Element {
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className="near-places__list places__list">
       {
         mockOffers.map((offer) => (
           <OfferCard
             placeCardTitle={offer.title}
             placeCardType={offer.type}
             id={offer.id}
-            key={offer.id}
             img={offer.previewImage}
             priceValue={offer.price}
             rating={offer.rating}
+            key={offer.id}
           />))
       }
     </div>
   );
 }
 
-export default OfferList;
+export default NearPlacesList;
