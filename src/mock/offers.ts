@@ -1,10 +1,10 @@
 export const mockOffers = [
   {
-    id: '3e743cb6-3f30-40b6-b8ec-028d5503e495',
-    title: 'Loft Studio in the Central Area',
-    type: 'room',
-    price: 190,
-    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/18.jpg',
+    id: 'a1b05f79-22af-454d-812b-437f18264399',
+    title: 'Penthouse, 4-5 rooms + 5 balconies',
+    type: 'hotel',
+    price: 172,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/13.jpg',
     city: {
       name: 'Paris',
       location: {
@@ -20,14 +20,14 @@ export const mockOffers = [
     },
     isFavorite: false,
     isPremium: true,
-    rating: 4.4
+    rating: 3
   },
   {
-    id: '29e1a9db-8796-4e12-8add-ef5b75601f95',
-    title: 'Canal View Prinsengracht',
-    type: 'hotel',
-    price: 191,
-    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/16.jpg',
+    id: 'b387f005-aeaf-493f-a5e3-059c96cdfae6',
+    title: 'The Joshua Tree House',
+    type: 'room',
+    price: 228,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/4.jpg',
     city: {
       name: 'Paris',
       location: {
@@ -46,11 +46,11 @@ export const mockOffers = [
     rating: 2.5
   },
   {
-    id: '0b4609af-5494-4a13-ad9a-6b05b44b8067',
+    id: '0584a3c6-83d1-40ef-8248-5b9f8a66597c',
     title: 'The house among olive ',
-    type: 'room',
-    price: 278,
-    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/3.jpg',
+    type: 'hotel',
+    price: 243,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/18.jpg',
     city: {
       name: 'Paris',
       location: {
@@ -65,15 +65,15 @@ export const mockOffers = [
       zoom: 16
     },
     isFavorite: false,
-    isPremium: false,
-    rating: 3.5
+    isPremium: true,
+    rating: 1.9
   },
   {
-    id: 'cbf7af60-3bc6-4c39-9da0-8f1090c437b3',
-    title: 'Tile House',
+    id: '61f6a29e-cbed-4b5f-8a0b-3e0be8c98528',
+    title: 'The Joshua Tree House',
     type: 'room',
-    price: 170,
-    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/19.jpg',
+    price: 103,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/2.jpg',
     city: {
       name: 'Paris',
       location: {
@@ -88,15 +88,15 @@ export const mockOffers = [
       zoom: 16
     },
     isFavorite: false,
-    isPremium: false,
-    rating: 1.6
+    isPremium: true,
+    rating: 2.2
   },
   {
-    id: 'ccad9338-7f2d-4e5a-91a9-83eceb70c2bf',
-    title: 'Canal View Prinsengracht',
-    type: 'apartment',
-    price: 460,
-    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/10.jpg',
+    id: '152e83a9-d1e5-4849-b6a3-ef62898dbb60',
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'hotel',
+    price: 318,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/6.jpg',
     city: {
       name: 'Paris',
       location: {
@@ -111,15 +111,15 @@ export const mockOffers = [
       zoom: 16
     },
     isFavorite: false,
-    isPremium: true,
-    rating: 4.9
+    isPremium: false,
+    rating: 5
   },
   {
-    id: 'e9774f6a-734a-476d-8664-87efab6060f3',
-    title: 'Amazing and Extremely Central Flat',
-    type: 'hotel',
-    price: 173,
-    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/4.jpg',
+    id: '60c6351f-2777-4e21-8fd1-060849d28f35',
+    title: 'House in countryside',
+    type: 'house',
+    price: 127,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/16.jpg',
     city: {
       name: 'Paris',
       location: {
@@ -135,29 +135,6 @@ export const mockOffers = [
     },
     isFavorite: false,
     isPremium: false,
-    rating: 1.1
-  },
-  {
-    id: 'f19baebc-e9ef-40ae-8eb6-3fb95719fa63',
-    title: 'Amazing and Extremely Central Flat',
-    type: 'house',
-    price: 643,
-    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/4.jpg',
-    city: {
-      name: 'Paris',
-      location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
-        zoom: 13
-      }
-    },
-    location: {
-      latitude: 48.834610000000005,
-      longitude: 2.364499,
-      zoom: 16
-    },
-    isFavorite: false,
-    isPremium: false,
-    rating: 1.5
+    rating: 2.3
   }
 ];

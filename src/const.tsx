@@ -1,3 +1,11 @@
+export enum AppRoute {
+  Favorites = '/favorites',
+  Login = '/login',
+  Main = '/',
+  NotFoundScreen = '/not-found-screen',
+  Offer = '/offer/:id'
+}
+
 export const cities: {id: string; name: string}[] = [
   {
     id: 'd08b6bf1-36e5-45d6-bdc9-02803813a2e3',
@@ -43,3 +51,11 @@ export const sortingOptions: {id: string; name: string}[] = [
     name: 'Top rated first',
   }
 ];
+
+export enum AuthorizationStatus {
+  Auth ='AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
+export const placesFoundNumber: number = 345;
