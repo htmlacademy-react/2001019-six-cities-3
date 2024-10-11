@@ -1,35 +1,22 @@
 import Header from '../../components/layout/header/header.tsx';
-import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 import ReviewForm from '../../components/blocks/review-form/review-form.tsx';
-import ReviewItem from '../../components/blocks/review-item/review-item.tsx';
-import {mockOffers} from '../../mock/offers.ts';
+import ReviewList from '../../components/blocks/review-list/review-list.tsx';
+import OfferGallery from '../../components/blocks/offer-gallery/offer-gallery.tsx';
+import OfferInside from '../../components/blocks/offer-inside/offer-inside.tsx';
+import NearPlacesList from '../../components/blocks/near-places-list/near-places-list.tsx';
+import Map from '../../components/blocks/map/map.tsx';
+import OfferFeatures from '../../components/blocks/offer-features/offer-features.tsx';
+import {useParams} from 'react-router-dom';
+import {mockDetailOffers} from '../../mock/detail-offers.ts';
 function Offer(): JSX.Element {
+  const params = useParams();
+  const offer = mockDetailOffers.find((item) => item.id === params.id) ?? mockDetailOffers[0];
+
   return (
     <main className="page__main page__main--offer">
       <Header />
       <section className="offer">
-        <div className="offer__gallery-container container">
-          <div className="offer__gallery">
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/room.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-            </div>
-          </div>
-        </div>
+        <OfferGallery key={`${offer.id }gallery`} offerId={offer.id} images={offer.images} />
         <div className="offer__container container">
           <div className="offer__wrapper">
             <div className="offer__mark">
@@ -37,7 +24,8 @@ function Offer(): JSX.Element {
             </div>
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
-                Beautiful &amp; luxurious studio at great location
+                {offer.title}
+                {/*Beautiful &amp; luxurious studio at great location*/}
               </h1>
               <button className="offer__bookmark-button button" type="button">
                 <svg className="offer__bookmark-icon" width="31" height="33">
@@ -51,58 +39,14 @@ function Offer(): JSX.Element {
                 <span style={{width: '80%'}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="offer__rating-value rating__value">4.8</span>
+              <span className="offer__rating-value rating__value">{offer.rating}</span>
             </div>
-            <ul className="offer__features">
-              <li className="offer__feature offer__feature--entire">
-                Apartment
-              </li>
-              <li className="offer__feature offer__feature--bedrooms">
-                3 Bedrooms
-              </li>
-              <li className="offer__feature offer__feature--adults">
-                Max 4 adults
-              </li>
-            </ul>
+            <OfferFeatures />
             <div className="offer__price">
               <b className="offer__price-value">&euro;120</b>
               <span className="offer__price-text">&nbsp;night</span>
             </div>
-            <div className="offer__inside">
-              <h2 className="offer__inside-title">What&apos;s inside</h2>
-              <ul className="offer__inside-list">
-                <li className="offer__inside-item">
-                  Wi-Fi
-                </li>
-                <li className="offer__inside-item">
-                  Washing machine
-                </li>
-                <li className="offer__inside-item">
-                  Towels
-                </li>
-                <li className="offer__inside-item">
-                  Heating
-                </li>
-                <li className="offer__inside-item">
-                  Coffee machine
-                </li>
-                <li className="offer__inside-item">
-                  Baby seat
-                </li>
-                <li className="offer__inside-item">
-                  Kitchen
-                </li>
-                <li className="offer__inside-item">
-                  Dishwasher
-                </li>
-                <li className="offer__inside-item">
-                  Cabel TV
-                </li>
-                <li className="offer__inside-item">
-                  Fridge
-                </li>
-              </ul>
-            </div>
+            <OfferInside key={`${offer.id }offerInside`} offerId={offer.id} goods={offer.goods} />
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
@@ -127,32 +71,17 @@ function Offer(): JSX.Element {
             </div>
             <section className="offer__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-              <ul className="reviews__list">
-                <ReviewItem />
-              </ul>
+              <ReviewList />
               <ReviewForm />
             </section>
           </div>
         </div>
-        <section className="offer__map map"></section>
+        <Map />
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <div className="near-places__list places__list">
-            {
-              mockOffers.map((offer) => (
-                <OfferCard
-                  placeCardTitle={offer.title}
-                  placeCardType={offer.type}
-                  id={offer.id}
-                  img={offer.previewImage}
-                  priceValue={offer.price}
-                  rating={offer.rating}
-                  key={offer.id}
-                />))
-            }
-          </div>
+          <NearPlacesList />
         </section>
       </div>
     </main>

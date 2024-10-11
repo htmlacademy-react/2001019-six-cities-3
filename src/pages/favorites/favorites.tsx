@@ -1,7 +1,7 @@
 import Header from '../../components/layout/header/header.tsx';
 import Footer from '../../components/layout/footer/footer.tsx';
 
-function Favorite(): JSX.Element {
+function Favorites(): JSX.Element {
   return (
     <div className="page">
       <Header />
@@ -139,4 +139,4 @@ function Favorite(): JSX.Element {
   );
 }
 
-export default Favorite;
+export default Favorites;
