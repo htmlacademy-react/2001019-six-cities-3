@@ -1,4 +1,3 @@
-import Header from '../../components/layout/header/header.tsx';
 import LocationList from '../../components/blocks/location-list/location-list.tsx';
 import Sorting from '../../components/blocks/sorting/sorting.tsx';
 import Map from '../../components/blocks/map/map.tsx';
@@ -10,7 +9,6 @@ import {placesFoundNumber} from '../../const.tsx';
 function Main(): JSX.Element {
   return (
     <div className="page page--gray page--main">
-      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <LocationList />

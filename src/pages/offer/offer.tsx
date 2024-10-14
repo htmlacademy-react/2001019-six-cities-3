@@ -1,4 +1,3 @@
-import Header from '../../components/layout/header/header.tsx';
 import ReviewForm from '../../components/blocks/review-form/review-form.tsx';
 import ReviewList from '../../components/blocks/review-list/review-list.tsx';
 import OfferGallery from '../../components/blocks/offer-gallery/offer-gallery.tsx';
@@ -14,7 +13,6 @@ function Offer(): JSX.Element {
 
   return (
     <main className="page__main page__main--offer">
-      <Header />
       <section className="offer">
         <OfferGallery key={`${offer.id }gallery`} offerId={offer.id} images={offer.images} />
         <div className="offer__container container">

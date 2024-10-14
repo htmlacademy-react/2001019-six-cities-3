@@ -1,7 +1,7 @@
 export enum AppRoute {
   Favorites = '/favorites',
   Login = '/login',
-  Main = '/',
+  Root = '/',
   NotFoundScreen = '/not-found-screen',
   Offer = '/offer/:id'
 }
