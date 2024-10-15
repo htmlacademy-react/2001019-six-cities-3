@@ -4,15 +4,18 @@ import Main from '../../pages/main/main.tsx';
 import Login from '../../pages/login/login.tsx';
 import Offer from '../../pages/offer/offer.tsx';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen.tsx';
-import PivateRoute from '../pivate-route/pivate-route.tsx';
+import PrivateRoute from '../private-route/private-route.tsx';
 import Favorites from '../../pages/favorites/favorites.tsx';
-import Layout from "../layout/layout.tsx";
+import Layout from '../layout/layout.tsx';
+import {getAuthorizationStatus} from '../../authorizationStatus.ts';
 
 // type AppProps = {
 //   offersCount: number;
 // }
 
 function App(): JSX.Element {
+  const authorizationStatus = getAuthorizationStatus();
+
   return (
     <BrowserRouter>
       <Routes>
@@ -27,11 +30,11 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PivateRoute
+              <PrivateRoute
                 authorizationStatus={AuthorizationStatus.NoAuth}
               >
                 <Favorites />
-              </PivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
@@ -40,7 +43,11 @@ function App(): JSX.Element {
           />
           <Route
             path={AppRoute.Login}
-            element={<Login />}
+            element={(
+              <PrivateRoute authorizationStatus={authorizationStatus} isReverse>
+                <Login />
+              </PrivateRoute>
+            )}
           />
           <Route
             path='*'
