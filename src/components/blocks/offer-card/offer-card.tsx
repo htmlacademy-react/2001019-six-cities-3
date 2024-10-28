@@ -1,5 +1,5 @@
 type PlaceCardProps = {
-  img: string;
+  img?: string;
   premiumMark?: string;
   priceValue: number;
   rating: number;
@@ -16,7 +16,7 @@ function OfferCard(placeCardData: PlaceCardProps): JSX.Element {
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={placeCardData.img} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={placeCardData.img ?? ''} width="260" height="200" alt="Place image" />
         </a>
       </div>
       <div className="place-card__info">

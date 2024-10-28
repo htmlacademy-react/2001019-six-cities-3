@@ -7,15 +7,14 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import Favorites from '../../pages/favorites/favorites.tsx';
 import Layout from '../layout/layout.tsx';
-import {getAuthorizationStatus} from '../../authorizationStatus.ts';
+import {TOffer} from "../blocks/offer-card/types.ts";
 
-// type AppProps = {
-//   offersCount: number;
-// }
+type TAppProps = {
+  offers: TOffer[],
+  authorizationStatus: AuthorizationStatus
+}
 
-function App(): JSX.Element {
-  const authorizationStatus = getAuthorizationStatus();
-
+function App({offers, authorizationStatus}: TAppProps) : JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -25,7 +24,7 @@ function App(): JSX.Element {
         >
           <Route
             index
-            element={<Main />}
+            element={<Main offers={offers} />}
           />
           <Route
             path={AppRoute.Favorites}
@@ -39,7 +38,7 @@ function App(): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<Offer />}
+            element={<Offer offers={offers} />}
           />
           <Route
             path={AppRoute.Login}

@@ -1,17 +1,21 @@
-import {mockOffers} from '../../../mock/offers.ts';
 import OfferCard from '../offer-card/offer-card.tsx';
+import {TOffer} from "../offer-card/types.ts";
 
-function OfferList(): JSX.Element {
+type TOfferList = {
+  offers: TOffer[]
+};
+
+function OfferList({offers}: TOfferList): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {
-        mockOffers.map((offer) => (
+        offers.map((offer) => (
           <OfferCard
             placeCardTitle={offer.title}
             placeCardType={offer.type}
             id={offer.id}
             key={offer.id}
-            img={offer.previewImage}
+            img={offer.images[0] ?? null}
             priceValue={offer.price}
             rating={offer.rating}
           />))

@@ -6,10 +6,20 @@ import NearPlacesList from '../../components/blocks/near-places-list/near-places
 import Map from '../../components/blocks/map/map.tsx';
 import OfferFeatures from '../../components/blocks/offer-features/offer-features.tsx';
 import {useParams} from 'react-router-dom';
-import {mockDetailOffers} from '../../mock/detail-offers.ts';
-function Offer(): JSX.Element {
+import {TOffer} from "../../components/blocks/offer-card/types.ts";
+import NotFoundScreen from "../not-found-screen/not-found-screen.tsx";
+
+type TOfferProps = {
+  offers: TOffer[]
+};
+
+function Offer({offers}: TOfferProps): JSX.Element {
   const params = useParams();
-  const offer = mockDetailOffers.find((item) => item.id === params.id) ?? mockDetailOffers[0];
+  const offer = offers.find((item: TOffer) => item.id === params.id) ?? (offers[0] ?? null);
+
+   if (!offer) {
+     return <NotFoundScreen />;
+   }
 
   return (
     <main className="page__main page__main--offer">

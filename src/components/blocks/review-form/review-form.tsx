@@ -1,3 +1,14 @@
+// const raiting = [
+//   {value: 5, label: 'perfect'},
+//   {value: 4, label: 'good'},
+//   {value: 3, label: 'not bad'},
+//   {value: 5, label: 'badly'},
+//   {value: 5, label: 'terribly'}
+// ]
+// import {Fragment} from "react";
+
+// <Fragment key={value}></Fragment> почему нужен кей при переборах?
+
 function ReviewForm(): JSX.Element {
   return (
     <form className="reviews__form form" action="#" method="post">

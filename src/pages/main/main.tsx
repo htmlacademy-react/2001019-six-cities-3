@@ -4,9 +4,13 @@ import Map from '../../components/blocks/map/map.tsx';
 import PlacesFound from '../../components/blocks/places-found/places-found.tsx';
 import OfferList from '../../components/blocks/offer-list/offer-list.tsx';
 import {placesFoundNumber} from '../../const.tsx';
+import {TOffer} from "../../components/blocks/offer-card/types.ts";
 
+type TMain = {
+  offers: TOffer[]
+};
 
-function Main(): JSX.Element {
+function Main({offers}: TMain): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <main className="page__main page__main--index">
@@ -18,7 +22,7 @@ function Main(): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <PlacesFound placesFoundCount={placesFoundNumber} />
               <Sorting />
-              <OfferList />
+              <OfferList offers={offers} />
             </section>
             <div className="cities__right-section">
               <Map />
