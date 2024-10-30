@@ -4,7 +4,6 @@ import OfferGallery from '../../components/blocks/offer-gallery/offer-gallery.ts
 import OfferInside from '../../components/blocks/offer-inside/offer-inside.tsx';
 import NearPlacesList from '../../components/blocks/near-places-list/near-places-list.tsx';
 import Map from '../../components/blocks/map/map.tsx';
-import OfferFeatures from '../../components/blocks/offer-features/offer-features.tsx';
 import {useParams} from 'react-router-dom';
 import {TOffer} from "../../components/blocks/offer-card/types.ts";
 import NotFoundScreen from "../not-found-screen/not-found-screen.tsx";
@@ -15,25 +14,22 @@ type TOfferProps = {
 
 function Offer({offers}: TOfferProps): JSX.Element {
   const params = useParams();
-  const offer = offers.find((item: TOffer) => item.id === params.id) ?? (offers[0] ?? null);
+  const currentOffer = offers.find((item: TOffer) => item.id === params.id) ?? (offers[0] ?? null);
 
-   if (!offer) {
+   if (!currentOffer) {
      return <NotFoundScreen />;
    }
 
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
-        <OfferGallery key={`${offer.id }gallery`} offerId={offer.id} images={offer.images} />
+        <OfferGallery key={`${currentOffer.id }gallery`} offerId={currentOffer.id} images={currentOffer.images} />
         <div className="offer__container container">
           <div className="offer__wrapper">
-            <div className="offer__mark">
-              <span>Premium</span>
-            </div>
+            { currentOffer.isPremium && (<div className="offer__mark"><span>Premium</span></div>) }
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
-                {offer.title}
-                {/*Beautiful &amp; luxurious studio at great location*/}
+                {currentOffer.title}
               </h1>
               <button className="offer__bookmark-button button" type="button">
                 <svg className="offer__bookmark-icon" width="31" height="33">
@@ -47,14 +43,24 @@ function Offer({offers}: TOfferProps): JSX.Element {
                 <span style={{width: '80%'}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="offer__rating-value rating__value">{offer.rating}</span>
+              <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
             </div>
-            <OfferFeatures />
+            <ul className="offer__features">
+              <li className="offer__feature offer__feature--entire">
+                {currentOffer.type}
+              </li>
+              <li className="offer__feature offer__feature--bedrooms">
+                {currentOffer.bedrooms} Bedrooms
+              </li>
+              <li className="offer__feature offer__feature--adults">
+                Max {currentOffer.maxAdults} adults
+              </li>
+            </ul>
             <div className="offer__price">
-              <b className="offer__price-value">&euro;120</b>
+              <b className="offer__price-value">&euro;{currentOffer.price}</b>
               <span className="offer__price-text">&nbsp;night</span>
             </div>
-            <OfferInside key={`${offer.id }offerInside`} offerId={offer.id} goods={offer.goods} />
+            <OfferInside key={`${currentOffer.id }offerInside`} offerId={currentOffer.id} goods={currentOffer.goods} />
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
@@ -70,11 +76,12 @@ function Offer({offers}: TOfferProps): JSX.Element {
               </div>
               <div className="offer__description">
                 <p className="offer__text">
-                  A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+                  {currentOffer.description}
                 </p>
                 <p className="offer__text">
-                  An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                  {currentOffer.description}
                 </p>
+                {/*{currentOffer.description}*/}
               </div>
             </div>
             <section className="offer__reviews reviews">

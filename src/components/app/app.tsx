@@ -38,7 +38,7 @@ function App({offers, authorizationStatus}: TAppProps) : JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            //здесь переделать
+            // path={`${AppRoute.Offer}/:id`}
             element={<Offer offers={offers} />}
           />
           <Route
