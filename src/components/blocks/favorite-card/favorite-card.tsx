@@ -1,18 +1,28 @@
-function FavoritePlace(): JSX.Element {
+type FavoriteCardProps = {
+  images?: string;
+  isPremium?: boolean;
+  price: number;
+  rating: number;
+  title: string;
+  type: string;
+  id: string;
+}
+
+function FavoriteCard(favoriteCardData: FavoriteCardProps): JSX.Element {
   return (
-    <article className="favorites__card place-card">
+    <article className="favorites__card place-card" id={favoriteCardData.id}>
       <div className="place-card__mark">
-        <span>Premium</span>
+        <span>{favoriteCardData.isPremium}</span>
       </div>
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src="img/apartment-small-03.jpg" width="150" height="110" alt="Place image" />
+          <img className="place-card__image" src={favoriteCardData.images ?? ''} width="150" height="110" alt="Place image" />
         </a>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;180</b>
+            <b className="place-card__price-value">&euro;{favoriteCardData.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
@@ -24,17 +34,17 @@ function FavoritePlace(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '100%'}}></span>
+            <span style={{width: `${favoriteCardData.rating}`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Nice, cozy, warm big bed apartment</a>
+          <a href="#">{favoriteCardData.title}</a>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{favoriteCardData.type}</p>
       </div>
     </article>
   );
 }
 
-export default FavoritePlace;
+export default FavoriteCard;

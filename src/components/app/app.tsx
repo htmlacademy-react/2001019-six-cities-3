@@ -30,14 +30,15 @@ function App({offers, authorizationStatus}: TAppProps) : JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={AuthorizationStatus.Auth}
               >
-                <Favorites />
+                <Favorites offers={offers} />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Offer}
+            //здесь переделать
             element={<Offer offers={offers} />}
           />
           <Route

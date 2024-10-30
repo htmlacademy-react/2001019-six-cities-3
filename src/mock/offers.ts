@@ -40,7 +40,7 @@ export const mockOffers = [
       name: 'Angelina',
       avatarUrl: 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
-    isPremium: true,
+    isPremium: false,
     isFavorite: false,
     rating: 3,
     bedrooms: 3,
@@ -61,7 +61,7 @@ export const mockOffers = [
       'https://15.design.htmlacademy.pro/static/hotel/14.jpg'
     ],
     city: {
-      name: 'Paris',
+      name: 'Amsterdam',
       location: {
         latitude: 48.85661,
         longitude: 2.351499,
@@ -113,7 +113,7 @@ export const mockOffers = [
       'https://15.design.htmlacademy.pro/static/hotel/9.jpg'
     ],
     city: {
-      name: 'Paris',
+      name: 'Brussels',
       location: {
         latitude: 48.85661,
         longitude: 2.351499,
@@ -165,7 +165,7 @@ export const mockOffers = [
       'https://15.design.htmlacademy.pro/static/hotel/3.jpg'
     ],
     city: {
-      name: 'Paris',
+      name: 'Brussels',
       location: {
         latitude: 48.85661,
         longitude: 2.351499,

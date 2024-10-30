@@ -1,28 +1,28 @@
 type PlaceCardProps = {
-  img?: string;
-  premiumMark?: string;
-  priceValue: number;
+  images?: string;
+  isPremium?: boolean;
+  price: number;
   rating: number;
-  placeCardTitle: string;
-  placeCardType: string;
+  title: string;
+  type: string;
   id: string;
 }
 
 function OfferCard(placeCardData: PlaceCardProps): JSX.Element {
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" id={placeCardData.id}>
       <div className="place-card__mark">
-        <span>{placeCardData.premiumMark}</span>
+        <span>{placeCardData.isPremium}</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={placeCardData.img ?? ''} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={placeCardData.images ?? ''} width="260" height="200" alt="Place image" />
         </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{placeCardData.priceValue}</b>
+            <b className="place-card__price-value">&euro;{placeCardData.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
@@ -39,9 +39,9 @@ function OfferCard(placeCardData: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{placeCardData.placeCardTitle}</a>
+          <a href="#">{placeCardData.title}</a>
         </h2>
-        <p className="place-card__type">{placeCardData.placeCardType}</p>
+        <p className="place-card__type">{placeCardData.type}</p>
       </div>
     </article>
   );
