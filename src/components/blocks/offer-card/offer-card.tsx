@@ -1,4 +1,3 @@
-import {AppRoute} from '../../../const.tsx';
 import {Link} from 'react-router-dom';
 
 type PlaceCardProps = {
@@ -15,7 +14,6 @@ type PlaceCardProps = {
 function OfferCard(placeCardData: PlaceCardProps): JSX.Element {
   // Не понятно какой тип указывать у event'а в обработчике событий
   const handleMouseOn = (evt : {target: EventTarget}) => {
-  // const handleMouseOn = (evt : {target: EventTarget}) => {
     if (!placeCardData.handleHover) {
       return;
     }
@@ -41,7 +39,7 @@ function OfferCard(placeCardData: PlaceCardProps): JSX.Element {
     >
       { placeCardData.isPremium && (<div className="place-card__mark"><span>Premium</span></div>) }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Offer}/${placeCardData.id}`}>
+        <Link to={`offer/${placeCardData.id}`}>
           <img
             className="place-card__image"
             src={placeCardData.images ?? ''}
