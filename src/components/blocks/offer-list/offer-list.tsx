@@ -9,7 +9,7 @@ type TOfferList = {
 
 function OfferList({offers}: TOfferList): JSX.Element {
   const [, setActiveOffer] = useState<Nullable<TOffer>>(null);
-  const handleHover = (offerId? : string) => {
+  const handleHover = (offerId : string | null) => {
     if (offerId) {
       const offer = offers.find((item) => item.id === offerId);
       setActiveOffer(offer || null);
