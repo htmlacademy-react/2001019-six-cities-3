@@ -1,5 +1,5 @@
-import {AppRoute} from "../../../const.tsx";
-import {Link} from "react-router-dom";
+import {AppRoute} from '../../../const.tsx';
+import {Link} from 'react-router-dom';
 
 type PlaceCardProps = {
   images?: string;
@@ -9,29 +9,36 @@ type PlaceCardProps = {
   title: string;
   type: string;
   id: string;
-  handleHover: (offerId: string | null) => void;
+  handleHover?: (offerId: string | null) => void;
 }
 
 function OfferCard(placeCardData: PlaceCardProps): JSX.Element {
   // Не понятно какой тип указывать у event'а в обработчике событий
-  const handleMouseOn = (evt : {target:object}) => {
-    if (evt.target) {
-      const target = evt.target as HTMLInputElement
-      const offerId = target.closest('article')?.id;
-      placeCardData.handleHover(offerId || null);
+  const handleMouseOn = (evt : {target: EventTarget}) => {
+  // const handleMouseOn = (evt : {target: EventTarget}) => {
+    if (!placeCardData.handleHover) {
+      return;
     }
-  }
+
+    const target = evt.target as HTMLInputElement;
+    const offerId = target.closest('article')?.id;
+    placeCardData.handleHover(offerId || null);
+  };
 
   const handleMouseOff = () => {
+    if (!placeCardData.handleHover) {
+      return;
+    }
+
     placeCardData.handleHover(null);
-  }
+  };
   return (
     <article
       className="cities__card place-card"
       id={placeCardData.id}
       onMouseEnter={handleMouseOn}
       onMouseLeave={handleMouseOff}
-      >
+    >
       { placeCardData.isPremium && (<div className="place-card__mark"><span>Premium</span></div>) }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Offer}/${placeCardData.id}`}>
@@ -40,7 +47,8 @@ function OfferCard(placeCardData: PlaceCardProps): JSX.Element {
             src={placeCardData.images ?? ''}
             width="260"
             height="200"
-            alt="Place image" />
+            alt="Place image"
+          />
         </Link>
       </div>
       <div className="place-card__info">

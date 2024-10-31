@@ -7,14 +7,16 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import Favorites from '../../pages/favorites/favorites.tsx';
 import Layout from '../layout/layout.tsx';
-import {TOffer} from "../blocks/offer-card/types.ts";
+import {TOffer} from '../blocks/offer-card/types.ts';
+import {TReview} from '../blocks/review-item/types.ts';
 
 type TAppProps = {
-  offers: TOffer[],
-  authorizationStatus: AuthorizationStatus
+  offers: TOffer[];
+  reviews: TReview[];
+  authorizationStatus: AuthorizationStatus;
 }
 
-function App({offers, authorizationStatus}: TAppProps) : JSX.Element {
+function App({offers, reviews, authorizationStatus}: TAppProps) : JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -38,8 +40,7 @@ function App({offers, authorizationStatus}: TAppProps) : JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            // path={`${AppRoute.Offer}/:id`}
-            element={<Offer offers={offers} />}
+            element={<Offer offers={offers} reviews={reviews} authorizationStatus={authorizationStatus} />}
           />
           <Route
             path={AppRoute.Login}

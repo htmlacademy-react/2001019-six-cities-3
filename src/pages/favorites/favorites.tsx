@@ -1,24 +1,24 @@
-import FavoriteCard from "../../components/blocks/favorite-card/favorite-card.tsx";
-import {TOffer} from "../../components/blocks/offer-card/types.ts";
+import FavoriteCard from '../../components/blocks/favorite-card/favorite-card.tsx';
+import {TOffer} from '../../components/blocks/offer-card/types.ts';
 
 type TFavorites = {
-  offers: TOffer[]
+  offers: TOffer[];
 };
 
 interface ICityOffers {
-  [key: string]: TOffer[]
-};
+  [key: string]: TOffer[];
+}
 
 function Favorites({offers}: TFavorites): JSX.Element {
   const cityOffers : ICityOffers = {};
 
   offers.map((offerItem) => {
-    if (!cityOffers[offerItem.city.name]) cityOffers[offerItem.city.name] = [];
+    if (!cityOffers[offerItem.city.name]) {
+      cityOffers[offerItem.city.name] = [];
+    }
 
     return cityOffers[offerItem.city.name].push(offerItem);
   });
-
-  console.log(cityOffers)
 
   return (
     <main className="page__main page__main--favorites">
@@ -27,36 +27,33 @@ function Favorites({offers}: TFavorites): JSX.Element {
           <h1 className="favorites__title">Saved listing</h1>
           <ul className="favorites__list">
             {
-              Object.keys(cityOffers).map((city) => {
-                return (
-                  <li className="favorites__locations-items">
-                    <div className="favorites__locations locations locations--current">
-                      <div className="locations__item">
-                        <a className="locations__item-link" href="#">
-                          <span>{city}</span>
-                        </a>
-                      </div>
+              Object.keys(cityOffers).map((city) => (
+                <li className="favorites__locations-items" key={city}>
+                  <div className="favorites__locations locations locations--current">
+                    <div className="locations__item">
+                      <a className="locations__item-link" href="#">
+                        <span>{city}</span>
+                      </a>
                     </div>
-                    <div className="favorites__places">
-                      {
-                        cityOffers[city].map((cityOffer) => {
-                          return (
-                            <FavoriteCard
-                              images={cityOffer.images[0] ?? ''}
-                              isPremium={cityOffer.isPremium}
-                              price={cityOffer.price}
-                              rating={cityOffer.rating}
-                              title={cityOffer.title}
-                              type={cityOffer.type}
-                              id={cityOffer.id}
-                            />
-                          );
-                        })
-                      }
-                    </div>
-                  </li>
-                )
-              })
+                  </div>
+                  <div className="favorites__places">
+                    {
+                      cityOffers[city].map((cityOffer) => (
+                        <FavoriteCard
+                          key={cityOffer.id}
+                          images={cityOffer.images[0] ?? ''}
+                          isPremium={cityOffer.isPremium}
+                          price={cityOffer.price}
+                          rating={cityOffer.rating}
+                          title={cityOffer.title}
+                          type={cityOffer.type}
+                          id={cityOffer.id}
+                        />
+                      ))
+                    }
+                  </div>
+                </li>
+              ))
             }
           </ul>
         </section>

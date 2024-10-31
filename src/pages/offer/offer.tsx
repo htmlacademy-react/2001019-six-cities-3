@@ -1,24 +1,30 @@
-import ReviewForm from '../../components/blocks/review-form/review-form.tsx';
-import ReviewList from '../../components/blocks/review-list/review-list.tsx';
 import OfferGallery from '../../components/blocks/offer-gallery/offer-gallery.tsx';
 import OfferInside from '../../components/blocks/offer-inside/offer-inside.tsx';
 import NearPlacesList from '../../components/blocks/near-places-list/near-places-list.tsx';
 import Map from '../../components/blocks/map/map.tsx';
 import {useParams} from 'react-router-dom';
-import {TOffer} from "../../components/blocks/offer-card/types.ts";
-import NotFoundScreen from "../not-found-screen/not-found-screen.tsx";
+import {TOffer} from '../../components/blocks/offer-card/types.ts';
+import NotFoundScreen from '../not-found-screen/not-found-screen.tsx';
+import Reviews from '../../components/blocks/reviews/reviews.tsx';
+import {AuthorizationStatus} from '../../const.tsx';
+import {TReview} from '../../components/blocks/review-item/types.ts';
 
 type TOfferProps = {
-  offers: TOffer[]
+  offers: TOffer[];
+  reviews: TReview[];
+  authorizationStatus: AuthorizationStatus;
 };
 
-function Offer({offers}: TOfferProps): JSX.Element {
+function Offer({offers, reviews, authorizationStatus}: TOfferProps): JSX.Element {
   const params = useParams();
   const currentOffer = offers.find((item: TOffer) => item.id === params.id) ?? (offers[0] ?? null);
 
-   if (!currentOffer) {
-     return <NotFoundScreen />;
-   }
+  reviews = reviews.splice(0, 3);
+  // reviews = reviews.filter((review) => review.id === currentOffer.id);
+
+  if (!currentOffer) {
+    return <NotFoundScreen />;
+  }
 
   return (
     <main className="page__main page__main--offer">
@@ -86,8 +92,7 @@ function Offer({offers}: TOfferProps): JSX.Element {
             </div>
             <section className="offer__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-              <ReviewList />
-              <ReviewForm />
+              <Reviews reviews={reviews} isAuth={authorizationStatus === AuthorizationStatus.Auth}/>
             </section>
           </div>
         </div>
@@ -96,7 +101,7 @@ function Offer({offers}: TOfferProps): JSX.Element {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <NearPlacesList />
+          <NearPlacesList offers={offers} />
         </section>
       </div>
     </main>

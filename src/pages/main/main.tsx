@@ -4,10 +4,10 @@ import Map from '../../components/blocks/map/map.tsx';
 import PlacesFound from '../../components/blocks/places-found/places-found.tsx';
 import OfferList from '../../components/blocks/offer-list/offer-list.tsx';
 import {placesFoundNumber} from '../../const.tsx';
-import {TOffer} from "../../components/blocks/offer-card/types.ts";
+import {TOffer} from '../../components/blocks/offer-card/types.ts';
 
 type TMain = {
-  offers: TOffer[]
+  offers: TOffer[];
 };
 
 function Main({offers}: TMain): JSX.Element {

@@ -1,14 +1,14 @@
 import OfferCard from '../offer-card/offer-card.tsx';
-import {TOffer} from "../offer-card/types.ts";
-import {useState} from "react";
-import {Nullable} from "vitest";
+import {TOffer} from '../offer-card/types.ts';
+import {useState} from 'react';
+import {Nullable} from 'vitest';
 
 type TOfferList = {
-  offers: TOffer[]
+  offers: TOffer[];
 };
 
 function OfferList({offers}: TOfferList): JSX.Element {
-  const [activeOffer, setActiveOffer] = useState<Nullable<TOffer>>(null);
+  const [, setActiveOffer] = useState<Nullable<TOffer>>(null);
   const handleHover = (offerId? : string) => {
     if (offerId) {
       const offer = offers.find((item) => item.id === offerId);
