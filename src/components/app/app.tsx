@@ -3,7 +3,7 @@ import {AppRoute, AuthorizationStatus} from '../../const.tsx';
 import Main from '../../pages/main/main.tsx';
 import Login from '../../pages/login/login.tsx';
 import Offer from '../../pages/offer/offer.tsx';
-import NotFoundScreen from '../../pages/not-found-screen/not-found-screen.tsx';
+import NotFound from '../../pages/not-found/not-found.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import Favorites from '../../pages/favorites/favorites.tsx';
 import Layout from '../layout/layout.tsx';
@@ -52,7 +52,7 @@ function App({offers, reviews, authorizationStatus}: TAppProps) : JSX.Element {
           />
           <Route
             path='*'
-            element={<NotFoundScreen />}
+            element={<NotFound />}
           />
         </Route>
       </Routes>

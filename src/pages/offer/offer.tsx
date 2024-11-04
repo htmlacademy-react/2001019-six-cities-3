@@ -1,13 +1,12 @@
 import OfferGallery from '../../components/blocks/offer-gallery/offer-gallery.tsx';
-import OfferInside from '../../components/blocks/offer-inside/offer-inside.tsx';
-import NearPlacesList from '../../components/blocks/near-places-list/near-places-list.tsx';
 import Map from '../../components/blocks/map/map.tsx';
 import {useParams} from 'react-router-dom';
 import {TOffer} from '../../components/blocks/offer-card/types.ts';
-import NotFoundScreen from '../not-found-screen/not-found-screen.tsx';
+import NotFound from '../not-found/not-found.tsx';
 import Reviews from '../../components/blocks/reviews/reviews.tsx';
 import {AuthorizationStatus} from '../../const.tsx';
 import {TReview} from '../../components/blocks/review-item/types.ts';
+import NearPlaces from '../../components/near-places/near-places.tsx';
 
 type TOfferProps = {
   offers: TOffer[];
@@ -15,15 +14,22 @@ type TOfferProps = {
   authorizationStatus: AuthorizationStatus;
 };
 
+function OfferInsideGoodsItem({goodsItem}: {goodsItem: string}): JSX.Element {
+  return (
+    <li className="offer__inside-item">
+      {goodsItem}
+    </li>
+  );
+}
+
 function Offer({offers, reviews, authorizationStatus}: TOfferProps): JSX.Element {
   const params = useParams();
   const currentOffer = offers.find((item: TOffer) => item.id === params.id) ?? (offers[0] ?? null);
 
   reviews = reviews.splice(0, 3);
-  // reviews = reviews.filter((review) => review.id === currentOffer.id);
 
   if (!currentOffer) {
-    return <NotFoundScreen />;
+    return <NotFound />;
   }
 
   return (
@@ -66,7 +72,13 @@ function Offer({offers, reviews, authorizationStatus}: TOfferProps): JSX.Element
               <b className="offer__price-value">&euro;{currentOffer.price}</b>
               <span className="offer__price-text">&nbsp;night</span>
             </div>
-            <OfferInside key={`${currentOffer.id }offerInside`} offerId={currentOffer.id} goods={currentOffer.goods} />
+            {/**/}
+            <div className="offer__inside">
+              <h2 className="offer__inside-title">What&apos;s inside</h2>
+              <ul className="offer__inside-list">
+                {currentOffer.goods.map((goodsItem) => <OfferInsideGoodsItem goodsItem={goodsItem} key={currentOffer.id + goodsItem}/>)}
+              </ul>
+            </div>
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
@@ -87,7 +99,6 @@ function Offer({offers, reviews, authorizationStatus}: TOfferProps): JSX.Element
                 <p className="offer__text">
                   {currentOffer.description}
                 </p>
-                {/*{currentOffer.description}*/}
               </div>
             </div>
             <section className="offer__reviews reviews">
@@ -99,10 +110,7 @@ function Offer({offers, reviews, authorizationStatus}: TOfferProps): JSX.Element
         <Map />
       </section>
       <div className="container">
-        <section className="near-places places">
-          <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <NearPlacesList offers={offers} />
-        </section>
+        <NearPlaces offers={offers} />
       </div>
     </main>
   );

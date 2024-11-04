@@ -1,6 +1,6 @@
-import ReviewsList from '../reviews-list/reviews-list.tsx';
 import ReviewForm from '../review-form/review-form.tsx';
 import {TReview} from '../review-item/types.ts';
+import ReviewItem from '../review-item/review-item.tsx';
 
 type TReviewsProps = {
   isAuth: boolean;
@@ -10,7 +10,17 @@ type TReviewsProps = {
 function Reviews({isAuth, reviews}: TReviewsProps): JSX.Element {
   return (
     <>
-      <ReviewsList reviews={reviews} />
+      <ul className="reviews__list">
+        {reviews.map((review : TReview) => (
+          <ReviewItem
+            key={review.id}
+            rating={review.rating}
+            date={review.date}
+            comment={review.comment}
+            name={review.user.name}
+            avatarUrl={review.user.avatarUrl}
+          />))}
+      </ul>
       {isAuth && <ReviewForm />}
     </>
   );

@@ -1,4 +1,3 @@
-//типы для офферов здесь
 export type TLocationCoordinates = {
   latitude: number;
   longitude: number;
@@ -9,12 +8,7 @@ export type TCity = {
   location: TLocationCoordinates;
 }
 
-export enum TApartmentType {
-  Apartment = 'apartment',
-  Room = 'room',
-  House = 'house',
-  Hotel = 'hotel'
-}
+export type TApartmentType = 'apartment' | 'room' | 'house' | 'hotel';
 
 export type THost = {
   name: string;
@@ -25,8 +19,7 @@ export type THost = {
 export type TOffer = {
   id: string;
   title: string;
-  type: string;
-  // type: TApartmentType;
+  type: TApartmentType;
   price: number;
   city: TCity;
   location: TLocationCoordinates;
