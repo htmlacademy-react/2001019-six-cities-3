@@ -1,11 +1,12 @@
 export enum AppRoute {
   Favorites = '/favorites',
   Login = '/login',
-  Main = '/',
+  Root = '/',
   NotFoundScreen = '/not-found-screen',
   Offer = '/offer/:id'
 }
 
+// CITIES константа
 export const cities: {id: string; name: string}[] = [
   {
     id: 'd08b6bf1-36e5-45d6-bdc9-02803813a2e3',
@@ -33,6 +34,7 @@ export const cities: {id: string; name: string}[] = [
   }
 ];
 
+//SORTINGOPTIONS константа
 export const sortingOptions: {id: string; name: string}[] = [
   {
     id: '601f6a52-e6e6-4c8c-87ad-ff3b138cb5dd',
