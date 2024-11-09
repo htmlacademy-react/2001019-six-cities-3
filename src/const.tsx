@@ -6,6 +6,12 @@ export enum AppRoute {
   Offer = '/offer/:id'
 }
 
+export const CITY = {
+  title: 'Amsterdam',
+  lat: 52.374,
+  lng: 4.8896,
+  zoom: 10,
+};
 // CITIES константа
 export const cities: {id: string; name: string}[] = [
   {

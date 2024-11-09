@@ -62,7 +62,7 @@ function OfferCard({id, price, rating, title, type, handleHover, images, isPremi
             </div>
           </div>
           <h2 className="place-card__name">
-            <a href="#">{title}</a>
+            {title}
           </h2>
           <p className="place-card__type">{type}</p>
         </div>
