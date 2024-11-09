@@ -8,8 +8,6 @@ export type TCity = {
   location: TLocationCoordinates;
 }
 
-export type TApartmentType = 'apartment' | 'room' | 'house' | 'hotel';
-
 export type THost = {
   name: string;
   avatarUrl: string;
@@ -19,7 +17,7 @@ export type THost = {
 export type TOffer = {
   id: string;
   title: string;
-  type: TApartmentType;
+  type: string;
   price: number;
   city: TCity;
   location: TLocationCoordinates;
