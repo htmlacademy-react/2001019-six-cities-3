@@ -12,7 +12,7 @@ type TUseMapProps = {
 }
 
 function useMap({mapRef, city}: TUseMapProps) {
-  const [map, setMap] = useState(null);
+  const [map, setMap] = useState<leaflet.Map|null>(null);
   const isRenderedRef = useRef(false);
 
   useEffect(() => {

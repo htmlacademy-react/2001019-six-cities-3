@@ -19,7 +19,7 @@ export type THost = {
 export type TOffer = {
   id: string;
   title: string;
-  type: TApartmentType;
+  type: TApartmentType|string;
   price: number;
   city: TCity;
   location: TLocationCoordinates;

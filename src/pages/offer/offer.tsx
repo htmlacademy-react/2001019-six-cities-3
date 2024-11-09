@@ -4,7 +4,7 @@ import {useParams} from 'react-router-dom';
 import {TOffer} from '../../components/blocks/offer-card/types.ts';
 import NotFound from '../not-found/not-found.tsx';
 import Reviews from '../../components/blocks/reviews/reviews.tsx';
-import {AuthorizationStatus} from '../../const.tsx';
+import {AuthorizationStatus, CITY} from '../../const.tsx';
 import {TReview} from '../../components/blocks/review-item/types.ts';
 import NearPlaces from '../../components/near-places/near-places.tsx';
 
@@ -107,7 +107,7 @@ function Offer({offers, reviews, authorizationStatus}: TOfferProps): JSX.Element
             </section>
           </div>
         </div>
-        <Map />
+        <Map city={CITY} />
       </section>
       <div className="container">
         <NearPlaces offers={offers} />

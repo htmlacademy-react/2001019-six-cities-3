@@ -12,8 +12,8 @@ type TMapProps = {
     lng: number;
     zoom: number;
   };
-   activeOffer: Nullable<TOffer>;
-  offers: TOffer[];
+   activeOffer?: Nullable<TOffer>;
+  offers?: TOffer[];
 }
 function Map({city, offers, activeOffer}: TMapProps) :JSX.Element {
   const mapRef = useRef(null);
@@ -32,7 +32,7 @@ function Map({city, offers, activeOffer}: TMapProps) :JSX.Element {
   });
 
   useEffect(() => {
-    if (map) {
+    if (offers && map) {
       offers.forEach((offer) => {
         leaflet
           .marker({

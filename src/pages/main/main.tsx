@@ -14,6 +14,7 @@ type TMain = {
 
 function Main({offers}: TMain): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Nullable<TOffer>>(null);
+  //<LeafletMap | null>(null)
 
   return (
     <div className="page page--gray page--main">
