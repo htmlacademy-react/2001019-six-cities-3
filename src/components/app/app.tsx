@@ -1,3 +1,6 @@
+//чтобы передать данные от меньшего компонента большему: в большем команенте объявляем функцию onAnswer
+//ее передаем пропсом в меньший компонент , вызываем ее обработчике события и при вызове передаем в нее state
+//и тогда этот state будет доступен большему компоненту!!!
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const.tsx';
 import Main from '../../pages/main/main.tsx';
