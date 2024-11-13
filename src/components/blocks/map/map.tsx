@@ -1,35 +1,48 @@
 import 'leaflet/dist/leaflet.css';
 import {useEffect, useRef} from 'react';
 import useMap from './useMap';
-import leaflet from 'leaflet';
-import {TOffer} from '../offer-card/types.ts';
+import leaflet, {LayerGroup} from 'leaflet';
+import {TCity, TOffer} from '../offer-card/types.ts';
 import {Nullable} from 'vitest';
+import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
 
 type TMapProps = {
-  city : {
-    title: string;
-    lat: number;
-    lng: number;
-    zoom: number;
-  };
-   activeOffer?: Nullable<TOffer>;
+  city : TCity;
+  mapType: 'offer' | 'cities';
+  activeOffer?: Nullable<TOffer>;
   offers?: TOffer[];
 }
-function Map({city, offers, activeOffer}: TMapProps) :JSX.Element {
+
+const defaultCustomIcon = leaflet.icon({
+  iconUrl: URL_MARKER_DEFAULT,
+  iconSize: [27, 39],
+  iconAnchor: [20, 40],
+});
+
+const currentCustomIcon = leaflet.icon({
+  iconUrl: URL_MARKER_ACTIVE,
+  iconSize: [27, 39],
+  iconAnchor: [20, 40],
+});
+
+function Map({city, mapType, offers, activeOffer}: TMapProps) :JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
+  const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
 
-  const defaultCustomIcon = leaflet.icon({
-    iconUrl: '/img/pin.svg',
-    iconSize: [27, 39],
-    iconAnchor: [20, 40],
-  });
+  let mapClass = 'map cities__map';
 
-  const currentCustomIcon = leaflet.icon({
-    iconUrl: '/img/pin-active.svg',
-    iconSize: [27, 39],
-    iconAnchor: [20, 40],
-  });
+  if (mapType === 'offer') {
+    mapClass = 'map offer__map';
+  }
+
+  useEffect(() => {
+    if (map) {
+      map.setView([city.lat, city.lng], city.zoom);
+      markerLayer.current.addTo(map);
+      markerLayer.current.clearLayers();
+    }
+  }, [city, map]);
 
   useEffect(() => {
     if (offers && map) {
@@ -48,8 +61,8 @@ function Map({city, offers, activeOffer}: TMapProps) :JSX.Element {
 
   return (
     <section
-      className="map cities__map"
-      style={{height: 'auto', width: '100%'}}
+      className={mapClass}
+      style={{height: (mapType === 'offer' ? '500px' : 'auto'), width: '100%'}}
       ref={mapRef}
     >
     </section>

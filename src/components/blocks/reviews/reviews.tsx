@@ -1,6 +1,6 @@
 import ReviewForm from '../review-form/review-form.tsx';
 import {TReview} from '../review-item/types.ts';
-import ReviewsList from "../review-list/review-list.tsx";
+import ReviewsList from '../review-list/review-list.tsx';
 
 type TReviewsProps = {
   isAuth: boolean;

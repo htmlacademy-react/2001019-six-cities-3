@@ -1,15 +1,17 @@
 import OfferGallery from '../../components/blocks/offer-gallery/offer-gallery.tsx';
 import Map from '../../components/blocks/map/map.tsx';
 import {useParams} from 'react-router-dom';
-import {TOffer} from '../../components/blocks/offer-card/types.ts';
+import {TCity, TOffer} from '../../components/blocks/offer-card/types.ts';
 import NotFound from '../not-found/not-found.tsx';
 import Reviews from '../../components/blocks/reviews/reviews.tsx';
-import {AuthorizationStatus, CITY} from '../../const.tsx';
+import {AuthorizationStatus} from '../../const.tsx';
 import {TReview} from '../../components/blocks/review-item/types.ts';
-import NearPlaces from '../../components/near-places/near-places.tsx';
+import {getNearOffers} from './utils.ts';
+import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 
 type TOfferProps = {
   offers: TOffer[];
+  cities: TCity[];
   reviews: TReview[];
   authorizationStatus: AuthorizationStatus;
 };
@@ -22,15 +24,24 @@ function OfferInsideGoodsItem({goodsItem}: {goodsItem: string}): JSX.Element {
   );
 }
 
-function Offer({offers, reviews, authorizationStatus}: TOfferProps): JSX.Element {
+function Offer({cities, offers, reviews, authorizationStatus}: TOfferProps): JSX.Element {
   const params = useParams();
   const currentOffer = offers.find((item: TOffer) => item.id === params.id) ?? (offers[0] ?? null);
+  let city = cities.find((item) => item.title === currentOffer.city.name);
+
+  if (!city) {
+    city = cities[0];
+  }
 
   reviews = reviews.splice(0, 3);
 
   if (!currentOffer) {
     return <NotFound />;
   }
+
+  const nearOffers = getNearOffers(currentOffer);
+  const nearOffersPlusCurrent = [...getNearOffers(currentOffer), currentOffer];
+
 
   return (
     <main className="page__main page__main--offer">
@@ -102,15 +113,30 @@ function Offer({offers, reviews, authorizationStatus}: TOfferProps): JSX.Element
               </div>
             </div>
             <section className="offer__reviews reviews">
-              {/*<h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>*/}
               <Reviews reviews={reviews} isAuth={authorizationStatus === AuthorizationStatus.Auth}/>
             </section>
           </div>
         </div>
-        <Map city={CITY} />
+        <Map mapType='offer' city={city} offers={nearOffersPlusCurrent} activeOffer={currentOffer.id}/>
       </section>
       <div className="container">
-        <NearPlaces offers={offers} />
+        <section className="near-places places">
+          <h2 className="near-places__title">Other places in the neighbourhood</h2>
+          <div className="near-places__list places__list">
+            {
+              nearOffers.map((offer) => (
+                <OfferCard
+                  title={offer.title}
+                  type={offer.type}
+                  id={offer.id}
+                  images={offer.images[0] ?? ''}
+                  price={offer.price}
+                  rating={offer.rating}
+                  key={offer.id}
+                />))
+            }
+          </div>
+        </section>
       </div>
     </main>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app.tsx';
-import { AuthorizationStatus } from './const.tsx';
+import {AuthorizationStatus, CITIES} from './const.tsx';
 import {mockOffers} from './mock/offers.ts';
 import {mockComments} from './mock/comments.ts';
 
@@ -12,6 +12,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offers={mockOffers} reviews={mockComments} authorizationStatus={authorizationStatus}/>
+    <App cities={CITIES} offers={mockOffers} reviews={mockComments} authorizationStatus={authorizationStatus}/>
   </React.StrictMode>
 );

@@ -11,6 +11,9 @@ type TUseMapProps = {
     mapRef: MutableRefObject<null>;
 }
 
+const TILE_LAYER_URL_PATTERN = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+const TILE_LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
 function useMap({mapRef, city}: TUseMapProps) {
   const [map, setMap] = useState<leaflet.Map|null>(null);
   const isRenderedRef = useRef(false);
@@ -27,9 +30,9 @@ function useMap({mapRef, city}: TUseMapProps) {
 
       leaflet
         .tileLayer(
-          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+          TILE_LAYER_URL_PATTERN,
           {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            attribution: TILE_LAYER_ATTRIBUTION,
           },
         )
         .addTo(instance);
