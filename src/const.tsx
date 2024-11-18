@@ -6,13 +6,6 @@ export enum AppRoute {
   Offer = '/offer/:id'
 }
 
-export const CITY = {
-  title: 'Amsterdam',
-  lat: 52.374,
-  lng: 4.8896,
-  zoom: 10,
-};
-
 export const CITIES = [
   {
     title: 'Paris',
@@ -78,4 +71,3 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const placesFoundNumber: number = 345;
