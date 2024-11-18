@@ -12,32 +12,44 @@ export const CITY = {
   lng: 4.8896,
   zoom: 10,
 };
-// CITIES константа
-export const cities: {id: string; name: string}[] = [
+
+export const CITIES = [
   {
-    id: 'd08b6bf1-36e5-45d6-bdc9-02803813a2e3',
-    name: 'Paris',
+    title: 'Paris',
+    lat: 48.856614,
+    lng: 2.3522219,
+    zoom: 10,
   },
   {
-    id: '6810e202-1651-45d6-8226-673385bb8dee',
-    name: 'Cologne',
+    title: 'Cologne',
+    lat: 50.9333,
+    lng: 6.95,
+    zoom: 10,
   },
   {
-    id: 'eb5ff01d-c980-4b6e-aaf5-ad48f922fbe2',
-    name: 'Brussels',
+    title: 'Brussels',
+    lat: 	50.8504,
+    lng: 4.34878,
+    zoom: 10,
   },
   {
-    id: 'da903444-3b9e-4806-b784-c44e745b315f',
-    name: 'Amsterdam',
+    title: 'Amsterdam',
+    lat: 52.374,
+    lng: 4.8896,
+    zoom: 10,
   },
   {
-    id: 'b7886c68-261a-4960-b7df-f88e65148ee4',
-    name: 'Hamburg',
+    title: 'Hamburg',
+    lat: 53.5753,
+    lng: 10.0153,
+    zoom: 10,
   },
   {
-    id: '0da0e2cd-2203-4f06-9268-2cd394322f66',
-    name: 'Dusseldorf',
-  }
+    title: 'Dusseldorf',
+    lat: 	51.2217,
+    lng: 6.77616,
+    zoom: 10,
+  },
 ];
 
 //SORTINGOPTIONS константа

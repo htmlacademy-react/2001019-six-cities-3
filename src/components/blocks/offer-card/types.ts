@@ -4,8 +4,10 @@ export type TLocationCoordinates = {
 }
 
 export type TCity = {
-  name: string;
-  location: TLocationCoordinates;
+  title: string;
+  lat: number;
+  lng: number;
+  zoom: number;
 }
 
 export type THost = {
@@ -19,7 +21,14 @@ export type TOffer = {
   title: string;
   type: string;
   price: number;
-  city: TCity;
+  city: {
+    name: string;
+    location: {
+      latitude: number;
+      longitude: number;
+      zoom: number;
+    };
+  };
   location: TLocationCoordinates;
   isFavorite: boolean;
   isPremium: boolean;

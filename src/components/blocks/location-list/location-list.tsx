@@ -1,13 +1,22 @@
 import LocationItem from '../location-item/location-item.tsx';
-import {cities} from '../../../const.tsx';
+import {Dispatch} from 'react';
+import {TCity} from '../offer-card/types.ts';
 
-function LocationList(): JSX.Element {
+type TLocationListProps = {
+    cities: TCity[];
+    activeCity: TCity;
+    setActiveCity: Dispatch<TCity>;
+};
+
+function LocationList({cities, activeCity, setActiveCity}: TLocationListProps): JSX.Element {
   return (
     <div className="tabs">
       <section className="locations container">
-        <ul className="locations__list tabs__list">
+        <ul
+          className="locations__list tabs__list"
+        >
           {
-            cities.map((city) => <LocationItem city={city.name} key={city.id}/>)
+            cities.map((city: TCity) => <LocationItem city={city} key={city.title} activeCity={activeCity} setActiveCity={setActiveCity}/>)
           }
         </ul>
       </section>

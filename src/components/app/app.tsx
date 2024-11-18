@@ -1,3 +1,6 @@
+//чтобы передать данные от меньшего компонента большему: в большем команенте объявляем функцию onAnswer
+//ее передаем пропсом в меньший компонент , вызываем ее обработчике события и при вызове передаем в нее state
+//и тогда этот state будет доступен большему компоненту!!!
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const.tsx';
 import Main from '../../pages/main/main.tsx';
@@ -7,16 +10,18 @@ import NotFound from '../../pages/not-found/not-found.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import Favorites from '../../pages/favorites/favorites.tsx';
 import Layout from '../layout/layout.tsx';
-import {TOffer} from '../blocks/offer-card/types.ts';
+import {TCity, TOffer} from '../blocks/offer-card/types.ts';
 import {TReview} from '../blocks/review-item/types.ts';
 
 type TAppProps = {
   offers: TOffer[];
   reviews: TReview[];
+  cities: TCity[];
   authorizationStatus: AuthorizationStatus;
 }
 
-function App({offers, reviews, authorizationStatus}: TAppProps) : JSX.Element {
+function App({cities, offers, reviews, authorizationStatus}: TAppProps) : JSX.Element {
+  // const [currentLocation, setCurrentLocation] = useState('Paris');
   return (
     <BrowserRouter>
       <Routes>
@@ -26,7 +31,7 @@ function App({offers, reviews, authorizationStatus}: TAppProps) : JSX.Element {
         >
           <Route
             index
-            element={<Main offers={offers} />}
+            element={<Main cities={cities} offers={offers} />}
           />
           <Route
             path={AppRoute.Favorites}
@@ -40,7 +45,7 @@ function App({offers, reviews, authorizationStatus}: TAppProps) : JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<Offer offers={offers} reviews={reviews} authorizationStatus={authorizationStatus} />}
+            element={<Offer cities={cities} offers={offers} reviews={reviews} authorizationStatus={authorizationStatus} />}
           />
           <Route
             path={AppRoute.Login}
