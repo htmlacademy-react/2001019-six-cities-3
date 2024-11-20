@@ -1,14 +1,12 @@
 import LocationItem from '../location-item/location-item.tsx';
-import {Dispatch} from 'react';
 import {TCity} from '../offer-card/types.ts';
 
 type TLocationListProps = {
+    city: TCity;
     cities: TCity[];
-    activeCity: TCity;
-    setActiveCity: Dispatch<TCity>;
 };
 
-function LocationList({cities, activeCity, setActiveCity}: TLocationListProps): JSX.Element {
+function LocationList({city, cities}: TLocationListProps): JSX.Element {
   return (
     <div className="tabs">
       <section className="locations container">
@@ -16,7 +14,7 @@ function LocationList({cities, activeCity, setActiveCity}: TLocationListProps): 
           className="locations__list tabs__list"
         >
           {
-            cities.map((city: TCity) => <LocationItem city={city} key={city.title} activeCity={activeCity} setActiveCity={setActiveCity}/>)
+            cities.map((cityItem: TCity) => <LocationItem isActive={cityItem.title === city.title} city={cityItem} key={cityItem.title} />)
           }
         </ul>
       </section>

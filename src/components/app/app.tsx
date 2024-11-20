@@ -12,6 +12,9 @@ import Favorites from '../../pages/favorites/favorites.tsx';
 import Layout from '../layout/layout.tsx';
 import {TCity, TOffer} from '../blocks/offer-card/types.ts';
 import {TReview} from '../blocks/review-item/types.ts';
+import {storeOffers} from '../../store/action.ts';
+import {useAppDispatch} from '../../hooks';
+import {mockOffers} from '../../mock/offers.ts';
 
 type TAppProps = {
   offers: TOffer[];
@@ -21,7 +24,9 @@ type TAppProps = {
 }
 
 function App({cities, offers, reviews, authorizationStatus}: TAppProps) : JSX.Element {
-  // const [currentLocation, setCurrentLocation] = useState('Paris');
+  const dispatch = useAppDispatch();
+  dispatch(storeOffers({offers: mockOffers}));
+
   return (
     <BrowserRouter>
       <Routes>
@@ -31,7 +36,7 @@ function App({cities, offers, reviews, authorizationStatus}: TAppProps) : JSX.El
         >
           <Route
             index
-            element={<Main cities={cities} offers={offers} />}
+            element={<Main cities={cities} />}
           />
           <Route
             path={AppRoute.Favorites}

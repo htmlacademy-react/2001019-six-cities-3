@@ -7,7 +7,7 @@ import {Nullable} from 'vitest';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
 
 type TMapProps = {
-  city : TCity;
+  city: TCity;
   mapType: 'offer' | 'cities';
   activeOffer?: Nullable<TOffer>;
   offers?: TOffer[];
@@ -57,7 +57,7 @@ function Map({city, mapType, offers, activeOffer}: TMapProps) :JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers, activeOffer, currentCustomIcon, defaultCustomIcon]);
+  }, [map, offers, activeOffer]);
 
   return (
     <section

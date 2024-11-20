@@ -1,21 +1,22 @@
-import {Dispatch} from 'react';
 import {TCity} from '../offer-card/types.ts';
+import {useAppDispatch} from '../../../hooks';
+import {changeCity} from '../../../store/action.ts';
 
 type LocationItemProps = {
   city: TCity;
-  activeCity: TCity;
-  setActiveCity: Dispatch<TCity>;
+  isActive: boolean;
 }
-function LocationItem({city, activeCity, setActiveCity}: LocationItemProps): JSX.Element {
+function LocationItem({isActive, city}: LocationItemProps): JSX.Element {
+  const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    setActiveCity(city);
+    dispatch(changeCity({city: city}));
   };
 
   return (
     <li className="locations__item" onClick={handleClick}>
       <a
-        className={city.title === activeCity.title ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}
+        className={isActive ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}
         href="#"
       >
         <span>{city.title}</span>
