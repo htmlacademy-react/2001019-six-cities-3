@@ -65,6 +65,13 @@ export const sortingOptions: {id: string; name: string}[] = [
   }
 ];
 
+export const SortType = {
+  POPULAR: 'Popular',
+  CHEAP: 'low to high',
+  EXPENSIVE: 'high to low',
+  RATING: 'Top rated first',
+};
+
 export enum AuthorizationStatus {
   Auth ='AUTH',
   NoAuth = 'NO_AUTH',
