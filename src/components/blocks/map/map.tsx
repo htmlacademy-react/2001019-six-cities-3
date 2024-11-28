@@ -3,13 +3,12 @@ import {useEffect, useRef} from 'react';
 import useMap from './useMap';
 import leaflet, {LayerGroup} from 'leaflet';
 import {TCity, TOffer} from '../offer-card/types.ts';
-import {Nullable} from 'vitest';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
+import {useAppSelector} from '../../../hooks';
 
 type TMapProps = {
   city: TCity;
   mapType: 'offer' | 'cities';
-  activeOffer?: Nullable<TOffer>;
   offers?: TOffer[];
 }
 
@@ -25,10 +24,11 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-function Map({city, mapType, offers, activeOffer}: TMapProps) :JSX.Element {
+function Map({city, mapType, offers}: TMapProps) :JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
   const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
+  const activeOffer = useAppSelector((state) => state.activeOffer);
 
   let mapClass = 'map cities__map';
 

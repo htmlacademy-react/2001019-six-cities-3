@@ -1,6 +1,3 @@
-//чтобы передать данные от меньшего компонента большему: в большем команенте объявляем функцию onAnswer
-//ее передаем пропсом в меньший компонент , вызываем ее обработчике события и при вызове передаем в нее state
-//и тогда этот state будет доступен большему компоненту!!!
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const.tsx';
 import Main from '../../pages/main/main.tsx';
@@ -10,22 +7,16 @@ import NotFound from '../../pages/not-found/not-found.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import Favorites from '../../pages/favorites/favorites.tsx';
 import Layout from '../layout/layout.tsx';
-import {TCity, TOffer} from '../blocks/offer-card/types.ts';
-import {TReview} from '../blocks/review-item/types.ts';
-import {storeOffers} from '../../store/action.ts';
-import {useAppDispatch} from '../../hooks';
-import {mockOffers} from '../../mock/offers.ts';
+import {useAppSelector} from '../../hooks';
 
 type TAppProps = {
-  offers: TOffer[];
-  reviews: TReview[];
-  cities: TCity[];
   authorizationStatus: AuthorizationStatus;
 }
 
-function App({cities, offers, reviews, authorizationStatus}: TAppProps) : JSX.Element {
-  const dispatch = useAppDispatch();
-  dispatch(storeOffers({offers: mockOffers}));
+function App({authorizationStatus}: TAppProps) : JSX.Element {
+  const cities = useAppSelector((state) => state.cities);
+  const offers = useAppSelector((state) => state.offers);
+  const reviews = useAppSelector((state) => state.reviews);
 
   return (
     <BrowserRouter>
@@ -36,7 +27,7 @@ function App({cities, offers, reviews, authorizationStatus}: TAppProps) : JSX.El
         >
           <Route
             index
-            element={<Main cities={cities} />}
+            element={<Main cities={cities} offers={offers} />}
           />
           <Route
             path={AppRoute.Favorites}

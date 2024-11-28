@@ -1,19 +1,21 @@
 import OfferCard from '../offer-card/offer-card.tsx';
 import {TOffer} from '../offer-card/types.ts';
-import {Dispatch} from 'react';
+import {useAppDispatch} from '../../../hooks';
+import {setActiveOffer} from '../../../store/action.ts';
 
 type TOfferList = {
   offers: TOffer[];
-  setActiveOffer: Dispatch<TOffer | null>;
 };
 
-function OfferList({offers, setActiveOffer}: TOfferList): JSX.Element {
+function OfferList({offers}: TOfferList): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const handleHover = (offerId : string | null) => {
     if (offerId) {
       const offer = offers.find((item) => item.id === offerId);
-      setActiveOffer(offer || null);
+      dispatch(setActiveOffer({offer: offer || null}));
     } else {
-      setActiveOffer(null);
+      dispatch(setActiveOffer({offer: null}));
     }
   };
 

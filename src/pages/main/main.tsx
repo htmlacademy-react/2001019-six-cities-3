@@ -4,19 +4,17 @@ import Map from '../../components/blocks/map/map.tsx';
 import OfferList from '../../components/blocks/offer-list/offer-list.tsx';
 import {TCity, TOffer} from '../../components/blocks/offer-card/types.ts';
 import {useState} from 'react';
-import {Nullable} from 'vitest';
 import {useAppSelector} from '../../hooks';
 import {SortType} from '../../const.tsx';
 
 type TMain = {
   cities: TCity[];
+  offers: TOffer[];
 };
 
-function Main({cities}: TMain): JSX.Element {
-  const [activeOffer, setActiveOffer] = useState<Nullable<TOffer>>(null);
+function Main({cities, offers}: TMain): JSX.Element {
   const [currentSortType, setSortType] = useState('Popular');
   const city = useAppSelector((state) => state.city);
-  let offers = useAppSelector((state) => state.offers);
   offers = offers.filter((offer) => offer.city.name === city.title);
 
   switch (currentSortType) {
@@ -42,10 +40,10 @@ function Main({cities}: TMain): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} places to stay in {city.title}</b>
               <Sorting currentSortType={currentSortType} setSortType={setSortType}/>
-              <OfferList offers={offers} setActiveOffer={setActiveOffer} />
+              <OfferList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={offers} activeOffer={activeOffer} mapType={'cities'}/>
+              <Map city={city} offers={offers} mapType={'cities'}/>
             </div>
           </div>
         </div>

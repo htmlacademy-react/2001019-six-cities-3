@@ -1,16 +1,25 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {CITIES} from '../const.tsx';
-import {changeCity, storeOffers} from './action.ts';
+import {changeCity, setActiveOffer} from './action.ts';
 import {TCity, TOffer} from '../components/blocks/offer-card/types.ts';
+import {mockOffers} from '../mock/offers.ts';
+import {TReview} from '../components/blocks/review-item/types.ts';
+import {mockComments} from '../mock/comments.ts';
 
 type TInitialState = {
     city: TCity;
+    cities: TCity[];
     offers: TOffer[];
+    reviews: TReview[];
+    activeOffer: TOffer | null;
 }
 
 const initialState: TInitialState = {
   city: CITIES[0],
-  offers: [],
+  cities: CITIES,
+  offers: mockOffers,
+  reviews: mockComments,
+  activeOffer: null,
 };
 const reducer = createReducer(initialState, (builder) => {
   builder
@@ -19,10 +28,12 @@ const reducer = createReducer(initialState, (builder) => {
       state.city = city;
     });
   builder
-    .addCase(storeOffers, (state, action) => {
-      const {offers} = action.payload;
-      state.offers = offers;
+    .addCase(setActiveOffer, (state, action) => {
+      const {offer} = action.payload;
+      state.activeOffer = offer;
     });
 });
 
 export { reducer };
+
+//возвращаем новый state чтобы возвращать иммутабельно, старый state деструктуризируем и меняем только то что изменилось ...state
