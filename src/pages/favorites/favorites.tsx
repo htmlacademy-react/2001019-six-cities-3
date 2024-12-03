@@ -1,5 +1,6 @@
-import FavoriteCard from '../../components/blocks/favorite-card/favorite-card.tsx';
-import {TOffer} from '../../components/blocks/offer-card/types.ts';
+import {TOffer} from '../../types.ts';
+import OfferCard from "../../components/blocks/offer-card/offer-card.tsx";
+import Layout from "../../components/layout/layout.tsx";
 
 type TFavorites = {
   offers: TOffer[];
@@ -21,44 +22,47 @@ function Favorites({offers}: TFavorites): JSX.Element {
   });
 
   return (
-    <main className="page__main page__main--favorites">
-      <div className="page__favorites-container container">
-        <section className="favorites">
-          <h1 className="favorites__title">Saved listing</h1>
-          <ul className="favorites__list">
-            {
-              Object.keys(cityOffers).map((city) => (
-                <li className="favorites__locations-items" key={city}>
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{city}</span>
-                      </a>
+    <Layout page={"favorites"}>
+      <main className="page__main page__main--favorites">
+        <div className="page__favorites-container container">
+          <section className="favorites">
+            <h1 className="favorites__title">Saved listing</h1>
+            <ul className="favorites__list">
+              {
+                Object.keys(cityOffers).map((city) => (
+                  <li className="favorites__locations-items" key={city}>
+                    <div className="favorites__locations locations locations--current">
+                      <div className="locations__item">
+                        <a className="locations__item-link" href="#">
+                          <span>{city}</span>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                  <div className="favorites__places">
-                    {
-                      cityOffers[city].map((cityOffer) => (
-                        <FavoriteCard
-                          key={cityOffer.id}
-                          images={cityOffer.images[0] ?? ''}
-                          isPremium={cityOffer.isPremium}
-                          price={cityOffer.price}
-                          rating={cityOffer.rating}
-                          title={cityOffer.title}
-                          type={cityOffer.type}
-                          id={cityOffer.id}
-                        />
-                      ))
-                    }
-                  </div>
-                </li>
-              ))
-            }
-          </ul>
-        </section>
-      </div>
-    </main>
+                    <div className="favorites__places">
+                      {
+                        cityOffers[city].map((cityOffer) => (
+                          <OfferCard
+                            key={cityOffer.id}
+                            images={cityOffer.images[0] ?? ''}
+                            isPremium={cityOffer.isPremium}
+                            price={cityOffer.price}
+                            rating={cityOffer.rating}
+                            title={cityOffer.title}
+                            type={cityOffer.type}
+                            id={cityOffer.id}
+                            cardType={"favorite"}
+                          />
+                        ))
+                      }
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+        </div>
+      </main>
+    </Layout>
   );
 }
 

@@ -1,5 +1,5 @@
 import LocationItem from '../location-item/location-item.tsx';
-import {TCity} from '../offer-card/types.ts';
+import {TCity} from '../../../types.ts';
 
 type TLocationListProps = {
     city: TCity;

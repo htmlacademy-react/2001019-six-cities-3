@@ -1,5 +1,5 @@
 import OfferCard from '../offer-card/offer-card.tsx';
-import {TOffer} from '../offer-card/types.ts';
+import {TOffer} from '../../../types.ts';
 import {useAppDispatch} from '../../../hooks';
 import {setActiveOffer} from '../../../store/action.ts';
 
@@ -32,6 +32,7 @@ function OfferList({offers}: TOfferList): JSX.Element {
             price={offer.price}
             rating={offer.rating}
             isPremium={offer.isPremium}
+            cardType={"main"}
             handleHover={handleHover}
           />))
       }

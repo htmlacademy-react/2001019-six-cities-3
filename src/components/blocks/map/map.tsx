@@ -2,7 +2,7 @@ import 'leaflet/dist/leaflet.css';
 import {useEffect, useRef} from 'react';
 import useMap from './useMap';
 import leaflet, {LayerGroup} from 'leaflet';
-import {TCity, TOffer} from '../offer-card/types.ts';
+import {TCity, TOffer} from '../../../types.ts';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
 import {useAppSelector} from '../../../hooks';
 

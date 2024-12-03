@@ -25,7 +25,7 @@ function ReviewForm(): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {rating.map(({value, label}) => (
-          <Fragment key={value}>
+          <Fragment key={value + label}>
             <input
               className="form__rating-input visually-hidden"
               name="rating"

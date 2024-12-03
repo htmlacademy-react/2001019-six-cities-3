@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import { clsx } from 'clsx';
 
 type PlaceCardProps = {
   images?: string;
@@ -8,10 +9,47 @@ type PlaceCardProps = {
   title: string;
   type: string;
   id: string;
+  cardType: 'favorite' | 'main' | 'near';
   handleHover?: (offerId: string | null) => void;
 }
 
-function OfferCard({id, price, rating, title, type, handleHover, images, isPremium}: PlaceCardProps): JSX.Element {
+const classes = {
+  main: {
+    containerClass: 'cities__card',
+    wrapperClass: 'cities__image-wrapper',
+    infoClass: '',
+  },
+  favorite: {
+    containerClass: 'favorites__card',
+    wrapperClass: 'favorites__image-wrapper',
+    infoClass: 'favorites__card-info',
+  },
+  near: {
+    containerClass: 'near-places__card',
+    wrapperClass: 'near-places__image-wrapper',
+    infoClass: '',
+  },
+}
+
+const imgSize = {
+  main: {
+    width: 260,
+    height: 200,
+  },
+  favorite: {
+    width: 150,
+    height: 110,
+  },
+  near: {
+    width: 260,
+    height: 200,
+  },
+}
+
+function OfferCard({id, price, rating, title, type, handleHover, images, isPremium, cardType}: PlaceCardProps): JSX.Element {
+
+  const cardClasses = classes[cardType];
+  const cardSize = imgSize[cardType];
   const handleMouseOn = () => {
     if (handleHover) {
       handleHover(id);
@@ -25,24 +63,26 @@ function OfferCard({id, price, rating, title, type, handleHover, images, isPremi
   };
 
   return (
-    <Link to={`offer/${id}`}>
       <article
-        className="cities__card place-card"
+        className={clsx(cardClasses.containerClass, "place-card")}
         id={id}
         onMouseEnter={handleMouseOn}
         onMouseLeave={handleMouseOff}
       >
         { isPremium && (<div className="place-card__mark"><span>Premium</span></div>) }
-        <div className="cities__image-wrapper place-card__image-wrapper">
+        <div className={clsx(cardClasses.wrapperClass, "place-card__image-wrapper")}>
+          <Link to={`offer/${id}`}>
+
           <img
             className="place-card__image"
             src={images ?? ''}
-            width="260"
-            height="200"
+            width={cardSize.width}
+            height={cardSize.height}
             alt="Place image"
           />
+          </Link>
         </div>
-        <div className="place-card__info">
+        <div className={clsx(cardClasses.infoClass, "place-card__info")}>
           <div className="place-card__price-wrapper">
             <div className="place-card__price">
               <b className="place-card__price-value">&euro;{price}</b>
@@ -67,7 +107,6 @@ function OfferCard({id, price, rating, title, type, handleHover, images, isPremi
           <p className="place-card__type">{type}</p>
         </div>
       </article>
-    </Link>
   );
 }
 

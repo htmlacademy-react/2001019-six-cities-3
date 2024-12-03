@@ -6,7 +6,6 @@ import Offer from '../../pages/offer/offer.tsx';
 import NotFound from '../../pages/not-found/not-found.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import Favorites from '../../pages/favorites/favorites.tsx';
-import Layout from '../layout/layout.tsx';
 import {useAppSelector} from '../../hooks';
 
 type TAppProps = {
@@ -22,40 +21,35 @@ function App({authorizationStatus}: TAppProps) : JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route
-          path={AppRoute.Root}
-          element={<Layout />}
-        >
-          <Route
-            index
-            element={<Main cities={cities} offers={offers} />}
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth}
-              >
-                <Favorites offers={offers} />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Offer}
-            element={<Offer cities={cities} offers={offers} reviews={reviews} authorizationStatus={authorizationStatus} />}
-          />
-          <Route
-            path={AppRoute.Login}
-            element={(
-              <PrivateRoute authorizationStatus={authorizationStatus} isReverse>
-                <Login />
-              </PrivateRoute>
-            )}
-          />
-          <Route
-            path='*'
-            element={<NotFound />}
-          />
-        </Route>
+          index
+          element={<Main cities={cities} offers={offers} />}
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute
+              authorizationStatus={AuthorizationStatus.Auth}
+            >
+              <Favorites offers={offers} />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Offer}
+          element={<Offer cities={cities} offers={offers} reviews={reviews} authorizationStatus={authorizationStatus} />}
+        />
+        <Route
+          path={AppRoute.Login}
+          element={(
+            <PrivateRoute authorizationStatus={authorizationStatus} isReverse>
+              <Login />
+            </PrivateRoute>
+          )}
+        />
+        <Route
+          path='*'
+          element={<NotFound />}
+        />
       </Routes>
     </BrowserRouter>
   );

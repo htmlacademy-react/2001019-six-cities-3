@@ -1,4 +1,4 @@
-import {TCity} from '../offer-card/types.ts';
+import {TCity} from '../../../types.ts';
 import {useAppDispatch} from '../../../hooks';
 import {changeCity} from '../../../store/action.ts';
 

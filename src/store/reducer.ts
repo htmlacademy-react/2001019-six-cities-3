@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {CITIES} from '../const.tsx';
 import {changeCity, setActiveOffer} from './action.ts';
-import {TCity, TOffer} from '../components/blocks/offer-card/types.ts';
+import {TCity, TOffer} from '../types.ts';
 import {mockOffers} from '../mock/offers.ts';
 import {TReview} from '../components/blocks/review-item/types.ts';
 import {mockComments} from '../mock/comments.ts';
@@ -35,5 +35,3 @@ const reducer = createReducer(initialState, (builder) => {
 });
 
 export { reducer };
-
-//возвращаем новый state чтобы возвращать иммутабельно, старый state деструктуризируем и меняем только то что изменилось ...state

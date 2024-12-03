@@ -1,5 +1,5 @@
 import { mockOffers } from '../../mock/offers.ts';
-import { TOffer } from '../../components/blocks/offer-card/types.ts';
+import { TOffer } from '../../types.ts';
 
 const MAX_NEAR_OFFERS = 3;
 
