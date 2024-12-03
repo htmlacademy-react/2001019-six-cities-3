@@ -7,6 +7,7 @@ import {useState} from 'react';
 import {useAppSelector} from '../../hooks';
 import {SortType} from '../../const.tsx';
 import Layout from "../../components/layout/layout.tsx";
+import {getSortedOffers} from "./utils.tsx";
 
 type TMain = {
   cities: TCity[];
@@ -14,21 +15,10 @@ type TMain = {
 };
 
 function Main({cities, offers}: TMain): JSX.Element {
-  const [currentSortType, setSortType] = useState('Popular');
+  const [currentSortType, setSortType] = useState(SortType.Popular);
   const city = useAppSelector((state) => state.city);
-  offers = offers.filter((offer) => offer.city.name === city.title);
-
-  switch (currentSortType) {
-    case SortType.EXPENSIVE:
-      offers.sort((a, b) => b.price - a.price);
-      break;
-    case SortType.CHEAP:
-      offers.sort((a, b) => a.price - b.price);
-      break;
-    case SortType.RATING:
-      offers.sort((a, b) => b.rating - a.rating);
-      break;
-  }
+  const filteredOffers = offers.filter((offer) => offer.city.name === city.title);
+  const sortedOffers = getSortedOffers(filteredOffers, currentSortType);
 
   return (
     <Layout page={"main"}>
@@ -40,12 +30,12 @@ function Main({cities, offers}: TMain): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} places to stay in {city.title}</b>
+                <b className="places__found">{sortedOffers.length} places to stay in {city.title}</b>
                 <Sorting currentSortType={currentSortType} setSortType={setSortType}/>
-                <OfferList offers={offers} />
+                <OfferList offers={sortedOffers} />
               </section>
               <div className="cities__right-section">
-                <Map city={city} offers={offers} mapType={'cities'}/>
+                <Map city={city} offers={sortedOffers} mapType={'cities'}/>
               </div>
             </div>
           </div>

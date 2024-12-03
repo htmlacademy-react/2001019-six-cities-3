@@ -1,5 +1,6 @@
-import {SortType} from '../../../const.tsx';
-import React, {Dispatch} from 'react';
+import { SortingOptionsDictionary } from "../../../const.tsx";
+import { Dispatch } from 'react';
+import { clsx } from "clsx";
 
 type TSorting = {
     setSortType: Dispatch<string>;
@@ -7,10 +8,7 @@ type TSorting = {
 };
 
 function Sorting({currentSortType, setSortType}: TSorting): JSX.Element {
-  const handleClick = (evt: React.MouseEvent) => {
-    const target = evt.target as HTMLElement;
-    const sortType = target.textContent;
-
+  const handleClick = (sortType: string) => {
     if (sortType) {
       setSortType(sortType);
     }
@@ -25,11 +23,18 @@ function Sorting({currentSortType, setSortType}: TSorting): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className="places__options places__options--custom places__options--opened" onClick={handleClick}>
-        <li className={currentSortType ? 'places__option places__option--active' : 'places__option'} tabIndex={0}>{SortType.POPULAR}</li>
-        <li className={currentSortType ? 'places__option places__option--active' : 'places__option'} tabIndex={0}>{SortType.CHEAP}</li>
-        <li className={currentSortType ? 'places__option places__option--active' : 'places__option'} tabIndex={0}>{SortType.EXPENSIVE}</li>
-        <li className={currentSortType ? 'places__option places__option--active' : 'places__option'} tabIndex={0}>{SortType.RATING}</li>
+      <ul className="places__options places__options--custom places__options--opened">
+        {
+          Object.keys(SortingOptionsDictionary).map((sortType) => (
+            <li
+              key={sortType}
+              onClick={() => handleClick(sortType)}
+              className={clsx(currentSortType === sortType && 'places__option--active', 'places__option')}
+              tabIndex={0}>
+              {SortingOptionsDictionary[sortType]}
+            </li>
+          ))
+        }
       </ul>
     </form>
   );

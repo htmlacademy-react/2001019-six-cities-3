@@ -45,32 +45,19 @@ export const CITIES = [
   },
 ];
 
-//SORTINGOPTIONS константа
-export const sortingOptions: {id: string; name: string}[] = [
-  {
-    id: '601f6a52-e6e6-4c8c-87ad-ff3b138cb5dd',
-    name: 'Popular',
-  },
-  {
-    id: 'c3681efb-47f9-4b31-8c96-fe9eff9fd13b',
-    name: 'Price: low to high',
-  },
-  {
-    id: '907e0112-7b20-4447-ac65-ac86b2f7f893',
-    name: 'Price: high to low',
-  },
-  {
-    id: '78ed5f15-8278-4449-93b3-cb30ac04b9e5',
-    name: 'Top rated first',
-  }
-];
-
 export const SortType = {
-  POPULAR: 'Popular',
-  CHEAP: 'low to high',
-  EXPENSIVE: 'high to low',
-  RATING: 'Top rated first',
+  Popular: 'Popular',
+  PriceAsc: 'Price: low to high',
+  PriceDesc: 'Price: high to low',
+  RatingDesc: 'Top rated first',
 };
+
+export const SortingOptionsDictionary = {
+  [SortType.Popular]: 'Popular',
+  [SortType.PriceAsc]: 'Price: low to high',
+  [SortType.PriceDesc]: 'Price: high to low',
+  [SortType.RatingDesc]: 'Top rated first',
+}
 
 export enum AuthorizationStatus {
   Auth ='AUTH',
