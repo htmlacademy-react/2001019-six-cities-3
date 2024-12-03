@@ -117,7 +117,7 @@ function Offer({cities, offers, reviews, authorizationStatus}: TOfferProps): JSX
               </section>
             </div>
           </div>
-          <Map mapType='offer' city={city} offers={nearOffersPlusCurrent}/>
+          <Map mapType='offer' city={city} offers={nearOffersPlusCurrent} className={'offer__map'}/>
         </section>
         <div className="container">
           <section className="near-places places">

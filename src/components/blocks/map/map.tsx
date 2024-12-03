@@ -5,11 +5,13 @@ import leaflet, {LayerGroup} from 'leaflet';
 import {TCity, TOffer} from '../../../types.ts';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
 import {useAppSelector} from '../../../hooks';
+import {clsx} from "clsx";
 
 type TMapProps = {
-  city: TCity;
-  mapType: 'offer' | 'cities';
-  offers?: TOffer[];
+  city: TCity,
+  mapType: 'offer' | 'cities',
+  offers?: TOffer[],
+  className?: string,
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -24,28 +26,28 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-function Map({city, mapType, offers}: TMapProps) :JSX.Element {
+function Map({city, offers, className}: TMapProps) :JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
-  const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
+  const markerLayerGroup = useRef<LayerGroup>(leaflet.layerGroup());
   const activeOffer = useAppSelector((state) => state.activeOffer);
-
-  let mapClass = 'map cities__map';
-
-  if (mapType === 'offer') {
-    mapClass = 'map offer__map';
-  }
 
   useEffect(() => {
     if (map) {
       map.setView([city.lat, city.lng], city.zoom);
-      markerLayer.current.addTo(map);
-      markerLayer.current.clearLayers();
+      markerLayerGroup.current.addTo(map);
+      markerLayerGroup.current.clearLayers();
     }
   }, [city, map]);
 
   useEffect(() => {
     if (offers && map) {
+      map.eachLayer((layer) => {
+        if (layer instanceof leaflet.Marker) {
+          map.removeLayer(layer)
+        }
+      })
+
       offers.forEach((offer) => {
         leaflet
           .marker({
@@ -57,12 +59,12 @@ function Map({city, mapType, offers}: TMapProps) :JSX.Element {
           .addTo(map);
       });
     }
+
   }, [map, offers, activeOffer]);
 
   return (
     <section
-      className={mapClass}
-      style={{height: (mapType === 'offer' ? '500px' : 'auto'), width: '100%'}}
+      className={clsx('map', className)}
       ref={mapRef}
     >
     </section>

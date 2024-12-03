@@ -35,7 +35,7 @@ function Main({cities, offers}: TMain): JSX.Element {
                 <OfferList offers={sortedOffers} />
               </section>
               <div className="cities__right-section">
-                <Map city={city} offers={sortedOffers} mapType={'cities'}/>
+                <Map city={city} offers={sortedOffers} mapType={'cities'} className={'cities__map'}/>
               </div>
             </div>
           </div>
