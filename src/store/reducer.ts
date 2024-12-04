@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {CITIES} from '../const.tsx';
-import {changeCity, setActiveOffer} from './action.ts';
-import {TCity, TOffer} from '../types.ts';
+import {CITIES, TCity} from '../const.tsx';
+import {changeCity, setActiveOfferId} from './action.ts';
+import {TOffer} from '../components/blocks/offer-card/types.ts';
 import {mockOffers} from '../mock/offers.ts';
 import {TReview} from '../components/blocks/review-item/types.ts';
 import {mockComments} from '../mock/comments.ts';
@@ -11,7 +11,7 @@ type TInitialState = {
     cities: TCity[];
     offers: TOffer[];
     reviews: TReview[];
-    activeOffer: TOffer | null;
+    activeOfferId: string | null;
 }
 
 const initialState: TInitialState = {
@@ -19,7 +19,7 @@ const initialState: TInitialState = {
   cities: CITIES,
   offers: mockOffers,
   reviews: mockComments,
-  activeOffer: null,
+  activeOfferId: null,
 };
 const reducer = createReducer(initialState, (builder) => {
   builder
@@ -28,9 +28,9 @@ const reducer = createReducer(initialState, (builder) => {
       state.city = city;
     });
   builder
-    .addCase(setActiveOffer, (state, action) => {
-      const {offer} = action.payload;
-      state.activeOffer = offer;
+    .addCase(setActiveOfferId, (state, action) => {
+      const {offerId} = action.payload;
+      state.activeOfferId = offerId;
     });
 });
 

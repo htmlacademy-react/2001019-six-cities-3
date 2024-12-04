@@ -2,12 +2,12 @@ import LocationList from '../../components/blocks/location-list/location-list.ts
 import Sorting from '../../components/blocks/sorting/sorting.tsx';
 import Map from '../../components/blocks/map/map.tsx';
 import OfferList from '../../components/blocks/offer-list/offer-list.tsx';
-import {TCity, TOffer} from '../../types.ts';
+import {TOffer} from '../../components/blocks/offer-card/types.ts';
 import {useState} from 'react';
 import {useAppSelector} from '../../hooks';
-import {SortType} from '../../const.tsx';
-import Layout from "../../components/layout/layout.tsx";
-import {getSortedOffers} from "./utils.tsx";
+import {SortType, TCity} from '../../const.tsx';
+import Layout from '../../components/layout/layout.tsx';
+import {getSortedOffers} from './utils.tsx';
 
 type TMain = {
   cities: TCity[];
@@ -21,7 +21,7 @@ function Main({cities, offers}: TMain): JSX.Element {
   const sortedOffers = getSortedOffers(filteredOffers, currentSortType);
 
   return (
-    <Layout page={"main"}>
+    <Layout page={'main'}>
       <div className="page page--gray page--main">
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
@@ -35,7 +35,7 @@ function Main({cities, offers}: TMain): JSX.Element {
                 <OfferList offers={sortedOffers} />
               </section>
               <div className="cities__right-section">
-                <Map city={city} offers={sortedOffers} mapType={'cities'} className={'cities__map'}/>
+                <Map city={city} offers={sortedOffers} className={'cities__map'}/>
               </div>
             </div>
           </div>

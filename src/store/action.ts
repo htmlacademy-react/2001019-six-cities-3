@@ -1,5 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
-import {TCity, TOffer} from '../types.ts';
+import {TCity} from '../const.tsx';
 
 export const changeCity = createAction<{city: TCity}>('main/changeCity');
-export const setActiveOffer = createAction<{offer: TOffer | null}>('main/setActiveOffer');
+export const setActiveOfferId = createAction<{offerId: string | null}>('main/setActiveOfferId');

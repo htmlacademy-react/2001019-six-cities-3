@@ -1,6 +1,6 @@
-import {TOffer} from '../../types.ts';
-import OfferCard from "../../components/blocks/offer-card/offer-card.tsx";
-import Layout from "../../components/layout/layout.tsx";
+import {TOffer} from '../../components/blocks/offer-card/types.ts';
+import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
+import Layout from '../../components/layout/layout.tsx';
 
 type TFavorites = {
   offers: TOffer[];
@@ -22,7 +22,7 @@ function Favorites({offers}: TFavorites): JSX.Element {
   });
 
   return (
-    <Layout page={"favorites"}>
+    <Layout page={'favorites'}>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -43,14 +43,15 @@ function Favorites({offers}: TFavorites): JSX.Element {
                         cityOffers[city].map((cityOffer) => (
                           <OfferCard
                             key={cityOffer.id}
-                            images={cityOffer.images[0] ?? ''}
+                            image={cityOffer.images[0] ?? ''}
                             isPremium={cityOffer.isPremium}
                             price={cityOffer.price}
                             rating={cityOffer.rating}
                             title={cityOffer.title}
                             type={cityOffer.type}
                             id={cityOffer.id}
-                            cardType={"favorite"}
+                            cardType={'favorite'}
+                            isFavorite
                           />
                         ))
                       }

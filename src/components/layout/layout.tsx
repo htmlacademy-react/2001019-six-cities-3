@@ -1,11 +1,11 @@
-import Footer from "./footer/footer.tsx";
-import Header from "./header/header.tsx";
-import React from "react";
-import {clsx} from "clsx";
+import Footer from './footer/footer.tsx';
+import Header from './header/header.tsx';
+import React from 'react';
+import {clsx} from 'clsx';
 
 type LayoutProps = {
-  children: React.ReactNode,
-  page: 'offer' | 'favorites' | 'main' | 'login',
+  children: React.ReactNode;
+  page: 'offer' | 'favorites' | 'main' | 'login';
 }
 
 const layoutProps = {
@@ -29,7 +29,7 @@ const layoutProps = {
     shouldRenderUser : false,
     shouldRenderFooter : false
   },
-}
+};
 
 export default function Layout ({children, page} : LayoutProps) {
   const {rootClassName, shouldRenderUser, shouldRenderFooter} = layoutProps[page];

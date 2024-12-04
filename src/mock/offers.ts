@@ -41,7 +41,7 @@ export const mockOffers = [
       avatarUrl: 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
     isPremium: false,
-    isFavorite: false,
+    isFavorite: true,
     rating: 3,
     bedrooms: 3,
     maxAdults: 4
@@ -93,7 +93,7 @@ export const mockOffers = [
       avatarUrl: 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
     isPremium: true,
-    isFavorite: false,
+    isFavorite: true,
     rating: 2.5,
     bedrooms: 1,
     maxAdults: 3
@@ -285,7 +285,7 @@ export const mockOffers = [
       avatarUrl: 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
     isPremium: false,
-    isFavorite: false,
+    isFavorite: true,
     rating: 2.3,
     bedrooms: 3,
     maxAdults: 10

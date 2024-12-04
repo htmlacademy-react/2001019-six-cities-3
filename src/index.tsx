@@ -14,8 +14,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        authorizationStatus={authorizationStatus} //зачем нужны эти пропсы если есть store??
-        // как сделать так. чтобы при наведении перерисовывалась только карта города справа
+        authorizationStatus={authorizationStatus}
       />
     </Provider>
   </React.StrictMode>

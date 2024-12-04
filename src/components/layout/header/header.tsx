@@ -1,7 +1,10 @@
-import Logo from "../../blocks/logo/logo.tsx";
-import UserNavigation from "../../blocks/user-navigation/user-navigation.tsx";
+import Logo from '../../blocks/logo/logo.tsx';
+import UserNavigation from '../../blocks/user-navigation/user-navigation.tsx';
 
 export default function Header(): JSX.Element {
+
+  const shouldRenderUser = true;
+
   return (
     <header className="header">
       <div className="container">
@@ -9,7 +12,7 @@ export default function Header(): JSX.Element {
           <div className="header__left">
             <Logo logoType={'header'}/>
           </div>
-          <UserNavigation shouldRenderUser={true}/>
+          {shouldRenderUser && <UserNavigation/>}
         </div>
       </div>
     </header>

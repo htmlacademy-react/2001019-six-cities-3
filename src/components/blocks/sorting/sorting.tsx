@@ -1,9 +1,10 @@
-import { SortingOptionsDictionary } from "../../../const.tsx";
-import { Dispatch } from 'react';
-import { clsx } from "clsx";
+import { SortingOptionsDictionary } from '../../../const.tsx';
+//import { Dispatch } from 'react';
+import { clsx } from 'clsx';
 
 type TSorting = {
-    setSortType: Dispatch<string>;
+    //setSortType: Dispatch<string>;
+    setSortType: (sortType: string) => void;
     currentSortType: string;
 };
 
@@ -30,7 +31,8 @@ function Sorting({currentSortType, setSortType}: TSorting): JSX.Element {
               key={sortType}
               onClick={() => handleClick(sortType)}
               className={clsx(currentSortType === sortType && 'places__option--active', 'places__option')}
-              tabIndex={0}>
+              tabIndex={0}
+            >
               {SortingOptionsDictionary[sortType]}
             </li>
           ))

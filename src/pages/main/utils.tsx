@@ -1,5 +1,5 @@
-import { TOffer } from "../../types.ts";
-import { SortType } from "../../const.tsx";
+import { TOffer } from '../../components/blocks/offer-card/types.ts';
+import { SortType } from '../../const.tsx';
 
 export const getSortedOffers = (offers: TOffer[], currentSortType: string) => {
   switch (currentSortType) {
@@ -14,4 +14,4 @@ export const getSortedOffers = (offers: TOffer[], currentSortType: string) => {
       break;
   }
   return offers;
-}
+};

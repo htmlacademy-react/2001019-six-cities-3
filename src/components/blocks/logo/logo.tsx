@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom';
-import {clsx} from "clsx";
+import {clsx} from 'clsx';
 
 type LogoProps = {
-  logoType: 'footer' | 'header',
+  logoType: 'footer' | 'header';
 }
 
 const classes = {
@@ -14,7 +14,7 @@ const classes = {
     linkClass: 'footer__logo-link',
     imgClass: 'footer__logo',
   },
-}
+};
 
 const imgSize = {
   header: {
@@ -25,7 +25,7 @@ const imgSize = {
     width: 64,
     height: 33,
   },
-}
+};
 
 function Logo({logoType}: LogoProps): JSX.Element {
   const logoClasses = classes[logoType];

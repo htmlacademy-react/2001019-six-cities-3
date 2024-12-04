@@ -6,6 +6,13 @@ export enum AppRoute {
   Offer = '/offer/:id'
 }
 
+export type TCity = {
+  title: string;
+  lat: number;
+  lng: number;
+  zoom: number;
+}
+
 export const CITIES = [
   {
     title: 'Paris',
@@ -57,7 +64,7 @@ export const SortingOptionsDictionary = {
   [SortType.PriceAsc]: 'Price: low to high',
   [SortType.PriceDesc]: 'Price: high to low',
   [SortType.RatingDesc]: 'Top rated first',
-}
+};
 
 export enum AuthorizationStatus {
   Auth ='AUTH',

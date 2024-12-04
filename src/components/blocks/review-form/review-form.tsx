@@ -1,19 +1,10 @@
-const rating = [
-  {value: 5, label: 'perfect'},
-  {value: 4, label: 'good'},
-  {value: 3, label: 'not bad'},
-  {value: 5, label: 'badly'},
-  {value: 5, label: 'terribly'}
-];
-
-import {Fragment, ReactEventHandler, useState} from 'react';
-type TChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>
+import {ChangeEvent, Fragment, useState} from 'react';
+import {rating, reviewLength} from './const.tsx';
 
 function ReviewForm(): JSX.Element {
   const [review, setReview] = useState({rating: 0, review: ''});
-
-  const handleChange: TChangeHandler = (event) => {
-    const { name, value } = event.currentTarget;
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
     setReview({...review, [name]: value});
   };
   return (
@@ -63,7 +54,7 @@ function ReviewForm(): JSX.Element {
         </p>
         <button className="reviews__submit form__submit button"
           type="submit"
-          disabled={review.review.length < 50 || review.rating === 0}
+          disabled={review.review.length < reviewLength.min || review.rating === 0 || review.review.length > reviewLength.max}
         >
           Submit
         </button>

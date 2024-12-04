@@ -1,14 +1,14 @@
 import OfferGallery from '../../components/blocks/offer-gallery/offer-gallery.tsx';
 import Map from '../../components/blocks/map/map.tsx';
 import {useParams} from 'react-router-dom';
-import {TCity, TOffer} from '../../types.ts';
+import {TOffer} from '../../components/blocks/offer-card/types.ts';
 import NotFound from '../not-found/not-found.tsx';
 import Reviews from '../../components/blocks/reviews/reviews.tsx';
-import {AuthorizationStatus} from '../../const.tsx';
+import {AuthorizationStatus, TCity} from '../../const.tsx';
 import {TReview} from '../../components/blocks/review-item/types.ts';
 import {getNearOffers} from './utils.ts';
 import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
-import Layout from "../../components/layout/layout.tsx";
+import Layout from '../../components/layout/layout.tsx';
 
 type TOfferProps = {
   offers: TOffer[];
@@ -43,7 +43,7 @@ function Offer({cities, offers, reviews, authorizationStatus}: TOfferProps): JSX
 
 
   return (
-    <Layout page={"offer"}>
+    <Layout page={'offer'}>
       <main className="page__main page__main--offer">
         <section className="offer">
           <OfferGallery key={`${currentOffer.id }gallery`} offerId={currentOffer.id} images={currentOffer.images} />
@@ -98,10 +98,10 @@ function Offer({cities, offers, reviews, authorizationStatus}: TOfferProps): JSX
                   </div>
                   <span className="offer__user-name">
                     Angelina
-                </span>
+                  </span>
                   <span className="offer__user-status">
                     Pro
-                </span>
+                  </span>
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
@@ -117,7 +117,7 @@ function Offer({cities, offers, reviews, authorizationStatus}: TOfferProps): JSX
               </section>
             </div>
           </div>
-          <Map mapType='offer' city={city} offers={nearOffersPlusCurrent} className={'offer__map'}/>
+          <Map city={city} offers={nearOffersPlusCurrent} className={'offer__map'}/>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -129,11 +129,12 @@ function Offer({cities, offers, reviews, authorizationStatus}: TOfferProps): JSX
                     title={offer.title}
                     type={offer.type}
                     id={offer.id}
-                    images={offer.images[0] ?? ''}
+                    image={offer.images[0] ?? ''}
                     price={offer.price}
                     rating={offer.rating}
                     key={offer.id}
-                    cardType={"near"}
+                    cardType={'near'}
+                    isFavorite={offer.isFavorite} isPremium={offer.isPremium}
                   />))
               }
             </div>

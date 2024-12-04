@@ -1,5 +1,5 @@
 import LoginForm from '../../components/blocks/login-form/login-form.tsx';
-import Layout from "../../components/layout/layout.tsx";
+import Layout from '../../components/layout/layout.tsx';
 
 function Login(): JSX.Element {
   return (

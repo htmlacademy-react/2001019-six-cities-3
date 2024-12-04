@@ -3,13 +3,6 @@ export type TLocationCoordinates = {
   longitude: number;
 }
 
-export type TCity = {
-  title: string;
-  lat: number;
-  lng: number;
-  zoom: number;
-}
-
 export type THost = {
   name: string;
   avatarUrl: string;

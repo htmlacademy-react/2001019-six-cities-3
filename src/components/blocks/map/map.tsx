@@ -2,16 +2,16 @@ import 'leaflet/dist/leaflet.css';
 import {useEffect, useRef} from 'react';
 import useMap from './useMap';
 import leaflet, {LayerGroup} from 'leaflet';
-import {TCity, TOffer} from '../../../types.ts';
+import {TOffer} from '../offer-card/types.ts';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
 import {useAppSelector} from '../../../hooks';
-import {clsx} from "clsx";
+import {clsx} from 'clsx';
+import {TCity} from '../../../const.tsx';
 
 type TMapProps = {
-  city: TCity,
-  mapType: 'offer' | 'cities',
-  offers?: TOffer[],
-  className?: string,
+  city: TCity;
+  offers?: TOffer[];
+  className?: string;
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -30,7 +30,7 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
   const markerLayerGroup = useRef<LayerGroup>(leaflet.layerGroup());
-  const activeOffer = useAppSelector((state) => state.activeOffer);
+  const activeOfferId = useAppSelector((state) => state.activeOfferId);
 
   useEffect(() => {
     if (map) {
@@ -44,9 +44,9 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
     if (offers && map) {
       map.eachLayer((layer) => {
         if (layer instanceof leaflet.Marker) {
-          map.removeLayer(layer)
+          map.removeLayer(layer);
         }
-      })
+      });
 
       offers.forEach((offer) => {
         leaflet
@@ -54,13 +54,13 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           },{
-            icon: activeOffer && offer.id === activeOffer.id ? currentCustomIcon : defaultCustomIcon,
+            icon: activeOfferId && offer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
           })
           .addTo(map);
       });
     }
 
-  }, [map, offers, activeOffer]);
+  }, [map, offers, activeOfferId]);
 
   return (
     <section
