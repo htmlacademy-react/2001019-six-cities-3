@@ -36,7 +36,7 @@ export default function Layout ({children, page} : LayoutProps) {
 
   return (
     <div className={clsx('page', ...rootClassName)}>
-      <Header shouldRenderUser={shouldRenderUser} />
+      {shouldRenderUser && <Header />}
       {children}
       {shouldRenderFooter && <Footer />}
     </div>
