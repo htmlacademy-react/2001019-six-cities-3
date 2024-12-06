@@ -7,6 +7,7 @@ function ReviewForm(): JSX.Element {
     const { name, value } = event.target;
     setReview({...review, [name]: value});
   };
+
   return (
     <form
       className="reviews__form form"

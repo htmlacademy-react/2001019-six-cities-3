@@ -3,7 +3,6 @@ import {AppRoute, AuthorizationStatus} from '../../../const.tsx';
 import {getAuthorizationStatus} from '../../../authorizationStatus.ts';
 
 export default function UserNavigation(): JSX.Element {
-
   const isAuth = getAuthorizationStatus() === AuthorizationStatus.Auth;
 
   return (

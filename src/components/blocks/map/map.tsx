@@ -35,10 +35,13 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
   useEffect(() => {
     if (map) {
       map.setView([city.lat, city.lng], city.zoom);
-      markerLayerGroup.current.addTo(map);
-      markerLayerGroup.current.clearLayers();
     }
   }, [city, map]);
+
+  if (map) {
+    markerLayerGroup.current.addTo(map);
+    markerLayerGroup.current.clearLayers();
+  }
 
   useEffect(() => {
     if (offers && map) {
@@ -60,6 +63,7 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
       });
     }
 
+    return () => {markerLayerGroup.current.clearLayers()}; //
   }, [map, offers, activeOfferId]);
 
   return (

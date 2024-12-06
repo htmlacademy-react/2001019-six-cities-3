@@ -15,6 +15,7 @@ const classes = {
 
 function Bookmark({isFavorite}: BookmarkProps): JSX.Element {
   const bookmarkClasses = classes[isFavorite ? 'favorite' : 'normal'];
+
   return (
     <button className={bookmarkClasses.buttonClass} type="button">
       <svg className="place-card__bookmark-icon" width="18" height="19">

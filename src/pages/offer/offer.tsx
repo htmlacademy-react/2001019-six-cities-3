@@ -43,7 +43,7 @@ function Offer({cities, offers, reviews, authorizationStatus}: TOfferProps): JSX
 
 
   return (
-    <Layout page={'offer'}>
+    <Layout page='offer'>
       <main className="page__main page__main--offer">
         <section className="offer">
           <OfferGallery key={`${currentOffer.id }gallery`} offerId={currentOffer.id} images={currentOffer.images} />
@@ -117,7 +117,7 @@ function Offer({cities, offers, reviews, authorizationStatus}: TOfferProps): JSX
               </section>
             </div>
           </div>
-          <Map city={city} offers={nearOffersPlusCurrent} className={'offer__map'}/>
+          <Map city={city} offers={nearOffersPlusCurrent} className='offer__map'/>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -129,11 +129,11 @@ function Offer({cities, offers, reviews, authorizationStatus}: TOfferProps): JSX
                     title={offer.title}
                     type={offer.type}
                     id={offer.id}
-                    image={offer.images[0] ?? ''}
+                    image={offer.previewImage}
                     price={offer.price}
                     rating={offer.rating}
                     key={offer.id}
-                    cardType={'near'}
+                    cardType='near'
                     isFavorite={offer.isFavorite} isPremium={offer.isPremium}
                   />))
               }

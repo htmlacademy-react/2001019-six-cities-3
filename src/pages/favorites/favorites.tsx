@@ -43,14 +43,14 @@ function Favorites({offers}: TFavorites): JSX.Element {
                         cityOffers[city].map((cityOffer) => (
                           <OfferCard
                             key={cityOffer.id}
-                            image={cityOffer.images[0] ?? ''}
+                            image={cityOffer.previewImage}
                             isPremium={cityOffer.isPremium}
                             price={cityOffer.price}
                             rating={cityOffer.rating}
                             title={cityOffer.title}
                             type={cityOffer.type}
                             id={cityOffer.id}
-                            cardType={'favorite'}
+                            cardType='favorite'
                             isFavorite
                           />
                         ))

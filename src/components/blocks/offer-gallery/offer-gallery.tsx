@@ -13,6 +13,7 @@ const OfferImage = (offerImageData: OfferImageProps) => (
   </div>
 );
 function OfferGallery({offerId, images}: OfferImagesProps): JSX.Element {
+
   return (
     <div className="offer__gallery-container container">
       <div className="offer__gallery">

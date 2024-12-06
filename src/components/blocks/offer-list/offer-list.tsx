@@ -28,7 +28,7 @@ function OfferList({offers}: TOfferList): JSX.Element {
             title={offer.title}
             type={offer.type}
             id={offer.id}
-            image={offer.images[0] ?? null}
+            image={offer.previewImage}
             price={offer.price}
             rating={offer.rating}
             isPremium={offer.isPremium}

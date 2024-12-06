@@ -1,18 +1,16 @@
 import { SortingOptionsDictionary } from '../../../const.tsx';
-//import { Dispatch } from 'react';
 import { clsx } from 'clsx';
+import {useAppDispatch} from "../../../hooks";
+import {setActiveSorting} from "../../../store/action.ts";
 
-type TSorting = {
-    //setSortType: Dispatch<string>;
-    setSortType: (sortType: string) => void;
-    currentSortType: string;
+export type TSorting = {
+  activeSorting: string;
 };
 
-function Sorting({currentSortType, setSortType}: TSorting): JSX.Element {
+function Sorting({activeSorting}: TSorting): JSX.Element {
+  const dispatch = useAppDispatch();
   const handleClick = (sortType: string) => {
-    if (sortType) {
-      setSortType(sortType);
-    }
+    dispatch(setActiveSorting({activeSorting: sortType}));
   };
 
   return (
@@ -30,7 +28,7 @@ function Sorting({currentSortType, setSortType}: TSorting): JSX.Element {
             <li
               key={sortType}
               onClick={() => handleClick(sortType)}
-              className={clsx(currentSortType === sortType && 'places__option--active', 'places__option')}
+              className={clsx(sortType === activeSorting && 'places__option--active', 'places__option')}
               tabIndex={0}
             >
               {SortingOptionsDictionary[sortType]}

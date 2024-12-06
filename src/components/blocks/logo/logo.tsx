@@ -33,7 +33,10 @@ function Logo({logoType}: LogoProps): JSX.Element {
 
   return (
     <Link className={clsx(logoClasses.linkClass)} to="/">
-      <img className={clsx(logoClasses.imgClass)} src="img/logo.svg" alt="6 cities logo" width={logoSize.width} height={logoSize.height} />
+      <img className={clsx(logoClasses.imgClass)}
+           src="img/logo.svg" alt="6 cities logo"
+           width={logoSize.width}
+           height={logoSize.height} />
     </Link>
   );
 }

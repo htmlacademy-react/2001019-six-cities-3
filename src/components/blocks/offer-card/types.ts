@@ -27,6 +27,7 @@ export type TOffer = {
   isPremium: boolean;
   rating: number;
   description: string;
+  previewImage: string;
   bedrooms: number;
   goods: string[];
   host: THost;
