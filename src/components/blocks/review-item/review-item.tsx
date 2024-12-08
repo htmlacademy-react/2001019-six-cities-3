@@ -7,6 +7,7 @@ type TReviewProps = {
 }
 
 function ReviewItem({name, comment, avatarUrl, rating, date} : TReviewProps): JSX.Element {
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">

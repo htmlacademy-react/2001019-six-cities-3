@@ -41,9 +41,10 @@ export const mockOffers = [
       avatarUrl: 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
     isPremium: false,
-    isFavorite: false,
+    isFavorite: true,
     rating: 3,
     bedrooms: 3,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/12.jpg',
     maxAdults: 4
   },
   {
@@ -93,9 +94,10 @@ export const mockOffers = [
       avatarUrl: 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
     isPremium: true,
-    isFavorite: false,
+    isFavorite: true,
     rating: 2.5,
     bedrooms: 1,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/15.jpg',
     maxAdults: 3
   },
   {
@@ -148,6 +150,7 @@ export const mockOffers = [
     isFavorite: false,
     rating: 1.9,
     bedrooms: 3,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/3.jpg',
     maxAdults: 5
   },
   {
@@ -193,6 +196,7 @@ export const mockOffers = [
     isFavorite: false,
     rating: 2.2,
     bedrooms: 1,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/4.jpg',
     maxAdults: 1
   },
   {
@@ -242,6 +246,7 @@ export const mockOffers = [
     isFavorite: false,
     rating: 5,
     bedrooms: 2,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/15.jpg',
     maxAdults: 4
   },
   {
@@ -285,9 +290,10 @@ export const mockOffers = [
       avatarUrl: 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
     isPremium: false,
-    isFavorite: false,
+    isFavorite: true,
     rating: 2.3,
     bedrooms: 3,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/16.jpg',
     maxAdults: 10
   }
 ];

@@ -1,6 +1,6 @@
 export const mockComments = [
   {
-    id: 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    id: 'b17ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     date: '2019-05-08T14:13:56.569Z',
     user: {
       name: 'Oliver Conner',
@@ -11,7 +11,7 @@ export const mockComments = [
     rating: 1
   },
   {
-    id: 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    id: 'b27ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     date: '2019-06-08T14:13:56.569Z',
     user: {
       name: 'Ckk13',
@@ -22,7 +22,7 @@ export const mockComments = [
     rating: 5
   },
   {
-    id: 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    id: 'b37ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     date: '2019-07-08T14:13:56.569Z',
     user: {
       name: 'Gabriele',
@@ -33,7 +33,7 @@ export const mockComments = [
     rating: 4
   },
   {
-    id: 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    id: 'b47ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     date: '2019-11-08T14:13:56.569Z',
     user: {
       name: 'Bridgette',
@@ -44,7 +44,7 @@ export const mockComments = [
     rating: 3
   },
   {
-    id: 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    id: 'b57ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     date: '2019-12-08T14:13:56.569Z',
     user: {
       name: 'Tompkins',
@@ -66,7 +66,7 @@ export const mockComments = [
     rating: 1
   },
   {
-    id: 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    id: 'b77ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     date: '2019-07-08T14:13:56.569Z',
     user: {
       name: 'Amar',
@@ -77,7 +77,7 @@ export const mockComments = [
     rating: 5
   },
   {
-    id: 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    id: 'b87ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     date: '2019-12-08T14:13:56.569Z',
     user: {
       name: 'Ghiada',
@@ -88,7 +88,7 @@ export const mockComments = [
     rating: 4
   },
   {
-    id: 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    id: 'b97ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     date: '2019-09-08T14:13:56.569Z',
     user: {
       name: 'Pradeep',
@@ -99,7 +99,7 @@ export const mockComments = [
     rating: 3
   },
   {
-    id: 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    id: 'ba7ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     date: '2019-05-08T14:13:56.569Z',
     user: {
       name: 'Maros',
@@ -110,7 +110,7 @@ export const mockComments = [
     rating: 2
   },
   {
-    id: 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    id: 'bb7ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     date: '2019-02-08T14:13:56.569Z',
     user: {
       name: 'Duta',

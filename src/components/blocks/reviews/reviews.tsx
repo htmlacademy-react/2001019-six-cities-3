@@ -8,6 +8,7 @@ type TReviewsProps = {
 }
 
 function Reviews({isAuth, reviews}: TReviewsProps): JSX.Element {
+
   return (
     <>
       <ReviewsList reviews={reviews} />

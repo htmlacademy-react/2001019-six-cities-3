@@ -2,15 +2,16 @@ import 'leaflet/dist/leaflet.css';
 import {useEffect, useRef} from 'react';
 import useMap from './useMap';
 import leaflet, {LayerGroup} from 'leaflet';
-import {TCity, TOffer} from '../offer-card/types.ts';
-import {Nullable} from 'vitest';
+import {TOffer} from '../offer-card/types.ts';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
+import {useAppSelector} from '../../../hooks';
+import {clsx} from 'clsx';
+import {TCity} from '../../../const.tsx';
 
 type TMapProps = {
   city: TCity;
-  mapType: 'offer' | 'cities';
-  activeOffer?: Nullable<TOffer>;
   offers?: TOffer[];
+  className?: string;
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -25,44 +26,51 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-function Map({city, mapType, offers, activeOffer}: TMapProps) :JSX.Element {
+function Map({city, offers, className}: TMapProps) :JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
-  const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
-
-  let mapClass = 'map cities__map';
-
-  if (mapType === 'offer') {
-    mapClass = 'map offer__map';
-  }
+  const markerLayerGroup = useRef<LayerGroup>(leaflet.layerGroup());
+  const activeOfferId = useAppSelector((state) => state.activeOfferId);
 
   useEffect(() => {
     if (map) {
       map.setView([city.lat, city.lng], city.zoom);
-      markerLayer.current.addTo(map);
-      markerLayer.current.clearLayers();
     }
   }, [city, map]);
 
+  if (map) {
+    markerLayerGroup.current.addTo(map);
+    markerLayerGroup.current.clearLayers();
+  }
+
   useEffect(() => {
     if (offers && map) {
+      map.eachLayer((layer) => {
+        if (layer instanceof leaflet.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
       offers.forEach((offer) => {
         leaflet
           .marker({
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           },{
-            icon: activeOffer && offer.id === activeOffer.id ? currentCustomIcon : defaultCustomIcon,
+            icon: activeOfferId && offer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
           })
           .addTo(map);
       });
     }
-  }, [map, offers, activeOffer]);
+
+    return () => {
+      markerLayerGroup.current.clearLayers();
+    };
+  }, [map, offers, activeOfferId]);
 
   return (
     <section
-      className={mapClass}
-      style={{height: (mapType === 'offer' ? '500px' : 'auto'), width: '100%'}}
+      className={clsx('map', className)}
       ref={mapRef}
     >
     </section>

@@ -1,19 +1,16 @@
-import {SortType} from '../../../const.tsx';
-import React, {Dispatch} from 'react';
+import { SortingOptionsDictionary } from '../../../const.tsx';
+import { clsx } from 'clsx';
+import {useAppDispatch} from '../../../hooks';
+import {setActiveSorting} from '../../../store/action.ts';
 
-type TSorting = {
-    setSortType: Dispatch<string>;
-    currentSortType: string;
+export type TSorting = {
+  activeSorting: string;
 };
 
-function Sorting({currentSortType, setSortType}: TSorting): JSX.Element {
-  const handleClick = (evt: React.MouseEvent) => {
-    const target = evt.target as HTMLElement;
-    const sortType = target.textContent;
-
-    if (sortType) {
-      setSortType(sortType);
-    }
+function Sorting({activeSorting}: TSorting): JSX.Element {
+  const dispatch = useAppDispatch();
+  const handleClick = (sortType: string) => {
+    dispatch(setActiveSorting({activeSorting: sortType}));
   };
 
   return (
@@ -25,11 +22,19 @@ function Sorting({currentSortType, setSortType}: TSorting): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className="places__options places__options--custom places__options--opened" onClick={handleClick}>
-        <li className={currentSortType ? 'places__option places__option--active' : 'places__option'} tabIndex={0}>{SortType.POPULAR}</li>
-        <li className={currentSortType ? 'places__option places__option--active' : 'places__option'} tabIndex={0}>{SortType.CHEAP}</li>
-        <li className={currentSortType ? 'places__option places__option--active' : 'places__option'} tabIndex={0}>{SortType.EXPENSIVE}</li>
-        <li className={currentSortType ? 'places__option places__option--active' : 'places__option'} tabIndex={0}>{SortType.RATING}</li>
+      <ul className="places__options places__options--custom places__options--opened">
+        {
+          Object.keys(SortingOptionsDictionary).map((sortType) => (
+            <li
+              key={sortType}
+              onClick={() => handleClick(sortType)}
+              className={clsx(sortType === activeSorting && 'places__option--active', 'places__option')}
+              tabIndex={0}
+            >
+              {SortingOptionsDictionary[sortType]}
+            </li>
+          ))
+        }
       </ul>
     </form>
   );
