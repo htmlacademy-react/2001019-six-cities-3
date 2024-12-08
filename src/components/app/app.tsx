@@ -31,7 +31,7 @@ function App({authorizationStatus}: TAppProps) : JSX.Element {
       <Routes>
         <Route
           index
-          element={<Main cities={cities} offers={offers} />}
+          element={<Main offers={offers} />}
         />
         <Route
           path={AppRoute.Favorites}
