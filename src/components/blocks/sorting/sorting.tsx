@@ -1,7 +1,7 @@
 import { SortingOptionsDictionary } from '../../../const.tsx';
 import { clsx } from 'clsx';
-import {useAppDispatch} from "../../../hooks";
-import {setActiveSorting} from "../../../store/action.ts";
+import {useAppDispatch} from '../../../hooks';
+import {setActiveSorting} from '../../../store/action.ts';
 
 export type TSorting = {
   activeSorting: string;

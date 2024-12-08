@@ -1,9 +1,18 @@
+export const TIMEOUT_SHOW_ERROR = 2000;
+
 export enum AppRoute {
   Favorites = '/favorites',
   Login = '/login',
   Root = '/',
   NotFoundScreen = '/not-found-screen',
   Offer = '/offer/:id'
+}
+
+export enum APIRoute {
+  Offers = '/offers',
+  Offer = '/offers/:id',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export type TCity = {

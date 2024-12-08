@@ -7,15 +7,24 @@ import NotFound from '../../pages/not-found/not-found.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import Favorites from '../../pages/favorites/favorites.tsx';
 import {useAppSelector} from '../../hooks';
+import LoadingScreen from '../../pages/loading/loading-screen.tsx';
 
 type TAppProps = {
   authorizationStatus: AuthorizationStatus;
 }
 
 function App({authorizationStatus}: TAppProps) : JSX.Element {
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
   const cities = useAppSelector((state) => state.cities);
   const offers = useAppSelector((state) => state.offers);
   const reviews = useAppSelector((state) => state.reviews);
+
+  if (isOffersDataLoading) {
+
+    return(
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>

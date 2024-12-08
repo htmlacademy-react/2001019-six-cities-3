@@ -4,17 +4,15 @@ import Map from '../../components/blocks/map/map.tsx';
 import OfferList from '../../components/blocks/offer-list/offer-list.tsx';
 import {TOffer} from '../../components/blocks/offer-card/types.ts';
 import {useAppSelector} from '../../hooks';
-import {TCity} from '../../const.tsx';
 import Layout from '../../components/layout/layout.tsx';
 import {getSortedOffers} from './utils.tsx';
 
 type TMain = {
-  cities: TCity[];
   offers: TOffer[];
 };
 
 function Main({offers}: TMain): JSX.Element {
-  const activeSorting = useAppSelector((state) => state.activeSorting)
+  const activeSorting = useAppSelector((state) => state.activeSorting);
   const city = useAppSelector((state) => state.city);
   const filteredOffers = offers.filter((offer) => offer.city.name === city.title);
   const sortedOffers = getSortedOffers(filteredOffers, activeSorting);

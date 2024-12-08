@@ -87,7 +87,7 @@ function Offer({cities, offers, reviews, authorizationStatus}: TOfferProps): JSX
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {currentOffer.goods.map((goodsItem) => <OfferInsideGoodsItem goodsItem={goodsItem} key={currentOffer.id + goodsItem}/>)}
+                  {currentOffer.goods && currentOffer.goods.map((goodsItem) => <OfferInsideGoodsItem goodsItem={goodsItem} key={currentOffer.id + goodsItem}/>)}
                 </ul>
               </div>
               <div className="offer__host">
