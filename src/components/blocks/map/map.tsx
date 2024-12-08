@@ -65,7 +65,7 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
 
     return () => {
       markerLayerGroup.current.clearLayers();
-    }; //
+    };
   }, [map, offers, activeOfferId]);
 
   return (
