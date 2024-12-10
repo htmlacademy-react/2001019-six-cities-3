@@ -2,55 +2,43 @@ import LocationList from '../../components/blocks/location-list/location-list.ts
 import Sorting from '../../components/blocks/sorting/sorting.tsx';
 import Map from '../../components/blocks/map/map.tsx';
 import OfferList from '../../components/blocks/offer-list/offer-list.tsx';
-import {TCity, TOffer} from '../../components/blocks/offer-card/types.ts';
-import {useState} from 'react';
-import {Nullable} from 'vitest';
+import {TOffer} from '../../components/blocks/offer-card/types.ts';
 import {useAppSelector} from '../../hooks';
-import {SortType} from '../../const.tsx';
+import Layout from '../../components/layout/layout.tsx';
+import {getSortedOffers} from './utils.tsx';
 
 type TMain = {
-  cities: TCity[];
+  offers: TOffer[];
 };
 
-function Main({cities}: TMain): JSX.Element {
-  const [activeOffer, setActiveOffer] = useState<Nullable<TOffer>>(null);
-  const [currentSortType, setSortType] = useState('Popular');
+function Main({offers}: TMain): JSX.Element {
+  const activeSorting = useAppSelector((state) => state.activeSorting);
   const city = useAppSelector((state) => state.city);
-  let offers = useAppSelector((state) => state.offers);
-  offers = offers.filter((offer) => offer.city.name === city.title);
-
-  switch (currentSortType) {
-    case SortType.EXPENSIVE:
-      offers.sort((a, b) => b.price - a.price);
-      break;
-    case SortType.CHEAP:
-      offers.sort((a, b) => a.price - b.price);
-      break;
-    case SortType.RATING:
-      offers.sort((a, b) => b.rating - a.rating);
-      break;
-  }
+  const filteredOffers = offers.filter((offer) => offer.city.name === city.title);
+  const sortedOffers = getSortedOffers(filteredOffers, activeSorting);
 
   return (
-    <div className="page page--gray page--main">
-      <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
-        <LocationList city={city} cities={cities}/>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {city.title}</b>
-              <Sorting currentSortType={currentSortType} setSortType={setSortType}/>
-              <OfferList offers={offers} setActiveOffer={setActiveOffer} />
-            </section>
-            <div className="cities__right-section">
-              <Map city={city} offers={offers} activeOffer={activeOffer} mapType={'cities'}/>
+    <Layout page='main'>
+      <div className="page page--gray page--main">
+        <main className="page__main page__main--index">
+          <h1 className="visually-hidden">Cities</h1>
+          <LocationList city={city}/>
+          <div className="cities">
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{sortedOffers.length} places to stay in {city.title}</b>
+                <Sorting activeSorting={activeSorting}/>
+                <OfferList offers={sortedOffers} />
+              </section>
+              <div className="cities__right-section">
+                <Map city={city} offers={sortedOffers} className='cities__map'/>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </Layout>
   );
 }
 

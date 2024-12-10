@@ -6,11 +6,13 @@ type TReviewsProps = {
 }
 
 function ReviewsList({reviews}: TReviewsProps): JSX.Element {
+  const cutReviews = reviews.filter((_, index) => index < 3);
+
   return (
     <>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
-        {reviews.map((review : TReview) => (
+        {cutReviews.map((review : TReview) => (
           <ReviewItem
             key={review.id}
             rating={review.rating}
