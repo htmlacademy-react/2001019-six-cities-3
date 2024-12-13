@@ -1,7 +1,7 @@
 import OfferCard from '../offer-card/offer-card.tsx';
 import {TOffer} from '../offer-card/types.ts';
 import {useAppDispatch} from '../../../hooks';
-import {setActiveOfferId} from '../../../store/action.ts';
+import {setActiveOfferId} from '../../../store/offer-process/offer-process.ts';
 
 type TOfferList = {
   offers: TOffer[];

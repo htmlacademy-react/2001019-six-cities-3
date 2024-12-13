@@ -30,6 +30,7 @@ function Favorites({offers}: TFavorites): JSX.Element {
             <ul className="favorites__list">
               {
                 Object.keys(cityOffers).map((city) => (
+                  //console.log(cityOffers),
                   <li className="favorites__locations-items" key={city}>
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">

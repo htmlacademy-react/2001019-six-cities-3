@@ -1,11 +1,9 @@
-export const TIMEOUT_SHOW_ERROR = 2000;
-
 export enum AppRoute {
   Favorites = '/favorites',
   Login = '/login',
   Root = '/',
   NotFoundScreen = '/not-found-screen',
-  Offer = '/offer/:id'
+  Offer = '/offer/'
 }
 
 export enum APIRoute {
@@ -13,6 +11,13 @@ export enum APIRoute {
   Offer = '/offers/:id',
   Login = '/login',
   Logout = '/logout',
+}
+
+export enum NameSpace {
+  Offer = 'OFFER',
+  City = 'CITY',
+  User = 'USER',
+  Data = 'DATA',
 }
 
 export type TCity = {
@@ -63,9 +68,9 @@ export const CITIES = [
 
 export const SortType = {
   Popular: 'Popular',
-  PriceAsc: 'Price: low to high',
-  PriceDesc: 'Price: high to low',
-  RatingDesc: 'Top rated first',
+  PriceAsc: 'PriceAsc',
+  PriceDesc: 'PriceDesc',
+  RatingDesc: 'RatingDesc',
 };
 
 export const SortingOptionsDictionary = {

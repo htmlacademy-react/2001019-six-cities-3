@@ -1,8 +1,12 @@
 import Logo from '../../blocks/logo/logo.tsx';
 import UserNavigation from '../../blocks/user-navigation/user-navigation.tsx';
 
-export default function Header(): JSX.Element {
-  const shouldRenderUser = true;
+type HeaderProps = {
+  shouldRenderUser: boolean;
+}
+
+export default function Header({shouldRenderUser}: HeaderProps): JSX.Element {
+  shouldRenderUser = true;
 
   return (
     <header className="header">

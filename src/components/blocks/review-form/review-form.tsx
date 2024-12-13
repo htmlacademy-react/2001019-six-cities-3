@@ -1,5 +1,5 @@
 import {ChangeEvent, Fragment, useState} from 'react';
-import {rating, reviewLength} from './const.tsx';
+import {RATINGS, ReviewLength} from './const.tsx';
 
 function ReviewForm(): JSX.Element {
   const [review, setReview] = useState({rating: 0, review: ''});
@@ -7,6 +7,7 @@ function ReviewForm(): JSX.Element {
     const { name, value } = event.target;
     setReview({...review, [name]: value});
   };
+  const isValid = review.review.length < ReviewLength.Min || review.rating === 0 || review.review.length > ReviewLength.Max;
 
   return (
     <form
@@ -16,7 +17,7 @@ function ReviewForm(): JSX.Element {
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {rating.map(({value, label}) => (
+        {RATINGS.map(({value, label}) => (
           <Fragment key={value + label}>
             <input
               className="form__rating-input visually-hidden"
@@ -55,7 +56,7 @@ function ReviewForm(): JSX.Element {
         </p>
         <button className="reviews__submit form__submit button"
           type="submit"
-          disabled={review.review.length < reviewLength.min || review.rating === 0 || review.review.length > reviewLength.max}
+          disabled={isValid}
         >
           Submit
         </button>
