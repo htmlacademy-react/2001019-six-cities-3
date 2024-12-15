@@ -4,11 +4,11 @@
 //
 // //export const getActiveSorting = (state: OfferProcess): string => state[NameSpace.Offer].activeSorting);
 
-import {NameSpace, SortValues, TCity} from '../../const.tsx';
+import {NameSpace, SortValue, TCity} from '../../const.tsx';
 import {State} from '../../types/state.ts';
 
 export const getActiveCity = (state: State): TCity => state[NameSpace.App].city;
-export const getActiveSorting = (state: State): SortValues => state[NameSpace.App].activeSorting;
+export const getActiveSorting = (state: State): SortValue => state[NameSpace.App].activeSorting;
 
 export const getCities = (state: State): TCity[] => state[NameSpace.App].cities;
 

@@ -67,7 +67,7 @@ export const CITIES = [
   },
 ];
 
-export type SortValues = keyof typeof SortType;
+export type SortValue = keyof typeof SortType;
 
 export const SortType = {
   Popular: 'Popular',

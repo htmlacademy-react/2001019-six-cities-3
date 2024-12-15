@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {CITIES, NameSpace, SortValues, TCity} from '../../const';
+import {CITIES, NameSpace, SortValue, TCity} from '../../const';
 
 export type appSlice = {
-  activeSorting: SortValues;
+  activeSorting: SortValue;
   activeOfferId: string | null;
   city: TCity;
   cities: TCity[];
@@ -23,7 +23,7 @@ export const appSlice = createSlice({
       const {offerId} = action.payload;
       state.activeOfferId = offerId;
     },
-    setActiveSorting: (state, action: PayloadAction<{activeSorting: SortValues}>) => {
+    setActiveSorting: (state, action: PayloadAction<{activeSorting: SortValue}>) => {
       const {activeSorting} = action.payload;
       state.activeSorting = activeSorting;
     },

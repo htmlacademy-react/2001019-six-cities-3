@@ -1,4 +1,4 @@
-import {SortingOptionsDictionary, SortType, SortValues} from '../../../const.tsx';
+import {SortingOptionsDictionary, SortType, SortValue} from '../../../const.tsx';
 import { clsx } from 'clsx';
 import {useAppDispatch} from '../../../hooks';
 import {useRef, useState} from 'react';
@@ -6,7 +6,7 @@ import useOnClickOutside from 'use-onclickoutside';
 import {setActiveSorting} from '../../../store/app/app.slice.ts';
 
 export type TSorting = {
-  activeSorting: SortValues;
+  activeSorting: SortValue;
 };
 
 function Sorting({activeSorting}: TSorting): JSX.Element {
@@ -14,7 +14,7 @@ function Sorting({activeSorting}: TSorting): JSX.Element {
   const ref = useRef(null);
   const dispatch = useAppDispatch();
 
-  const handleClick = (sortType: string) => {
+  const handleClick = (sortType: SortValue) => {
     setOpen(false);
     dispatch(setActiveSorting({activeSorting: sortType}));
   };
@@ -46,7 +46,7 @@ function Sorting({activeSorting}: TSorting): JSX.Element {
           Object.keys(SortType).map((sortType) => (
             <li
               key={sortType}
-              onClick={() => handleClick(sortType)}
+              onClick={() => handleClick((sortType as SortValue))}
               className={clsx(sortType === activeSorting && 'places__option--active', 'places__option')}
               tabIndex={0}
             >
