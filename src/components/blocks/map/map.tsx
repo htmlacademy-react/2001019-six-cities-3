@@ -6,7 +6,8 @@ import {TOffer} from '../offer-card/types.ts';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
 import {useAppSelector} from '../../../hooks';
 import {clsx} from 'clsx';
-import {NameSpace, TCity} from '../../../const.tsx';
+import {TCity} from '../../../const.tsx';
+import {getActiveOfferId} from '../../../store/app/app.selectors.ts';
 
 type TMapProps = {
   city: TCity;
@@ -30,7 +31,7 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
   const markerLayerGroup = useRef<LayerGroup>(leaflet.layerGroup());
-  const activeOfferId = useAppSelector((state) => state[NameSpace.Offer].activeOfferId);
+  const activeOfferId = useAppSelector(getActiveOfferId);
 
   useEffect(() => {
     if (map) {

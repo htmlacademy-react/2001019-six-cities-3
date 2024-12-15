@@ -1,19 +1,10 @@
+import './loading-screen.css';
 function LoadingScreen(): JSX.Element {
 
   return (
-    <section style={{
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100vh',
-      padding: '40vh',
-      alignItems: 'center',
-    }}
-    >
-      <p style={{
-        fontSize: '50px',
-        color: '#4481c3',
-      }}
-      >Loading...
+    <section className="loading-screen__section">
+      <p className="loading-screen__text">
+        Loading...
       </p>
     </section>
   );

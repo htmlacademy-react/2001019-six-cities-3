@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const authorizationStatus = AuthorizationStatus.Auth;
 
-
 store.dispatch(fetchOffersAction());
 store.dispatch(checkAuthAction());
 

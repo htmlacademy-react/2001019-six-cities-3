@@ -3,7 +3,7 @@ export enum AppRoute {
   Login = '/login',
   Root = '/',
   NotFoundScreen = '/not-found-screen',
-  Offer = '/offer/'
+  Offer = '/offer/:id'
 }
 
 export enum APIRoute {
@@ -15,6 +15,7 @@ export enum APIRoute {
 
 export enum NameSpace {
   Offer = 'OFFER',
+  App = 'APP',
   City = 'CITY',
   User = 'USER',
   Data = 'DATA',
@@ -66,6 +67,8 @@ export const CITIES = [
   },
 ];
 
+export type SortValues = keyof typeof SortType;
+
 export const SortType = {
   Popular: 'Popular',
   PriceAsc: 'PriceAsc',
@@ -86,3 +89,5 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+const RatingStepPercent = 20;
+export const GetRatingPercent = (rating: number) : number => rating * RatingStepPercent;

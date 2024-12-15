@@ -4,7 +4,7 @@ import {useParams} from 'react-router-dom';
 import {TOffer} from '../../components/blocks/offer-card/types.ts';
 import NotFound from '../not-found/not-found.tsx';
 import Reviews from '../../components/blocks/reviews/reviews.tsx';
-import {AuthorizationStatus, TCity} from '../../const.tsx';
+import {AuthorizationStatus, GetRatingPercent, TCity} from '../../const.tsx';
 import {TReview} from '../../components/blocks/review-item/types.ts';
 import {getNearOffers} from './utils.ts';
 import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
@@ -63,7 +63,7 @@ function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: `${currentOffer.rating * 20 }%`}}></span>
+                  <span style={{width: `${GetRatingPercent(currentOffer.rating)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{currentOffer.rating}</span>

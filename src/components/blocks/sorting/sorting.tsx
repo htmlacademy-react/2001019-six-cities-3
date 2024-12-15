@@ -1,35 +1,25 @@
-import {SortingOptionsDictionary, SortType} from '../../../const.tsx';
+import {SortingOptionsDictionary, SortType, SortValues} from '../../../const.tsx';
 import { clsx } from 'clsx';
 import {useAppDispatch} from '../../../hooks';
-import {useRef} from 'react';
+import {useRef, useState} from 'react';
 import useOnClickOutside from 'use-onclickoutside';
-import {setActiveSorting} from '../../../store/offer-process/offer-process.ts';
+import {setActiveSorting} from '../../../store/app/app.slice.ts';
 
 export type TSorting = {
-  //activeSorting: 'Popular'| 'PriceAsc' | 'PriceDesc' | 'RatingDesc';
-  activeSorting: string;
+  activeSorting: SortValues;
 };
 
 function Sorting({activeSorting}: TSorting): JSX.Element {
+  const [open, setOpen] = useState(false);
   const ref = useRef(null);
   const dispatch = useAppDispatch();
-  const placesOptionsElement = document.querySelector('.places__options');
+
   const handleClick = (sortType: string) => {
+    setOpen(false);
     dispatch(setActiveSorting({activeSorting: sortType}));
   };
 
-  const handleClickInside = () => {
-    if (placesOptionsElement) {
-      placesOptionsElement.classList.toggle('places__options--opened');
-    }
-  };
-  const handleClickOutside = () => {
-    if (placesOptionsElement) {
-      placesOptionsElement.classList.remove('places__options--opened');
-    }
-  };
-
-  useOnClickOutside(ref, handleClickOutside);
+  useOnClickOutside(ref, () => setOpen(false));
 
   return (
     <form
@@ -41,7 +31,7 @@ function Sorting({activeSorting}: TSorting): JSX.Element {
       <span
         className="places__sorting-type"
         tabIndex={0}
-        onClick={handleClickInside}
+        onClick={ () => setOpen(true) }
       >
           Popular
         <svg className="places__sorting-arrow" width="7" height="4">
@@ -49,8 +39,7 @@ function Sorting({activeSorting}: TSorting): JSX.Element {
         </svg>
       </span>
       <ul
-        className="places__options places__options--custom"
-        onClick={handleClickInside}
+        className={clsx('places__options places__options--custom', open && 'places__options--opened')}
         ref={ref}
       >
         {

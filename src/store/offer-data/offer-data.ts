@@ -1,7 +1,13 @@
-import {OfferData} from '../../types/state.ts';
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const.tsx';
 import {fetchOffersAction} from '../api-actions.ts';
+import {TOffer} from '../../components/blocks/offer-card/types.ts';
+
+export type OfferData = {
+  offers: TOffer[];
+  isOffersDataLoading: boolean;
+  hasError: boolean;
+}
 
 const initialState: OfferData = {
   offers: [],
