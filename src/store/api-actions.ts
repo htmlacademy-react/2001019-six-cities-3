@@ -2,34 +2,21 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.ts';
 import {AxiosInstance} from 'axios';
 import {TOffer} from '../components/blocks/offer-card/types.ts';
-import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const.tsx';
-import {loadOffers, requireAuthorization, setOffersDataLoadingStatus, setError} from './action.ts';
+import {APIRoute, AuthorizationStatus} from '../const.tsx';
+import {requireAuthorization} from './action.ts';
 import {UserData} from '../types/user-data.ts';
 import {AuthData} from '../types/auth-data.ts';
 import {saveToken, dropToken} from '../services/token.ts';
-import {store} from './index.ts';
 
-export const clearErrorAction = createAsyncThunk(
-  'main/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
-
-export const fetchOffersAction = createAsyncThunk<void, undefined, {
+export const fetchOffersAction = createAsyncThunk<TOffer[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchOffers',
-  async (_arg, {dispatch, extra: api}) => {
-    dispatch(setOffersDataLoadingStatus(true));
+  async (_arg, {extra: api}) => {
     const {data} = await api.get<TOffer[]>(APIRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
-    dispatch(loadOffers(data));
+    return data;
   },
 );
 export const checkAuthAction = createAsyncThunk<void, undefined, {

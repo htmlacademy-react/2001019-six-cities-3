@@ -6,14 +6,15 @@ import {TOffer} from '../../components/blocks/offer-card/types.ts';
 import {useAppSelector} from '../../hooks';
 import Layout from '../../components/layout/layout.tsx';
 import {getSortedOffers} from './utils.tsx';
+import {getActiveCity, getActiveSorting} from '../../store/app/app.selectors.ts';
 
 type TMain = {
   offers: TOffer[];
 };
 
 function Main({offers}: TMain): JSX.Element {
-  const activeSorting = useAppSelector((state) => state.activeSorting);
-  const city = useAppSelector((state) => state.city);
+  const activeSorting = useAppSelector(getActiveSorting);
+  const city = useAppSelector(getActiveCity);
   const filteredOffers = offers.filter((offer) => offer.city.name === city.title);
   const sortedOffers = getSortedOffers(filteredOffers, activeSorting);
 

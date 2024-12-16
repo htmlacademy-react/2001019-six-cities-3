@@ -1,7 +1,11 @@
-function Badge(): JSX.Element {
+type BadgeProps = {
+  badgeText: string;
+}
+
+function Badge({badgeText}: BadgeProps): JSX.Element {
 
   return (
-    <div className="place-card__mark"><span>Premium</span></div>
+    <div className="place-card__mark"><span>{badgeText}</span></div>
   );
 }
 

@@ -7,6 +7,7 @@ import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
 import {useAppSelector} from '../../../hooks';
 import {clsx} from 'clsx';
 import {TCity} from '../../../const.tsx';
+import {getActiveOfferId} from '../../../store/app/app.selectors.ts';
 
 type TMapProps = {
   city: TCity;
@@ -30,7 +31,7 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
   const markerLayerGroup = useRef<LayerGroup>(leaflet.layerGroup());
-  const activeOfferId = useAppSelector((state) => state.activeOfferId);
+  const activeOfferId = useAppSelector(getActiveOfferId);
 
   useEffect(() => {
     if (map) {
@@ -57,7 +58,7 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           },{
-            icon: activeOfferId && offer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
+            icon: offer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
           })
           .addTo(map);
       });

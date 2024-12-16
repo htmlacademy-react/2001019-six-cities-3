@@ -1,5 +1,3 @@
-export const TIMEOUT_SHOW_ERROR = 2000;
-
 export enum AppRoute {
   Favorites = '/favorites',
   Login = '/login',
@@ -13,6 +11,14 @@ export enum APIRoute {
   Offer = '/offers/:id',
   Login = '/login',
   Logout = '/logout',
+}
+
+export enum NameSpace {
+  Offer = 'OFFER',
+  App = 'APP',
+  City = 'CITY',
+  User = 'USER',
+  Data = 'DATA',
 }
 
 export type TCity = {
@@ -61,11 +67,13 @@ export const CITIES = [
   },
 ];
 
+export type SortValue = keyof typeof SortType;
+
 export const SortType = {
   Popular: 'Popular',
-  PriceAsc: 'Price: low to high',
-  PriceDesc: 'Price: high to low',
-  RatingDesc: 'Top rated first',
+  PriceAsc: 'PriceAsc',
+  PriceDesc: 'PriceDesc',
+  RatingDesc: 'RatingDesc',
 };
 
 export const SortingOptionsDictionary = {
@@ -81,3 +89,5 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+const RatingStepPercent = 20;
+export const GetRatingPercent = (rating: number) : number => rating * RatingStepPercent;

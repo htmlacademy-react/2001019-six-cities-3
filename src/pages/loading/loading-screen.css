@@ -1,0 +1,13 @@
+.loading-screen__section {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 40vh;
+  align-items: center;
+}
+
+.loading-screen__text {
+  font-size: 50px;
+  color: #4481c3;
+}
+

@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const.tsx';
 import Main from '../../pages/main/main.tsx';
 import Login from '../../pages/login/login.tsx';
@@ -8,16 +8,23 @@ import PrivateRoute from '../private-route/private-route.tsx';
 import Favorites from '../../pages/favorites/favorites.tsx';
 import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../../pages/loading/loading-screen.tsx';
+import HistoryRouter from '../history-route/history-route.tsx';
+import browserHistory from '../../browser-history.ts';
+import ErrorScreen from '../../pages/error/error-screen.tsx';
+import {getErrorStatus, getIsOffersDataLoading, getOffers} from '../../store/offer-data/selectors.ts';
+import {mockComments} from '../../mock/comments.ts';
+import {getCities} from '../../store/app/app.selectors.ts';
 
 type TAppProps = {
   authorizationStatus: AuthorizationStatus;
 }
 
 function App({authorizationStatus}: TAppProps) : JSX.Element {
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
-  const cities = useAppSelector((state) => state.cities);
-  const offers = useAppSelector((state) => state.offers);
-  const reviews = useAppSelector((state) => state.reviews);
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
+  const cities = useAppSelector(getCities);
+  const offers = useAppSelector(getOffers);
+  const reviews = mockComments;
+  const hasError = useAppSelector(getErrorStatus);
 
   if (isOffersDataLoading) {
 
@@ -26,8 +33,13 @@ function App({authorizationStatus}: TAppProps) : JSX.Element {
     );
   }
 
+  if (hasError) {
+    return (
+      <ErrorScreen />);
+  }
+
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           index
@@ -44,7 +56,7 @@ function App({authorizationStatus}: TAppProps) : JSX.Element {
           }
         />
         <Route
-          path={AppRoute.Offer}
+          path={`${AppRoute.Offer }`}
           element={<Offer cities={cities} offers={offers} reviews={reviews} authorizationStatus={authorizationStatus} />}
         />
         <Route
@@ -60,7 +72,7 @@ function App({authorizationStatus}: TAppProps) : JSX.Element {
           element={<NotFound />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

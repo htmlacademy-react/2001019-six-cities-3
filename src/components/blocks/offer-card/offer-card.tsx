@@ -1,7 +1,8 @@
-import {Link} from 'react-router-dom';
+import {generatePath, Link} from 'react-router-dom';
 import { clsx } from 'clsx';
 import Badge from '../../ui/badge/badge.tsx';
 import Bookmark from '../../ui/bookmark/bookmark.tsx';
+import {AppRoute, GetRatingPercent} from '../../../const.tsx';
 
 type PlaceCardProps = {
   image: string;
@@ -62,9 +63,9 @@ function OfferCard({id, price, rating, title, type, onHover, image, isPremium, c
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseOff}
     >
-      { isPremium && (<Badge />) }
+      { isPremium && (<Badge badgeText={'Premium'}/>) }
       <div className={clsx(cardClasses.wrapperClass, 'place-card__image-wrapper')}>
-        <Link to={`offer/${id}`}>
+        <Link to={generatePath(AppRoute.Offer, {id})}>
 
           <img
             className="place-card__image"
@@ -85,7 +86,7 @@ function OfferCard({id, price, rating, title, type, onHover, image, isPremium, c
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${rating}`}}></span>
+            <span style={{width: `${GetRatingPercent(rating)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

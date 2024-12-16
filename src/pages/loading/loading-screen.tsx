@@ -1,7 +1,12 @@
+import './loading-screen.css';
 function LoadingScreen(): JSX.Element {
 
   return (
-    <p>Loading...</p>
+    <section className="loading-screen__section">
+      <p className="loading-screen__text">
+        Loading...
+      </p>
+    </section>
   );
 }
 

@@ -1,12 +1,14 @@
-export const rating = [
+export const RATINGS = [
   {value: 5, label: 'perfect'},
   {value: 4, label: 'good'},
   {value: 3, label: 'not bad'},
-  {value: 5, label: 'badly'},
-  {value: 5, label: 'terribly'}
+  {value: 2, label: 'badly'},
+  {value: 1, label: 'terribly'}
 ];
 
-export const reviewLength = {
-  min: 50,
-  max: 300,
-};
+export const ReviewLength = {
+  Min: 50,
+  Max: 300,
+} as const;
+
+

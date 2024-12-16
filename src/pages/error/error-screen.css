@@ -1,0 +1,20 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 30vh;
+  align-items: center;
+}
+
+.error__text {
+  font-size: 50px;
+  color: #4481c3;
+}
+
+.replay--error {
+  font-size: 25px;
+  background-color: #4481c3;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
