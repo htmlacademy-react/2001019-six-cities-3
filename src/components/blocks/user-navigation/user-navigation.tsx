@@ -1,9 +1,12 @@
 import {Link} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../../const.tsx';
-import {getAuthorizationStatus} from '../../../authorizationStatus.ts';
+import {AppRoute} from '../../../const.tsx';
+import {useAppDispatch, useAppSelector} from '../../../hooks';
+import {logoutAction} from '../../../store/api-actions.ts';
+import {getIsAuth} from '../../../store/user/user.selectors.ts';
 
 export default function UserNavigation(): JSX.Element {
-  const isAuth = getAuthorizationStatus() === AuthorizationStatus.Auth;
+  const isAuth = useAppSelector(getIsAuth);
+  const dispatch = useAppDispatch();
 
   return (
     <nav className="header__nav">
@@ -26,7 +29,10 @@ export default function UserNavigation(): JSX.Element {
         </li>
         {isAuth && (
           <li className="header__nav-item">
-            <a className="header__nav-link" href="#">
+            <a className="header__nav-link" href="#" onClick={() => {
+              dispatch(logoutAction());
+            }}
+            >
               <span className="header__signout">Sign out</span>
             </a>
           </li>
