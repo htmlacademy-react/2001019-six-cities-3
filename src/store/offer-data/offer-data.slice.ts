@@ -1,18 +1,16 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace} from '../../const.tsx';
+import {NameSpace, RequestStatus} from '../../const.tsx';
 import {fetchOffersAction} from '../api-actions.ts';
 import {TOffer} from '../../components/blocks/offer-card/types.ts';
 
-export type OfferData = {
+export type OfferDataSlice = {
   offers: TOffer[];
-  isOffersDataLoading: boolean;
-  hasError: boolean;
+  status: RequestStatus;
 }
 
-const initialState: OfferData = {
+const initialState: OfferDataSlice = {
   offers: [],
-  isOffersDataLoading: false,
-  hasError: false,
+  status: RequestStatus.Idle
 };
 
 export const offerData = createSlice({
@@ -22,16 +20,14 @@ export const offerData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
-        state.isOffersDataLoading = true;
-        state.hasError = false;
+        state.status = RequestStatus.Loading;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
-        state.isOffersDataLoading = false;
+        state.status = RequestStatus.Success;
       })
       .addCase(fetchOffersAction.rejected, (state) => {
-        state.isOffersDataLoading = false;
-        state.hasError = true;
+        state.status = RequestStatus.Failed;
       });
   }
 });

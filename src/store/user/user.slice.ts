@@ -3,7 +3,7 @@ import {AuthorizationStatus, NameSpace} from '../../const';
 import {requireAuthorization} from '../action.ts';
 
 export type UserProcess = {
-  authorizationStatus: string;
+  authorizationStatus: AuthorizationStatus;
 }
 
 const initialState: UserProcess = {
