@@ -8,7 +8,8 @@ function Login(): JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
-  const validPassword = /^(?=.*\d) ((?=.*[a-z]) || (?=.*[A-Z]))$/;
+  const validPassword = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+;
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
