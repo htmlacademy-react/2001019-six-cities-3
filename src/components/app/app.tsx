@@ -14,7 +14,7 @@ import ErrorScreen from '../../pages/error/error-screen.tsx';
 import {getErrorStatus, getIsOffersDataLoading, getOffers} from '../../store/offer-data/offer-data.selectors.ts';
 import {mockComments} from '../../mock/comments.ts';
 import {getCities} from '../../store/app/app.selectors.ts';
-import {getAuthorizationStatus} from '../../authorizationStatus.ts';
+import {getAuthorizationStatus} from '../../store/user/user.selectors.ts';
 
 function App() : JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -25,7 +25,6 @@ function App() : JSX.Element {
   const hasError = useAppSelector(getErrorStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
-
     return(
       <LoadingScreen />
     );
@@ -46,15 +45,16 @@ function App() : JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute >
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <Favorites offers={offers} />
             </PrivateRoute>
           }
         />
         <Route
-          path={`${AppRoute.Offer }`}
+          path={AppRoute.Offer}
           element={(
-            <Offer cities={cities}
+            <Offer
+              cities={cities}
               offers={offers}
               reviews={reviews}
               authorizationStatus={authorizationStatus}
@@ -64,11 +64,7 @@ function App() : JSX.Element {
         <Route
           path={AppRoute.Login}
           element={(
-            <PrivateRoute
-              isReverse
-            >
-              <Login />
-            </PrivateRoute>
+            <Login />
           )}
         />
         <Route

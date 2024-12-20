@@ -1,14 +1,25 @@
 import Layout from '../../components/layout/layout.tsx';
 import {FormEvent, useRef} from 'react';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions.ts';
+import {getIsAuth, getIsLoginLoading} from '../../store/user/user.selectors.ts';
+import {AppRoute} from '../../const.tsx';
+import {Navigate} from 'react-router-dom';
 
 function Login(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
   const dispatch = useAppDispatch();
-  const validPassword = /^(?=.*\d) ((?=.*[a-z]) || (?=.*[A-Z]))$/;
+  const validPassword = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+  const isAuth = useAppSelector(getIsAuth);
+  const isLoginLoading = useAppSelector(getIsLoginLoading);
+
+  if (isAuth) {
+    return (
+      <Navigate to={AppRoute.Root} />
+    );
+  }
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -21,7 +32,7 @@ function Login(): JSX.Element {
   };
 
   return (
-    <Layout page={'login'}>
+    <Layout page="login">
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -57,8 +68,9 @@ function Login(): JSX.Element {
               <button
                 className="login__submit form__submit button"
                 type="submit"
+                disabled={isLoginLoading}
               >
-                Sign in
+                {isLoginLoading ? 'Loading...' : 'Sign in'}
               </button>
             </form>
           </section>

@@ -14,9 +14,7 @@ export enum APIRoute {
 }
 
 export enum NameSpace {
-  //Offer = 'OFFER',
   App = 'APP',
-  //City = 'CITY',
   User = 'USER',
   Data = 'DATA',
 }
