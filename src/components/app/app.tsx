@@ -11,23 +11,20 @@ import LoadingScreen from '../../pages/loading/loading-screen.tsx';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
 import ErrorScreen from '../../pages/error/error-screen.tsx';
-import {getErrorStatus, getIsOffersDataLoading, getOffers} from '../../store/offer-data/selectors.ts';
+import {getErrorStatus, getIsOffersDataLoading, getOffers} from '../../store/offer-data/offer-data.selectors.ts';
 import {mockComments} from '../../mock/comments.ts';
 import {getCities} from '../../store/app/app.selectors.ts';
+import {getAuthorizationStatus} from '../../store/user/user.selectors.ts';
 
-type TAppProps = {
-  authorizationStatus: AuthorizationStatus;
-}
-
-function App({authorizationStatus}: TAppProps) : JSX.Element {
+function App() : JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
   const cities = useAppSelector(getCities);
   const offers = useAppSelector(getOffers);
   const reviews = mockComments;
   const hasError = useAppSelector(getErrorStatus);
 
-  if (isOffersDataLoading) {
-
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return(
       <LoadingScreen />
     );
@@ -48,23 +45,26 @@ function App({authorizationStatus}: TAppProps) : JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
-            >
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <Favorites offers={offers} />
             </PrivateRoute>
           }
         />
         <Route
-          path={`${AppRoute.Offer }`}
-          element={<Offer cities={cities} offers={offers} reviews={reviews} authorizationStatus={authorizationStatus} />}
+          path={AppRoute.Offer}
+          element={(
+            <Offer
+              cities={cities}
+              offers={offers}
+              reviews={reviews}
+              authorizationStatus={authorizationStatus}
+            />
+          )}
         />
         <Route
           path={AppRoute.Login}
           element={(
-            <PrivateRoute authorizationStatus={authorizationStatus} isReverse>
-              <Login />
-            </PrivateRoute>
+            <Login />
           )}
         />
         <Route

@@ -1,12 +1,16 @@
 import axios, {AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig} from 'axios';
 import {StatusCodes} from 'http-status-codes';
 import {getToken} from './token.ts';
-// import {processErrorHandle} from './process-error-handle.ts';
 import {toast} from 'react-toastify';
+
+type DetailsMessage = {
+  messages: string[];
+}
 
 type DetailMessageType = {
   type: string;
   message: string;
+  details?: DetailsMessage[];
 }
 
 const StatusCodeMapping: Record<number, boolean> = {
@@ -44,8 +48,11 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = (error.response.data);
 
-        //processErrorHandle(detailMessage.message);
-        toast.warn(detailMessage.message);
+        if (detailMessage.details && detailMessage.details.length > 0 && detailMessage.details[0].messages) {
+          detailMessage.details[0].messages.map((message: string) => toast.warn(message));
+        } else {
+          toast.warn(detailMessage.message);
+        }
       }
 
       throw error;

@@ -14,11 +14,16 @@ export enum APIRoute {
 }
 
 export enum NameSpace {
-  Offer = 'OFFER',
   App = 'APP',
-  City = 'CITY',
   User = 'USER',
   Data = 'DATA',
+}
+
+export enum RequestStatus {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Failed = 'Failed',
 }
 
 export type TCity = {
