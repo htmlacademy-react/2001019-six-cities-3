@@ -1,7 +1,6 @@
 import OfferGallery from '../../components/blocks/offer-gallery/offer-gallery.tsx';
 import Map from '../../components/blocks/map/map.tsx';
 import {useParams} from 'react-router-dom';
-import {TOffer} from '../../components/blocks/offer-card/types.ts';
 import NotFound from '../not-found/not-found.tsx';
 import Reviews from '../../components/blocks/reviews/reviews.tsx';
 import {AuthorizationStatus, GetRatingPercent, TCity} from '../../const.tsx';
@@ -9,9 +8,13 @@ import {TReview} from '../../components/blocks/review-item/types.ts';
 import {getNearOffers} from './utils.ts';
 import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 import Layout from '../../components/layout/layout.tsx';
+import {useAppSelector} from "../../hooks";
+import {getIsOffersDataLoading, getOffer} from "../../store/offer-data/offer-data.selectors.ts";
+import {store} from "../../store";
+import {fetchOfferAction} from "../../store/api-actions.ts";
+import LoadingScreen from "../loading/loading-screen.tsx";
 
 type TOfferProps = {
-  offers: TOffer[];
   cities: TCity[];
   reviews: TReview[];
   authorizationStatus: AuthorizationStatus;
@@ -25,22 +28,43 @@ function OfferInsideGoodsItem({goodsItem}: {goodsItem: string}): JSX.Element {
   );
 }
 
-function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX.Element {
+function Offer({cities, authorizationStatus, reviews}: TOfferProps): JSX.Element {
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
+  const currentOffer = useAppSelector(getOffer);
+  console.log(currentOffer);
   const params = useParams();
-  const currentOffer = offers.find((item: TOffer) => item.id === params.id) ?? (offers[0] ?? null);
+  const offerId = params.id;
+
+  if (!offerId) {
+    return (
+        <NotFound />
+    )
+  }
+
+  if ((!currentOffer || currentOffer.id !== offerId) && !isOffersDataLoading) {
+    store.dispatch(fetchOfferAction({id: offerId}))
+  }
+
+  if (isOffersDataLoading) {
+    return (
+        <LoadingScreen />
+    )
+  }
+
+  if (!currentOffer) {
+    return (
+        <NotFound />
+    )
+  }
+
   let city = cities.find((item) => item.title === currentOffer.city.name);
 
   if (!city) {
     city = cities[0];
   }
 
-  if (!currentOffer) {
-    return <NotFound />;
-  }
-
   const nearOffers = getNearOffers(currentOffer);
   const nearOffersPlusCurrent = [...getNearOffers(currentOffer), currentOffer];
-
 
   return (
     <Layout page='offer'>
@@ -94,10 +118,10 @@ function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="offer__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">
-                    Angelina
+                    {currentOffer.host.name}
                   </span>
                   <span className="offer__user-status">
                     Pro
@@ -134,7 +158,8 @@ function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX
                     rating={offer.rating}
                     key={offer.id}
                     cardType='near'
-                    isFavorite={offer.isFavorite} isPremium={offer.isPremium}
+                    isFavorite={offer.isFavorite}
+                    isPremium={offer.isPremium}
                   />))
               }
             </div>

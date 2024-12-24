@@ -7,6 +7,7 @@ import {redirectToRoute, requireAuthorization} from './action.ts';
 import {UserData} from '../types/user-data.ts';
 import {AuthData} from '../types/auth-data.ts';
 import {dropToken, saveToken} from '../services/token.ts';
+import {generatePath} from "react-router-dom";
 
 export const fetchOffersAction = createAsyncThunk<TOffer[], undefined, {
   dispatch: AppDispatch;
@@ -19,6 +20,19 @@ export const fetchOffersAction = createAsyncThunk<TOffer[], undefined, {
     return data;
   },
 );
+
+export const fetchOfferAction = createAsyncThunk<TOffer, {id: string}, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+}>(
+    'data/fetchOffer',
+    async ({id}, {extra: api}) => {
+        const {data} = await api.get<TOffer>(generatePath(APIRoute.Offer, {id}), {}); //здесь находятся данные по офферу
+        return data;
+    },
+);
+
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
@@ -28,7 +42,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     try {
       await api.get(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(requireAuthorization(AuthorizationStatus.Auth)); //диспатч отправляет действие в редюсер, а редюсер меняет стор
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
