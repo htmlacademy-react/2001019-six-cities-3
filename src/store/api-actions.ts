@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.ts';
 import {AxiosInstance} from 'axios';
-import {TOffer} from '../components/blocks/offer-card/types.ts';
+import {TNearbyOffers, TOffer} from '../components/blocks/offer-card/types.ts';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const.tsx';
 import {redirectToRoute, requireAuthorization} from './action.ts';
 import {UserData} from '../types/user-data.ts';
@@ -19,6 +19,21 @@ export const fetchOffersAction = createAsyncThunk<TOffer[], undefined, {
     const {data} = await api.get<TOffer[]>(APIRoute.Offers);
     return data;
   },
+);
+
+export const fetchNearOfferAction = createAsyncThunk<TNearbyOffers, {id: string}, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+}>(
+    'data/fetchNearOffers',
+    async ({id}, {extra: api}) => {
+        const {data} = await api.get<TOffer[]>(generatePath(APIRoute.NearOffers, {id}), {});
+        return {
+            offers: data,
+            offerId: id,
+        };
+    },
 );
 
 export const fetchOfferAction = createAsyncThunk<TOffer, {id: string}, {

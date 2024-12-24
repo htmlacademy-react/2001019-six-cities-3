@@ -1,3 +1,5 @@
+import {Nullable} from "vitest";
+
 export type TLocationCoordinates = {
   latitude: number;
   longitude: number;
@@ -7,6 +9,11 @@ export type THost = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
+}
+
+export type TNearbyOffers = {
+  offers: TOffer[],
+  offerId: Nullable<string>
 }
 
 export type TOffer = {

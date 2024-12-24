@@ -5,13 +5,17 @@ import NotFound from '../not-found/not-found.tsx';
 import Reviews from '../../components/blocks/reviews/reviews.tsx';
 import {AuthorizationStatus, GetRatingPercent, TCity} from '../../const.tsx';
 import {TReview} from '../../components/blocks/review-item/types.ts';
-import {getNearOffers} from './utils.ts';
 import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 import Layout from '../../components/layout/layout.tsx';
 import {useAppSelector} from "../../hooks";
-import {getIsOffersDataLoading, getOffer} from "../../store/offer-data/offer-data.selectors.ts";
+import {
+  getIsNearbyOffersDataLoading,
+  getIsOfferDataLoading,
+  getNearbyOffers,
+  getOffer
+} from "../../store/offer-data/offer-data.selectors.ts";
 import {store} from "../../store";
-import {fetchOfferAction} from "../../store/api-actions.ts";
+import {fetchNearOfferAction, fetchOfferAction} from "../../store/api-actions.ts";
 import LoadingScreen from "../loading/loading-screen.tsx";
 
 type TOfferProps = {
@@ -29,11 +33,15 @@ function OfferInsideGoodsItem({goodsItem}: {goodsItem: string}): JSX.Element {
 }
 
 function Offer({cities, authorizationStatus, reviews}: TOfferProps): JSX.Element {
-  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
+  const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
+  const isNearbyOffersDataLoading = useAppSelector(getIsNearbyOffersDataLoading);
   const currentOffer = useAppSelector(getOffer);
-  console.log(currentOffer);
+  const nearbyOffersData = useAppSelector(getNearbyOffers);
   const params = useParams();
   const offerId = params.id;
+  const isCorrectOffer = currentOffer && currentOffer.id === offerId;
+  const nearbyOffers = nearbyOffersData.offers;
+  const isCorrectNearbyOffers = nearbyOffersData.offerId === offerId;
 
   if (!offerId) {
     return (
@@ -41,11 +49,12 @@ function Offer({cities, authorizationStatus, reviews}: TOfferProps): JSX.Element
     )
   }
 
-  if ((!currentOffer || currentOffer.id !== offerId) && !isOffersDataLoading) {
-    store.dispatch(fetchOfferAction({id: offerId}))
+  if (!isOfferDataLoading && !isNearbyOffersDataLoading && !isCorrectOffer && !isCorrectNearbyOffers) {
+    store.dispatch(fetchOfferAction({id: offerId}));
+    store.dispatch(fetchNearOfferAction({id: offerId}));
   }
 
-  if (isOffersDataLoading) {
+  if (!isCorrectOffer && !isCorrectNearbyOffers) {
     return (
         <LoadingScreen />
     )
@@ -63,8 +72,7 @@ function Offer({cities, authorizationStatus, reviews}: TOfferProps): JSX.Element
     city = cities[0];
   }
 
-  const nearOffers = getNearOffers(currentOffer);
-  const nearOffersPlusCurrent = [...getNearOffers(currentOffer), currentOffer];
+  const nearOffersPlusCurrent = [...nearbyOffers.filter((_, index) => index < 3), currentOffer];
 
   return (
     <Layout page='offer'>
@@ -148,7 +156,7 @@ function Offer({cities, authorizationStatus, reviews}: TOfferProps): JSX.Element
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {
-                nearOffers.map((offer) => (
+                nearbyOffers.map((offer) => (
                   <OfferCard
                     title={offer.title}
                     type={offer.type}
