@@ -1,4 +1,4 @@
-import {Nullable} from "vitest";
+import {Nullable} from 'vitest';
 
 export type TLocationCoordinates = {
   latitude: number;
@@ -12,8 +12,8 @@ export type THost = {
 }
 
 export type TNearbyOffers = {
-  offers: TOffer[],
-  offerId: Nullable<string>
+  offers: TOffer[];
+  offerId: Nullable<string>;
 }
 
 export type TOffer = {

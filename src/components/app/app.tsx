@@ -1,19 +1,19 @@
 import {Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const.tsx';
-import Main from '../../pages/main/main.tsx';
-import Login from '../../pages/login/login.tsx';
-import Offer from '../../pages/offer/offer.tsx';
-import NotFound from '../../pages/not-found/not-found.tsx';
+import Main from '@/pages/main/main.tsx';
+import Login from '@/pages/login/login.tsx';
+import Offer from '@/pages/offer/offer.tsx';
+import NotFound from '@/pages/not-found/not-found.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
-import Favorites from '../../pages/favorites/favorites.tsx';
-import {useAppSelector} from '../../hooks';
-import LoadingScreen from '../../pages/loading/loading-screen.tsx';
+import Favorites from '@/pages/favorites/favorites.tsx';
+import {useAppSelector} from '@/hooks';
+import LoadingScreen from '@/pages/loading/loading-screen.tsx';
 import HistoryRouter from '../history-route/history-route.tsx';
-import browserHistory from '../../browser-history.ts';
-import ErrorScreen from '../../pages/error/error-screen.tsx';
-import {getOffersErrorStatus, getIsOffersDataLoading, getOffers} from '../../store/offer-data/offer-data.selectors.ts';
-import {getCities} from '../../store/app/app.selectors.ts';
-import {getAuthorizationStatus} from '../../store/user/user.selectors.ts';
+import browserHistory from '@/browser-history.ts';
+import ErrorScreen from '@/pages/error/error-screen.tsx';
+import {getOffersErrorStatus, getIsOffersDataLoading, getOffers} from '@/store/offer-data';
+import {getCities} from '@/store/app/';
+import {getAuthorizationStatus} from '@/store/user';
 
 function App() : JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);

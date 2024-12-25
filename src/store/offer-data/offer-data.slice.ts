@@ -1,19 +1,28 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, RequestStatus} from '../../const.tsx';
-import {fetchCommentsAction, fetchNearOfferAction, fetchOfferAction, fetchOffersAction} from '../api-actions.ts';
+import {
+  fetchCommentsAction,
+  fetchNearOfferAction,
+  fetchOfferAction,
+  fetchOffersAction,
+  postReviewAction
+} from '../api-actions.ts';
 import {TNearbyOffers, TOffer} from '../../components/blocks/offer-card/types.ts';
-import {Nullable} from "vitest";
-import {TComments} from "../../components/blocks/review-item/types.ts";
+import {Nullable} from 'vitest';
+import {TComments} from '../../components/blocks/review-item/types.ts';
+//import {ReviewData} from "../../types/review-data.ts";
 
 export type OfferDataSlice = {
   offer: Nullable<TOffer>;
   offers: TOffer[];
   nearbyOffers: TNearbyOffers;
   comments: TComments;
+  //newReview: Nullable<ReviewData>
   nearbyOffersStatus: RequestStatus;
   offersStatus: RequestStatus;
   offerStatus: RequestStatus;
   commentsStatus: RequestStatus;
+  reviewStatus: RequestStatus;
 }
 
 const initialState: OfferDataSlice = {
@@ -27,10 +36,12 @@ const initialState: OfferDataSlice = {
     reviews: [],
     offerId: null,
   },
+  //newReview: null,
   nearbyOffersStatus: RequestStatus.Idle,
   offersStatus: RequestStatus.Idle,
   offerStatus: RequestStatus.Idle,
   commentsStatus: RequestStatus.Idle,
+  reviewStatus: RequestStatus.Idle,
 };
 
 export const offerData = createSlice({
@@ -87,5 +98,14 @@ export const offerData = createSlice({
       .addCase(fetchCommentsAction.rejected, (state) => {
         state.commentsStatus = RequestStatus.Failed;
       })
+      .addCase(postReviewAction.pending, (state) => {
+        state.reviewStatus = RequestStatus.Loading;
+      })
+      .addCase(postReviewAction.fulfilled, (state) => {
+        state.reviewStatus = RequestStatus.Success;
+      })
+      .addCase(postReviewAction.rejected, (state) => {
+        state.reviewStatus = RequestStatus.Failed;
+      });
   }
 });

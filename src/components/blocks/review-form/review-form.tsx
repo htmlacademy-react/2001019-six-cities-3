@@ -1,19 +1,42 @@
-import {ChangeEvent, Fragment, useState} from 'react';
+import {ChangeEvent, FormEvent, Fragment, useRef, useState} from 'react';
 import {RATINGS, ReviewLength} from './const.tsx';
+import {useAppDispatch, useAppSelector} from '../../../hooks';
+import {postReviewAction} from '../../../store/api-actions.ts';
+import {getIsReviewLoading} from '../../../store/offer-data/offer-data.selectors.ts';
 
-function ReviewForm(): JSX.Element {
-  const [review, setReview] = useState({rating: 0, review: ''});
+function ReviewForm({offerId}: {offerId: string}): JSX.Element {
+  const initialState = {rating: 0, review: ''};
+  const [review, setReview] = useState(initialState);
+  const reviewRef = useRef<HTMLTextAreaElement | null>(null);
+  const ratingRef = useRef<HTMLInputElement | null>(null);
+  const dispatch = useAppDispatch();
+  const isReviewLoading = useAppSelector(getIsReviewLoading);
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setReview({...review, [name]: value});
   };
-  const isValid = review.review.length < ReviewLength.Min || review.rating === 0 || review.review.length > ReviewLength.Max;
+  const isInvalid = review.review.length < ReviewLength.Min || review.rating === 0 || review.review.length > ReviewLength.Max;
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (reviewRef && reviewRef.current && ratingRef && ratingRef.current) {
+      dispatch(postReviewAction({
+        comment: reviewRef.current.value,
+        rating: Number.parseInt(ratingRef.current.value, 10),
+        offerId: offerId
+      }));
+      evt.currentTarget.reset();
+      setReview(initialState);
+    }
+  };
 
   return (
     <form
       className="reviews__form form"
       action="#"
       method="post"
+      onSubmit={handleSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
@@ -26,6 +49,7 @@ function ReviewForm(): JSX.Element {
               id={`${value}-stars`}
               type="radio"
               onChange={handleChange}
+              ref={ratingRef}
             />
             <label
               htmlFor={`${value}-stars`}
@@ -46,6 +70,7 @@ function ReviewForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChange}
         defaultValue={''}
+        ref={reviewRef}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -56,7 +81,7 @@ function ReviewForm(): JSX.Element {
         </p>
         <button className="reviews__submit form__submit button"
           type="submit"
-          disabled={isValid}
+          disabled={isInvalid || isReviewLoading}
         >
           Submit
         </button>

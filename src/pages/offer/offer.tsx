@@ -4,25 +4,24 @@ import {useParams} from 'react-router-dom';
 import NotFound from '../not-found/not-found.tsx';
 import Reviews from '../../components/blocks/reviews/reviews.tsx';
 import {AuthorizationStatus, GetRatingPercent, TCity} from '../../const.tsx';
-import {TReview} from '../../components/blocks/review-item/types.ts';
 import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 import Layout from '../../components/layout/layout.tsx';
-import {useAppSelector} from "../../hooks";
+import {useAppSelector} from '../../hooks';
 import {
-  getComments,
+  getComments, getCommentsErrorStatus,
   getIsCommentsDataLoading,
   getIsNearbyOffersDataLoading,
   getIsOfferDataLoading,
-  getNearbyOffers,
-  getOffer
-} from "../../store/offer-data/offer-data.selectors.ts";
-import {store} from "../../store";
-import {fetchCommentsAction, fetchNearOfferAction, fetchOfferAction} from "../../store/api-actions.ts";
-import LoadingScreen from "../loading/loading-screen.tsx";
+  getNearbyOffers, getNearbyOffersErrorStatus,
+  getOffer, getOfferErrorStatus
+} from '../../store/offer-data/offer-data.selectors.ts';
+import {store} from '../../store';
+import {fetchCommentsAction, fetchNearOfferAction, fetchOfferAction} from '../../store/api-actions.ts';
+import LoadingScreen from '../loading/loading-screen.tsx';
+import ErrorScreen from '@/pages/error/error-screen.tsx';
 
 type TOfferProps = {
   cities: TCity[];
-  reviews: TReview[];
   authorizationStatus: AuthorizationStatus;
 };
 
@@ -41,6 +40,11 @@ function Offer({cities, authorizationStatus}: TOfferProps): JSX.Element {
   const currentOffer = useAppSelector(getOffer);
   const nearbyOffersData = useAppSelector(getNearbyOffers);
   const commentsData = useAppSelector(getComments);
+
+  const offerHasError = useAppSelector(getOfferErrorStatus);
+  const nearbyHasError = useAppSelector(getNearbyOffersErrorStatus);
+  const commentsHasError = useAppSelector(getCommentsErrorStatus);
+
   const params = useParams();
   const offerId = params.id;
   const isCorrectOffer = currentOffer && currentOffer.id === offerId;
@@ -48,31 +52,40 @@ function Offer({cities, authorizationStatus}: TOfferProps): JSX.Element {
   const isCorrectNearbyOffers = nearbyOffersData.offerId === offerId;
   const isCorrectComments = commentsData.offerId === offerId;
   const comments = commentsData.reviews;
-  console.log(comments);
 
   if (!offerId) {
     return (
-        <NotFound />
-    )
+      <NotFound />
+    );
   }
 
+  if (offerHasError) {
+    return (
+      <ErrorScreen />);
+  }
 
-  if (!isOfferDataLoading && !isNearbyOffersDataLoading && !isCorrectOffer && !isCorrectNearbyOffers && !isCorrectComments && !isCommentsDataLoading) {
+  if (!isOfferDataLoading && !isNearbyOffersDataLoading &&
+      !isCorrectOffer && !isCorrectNearbyOffers &&
+      !isCorrectComments && !isCommentsDataLoading) {
     store.dispatch(fetchOfferAction({id: offerId}));
-    store.dispatch(fetchNearOfferAction({id: offerId}));
-    store.dispatch(fetchCommentsAction({id: offerId}));
+    if (!nearbyHasError) {
+      store.dispatch(fetchNearOfferAction({id: offerId}));
+    }
+    if (!commentsHasError) {
+      store.dispatch(fetchCommentsAction({id: offerId}));
+    }
   }
 
   if (!isCorrectOffer && !isCorrectNearbyOffers) {
     return (
-        <LoadingScreen />
-    )
+      <LoadingScreen />
+    );
   }
 
   if (!currentOffer) {
     return (
-        <NotFound />
-    )
+      <NotFound />
+    );
   }
 
   let city = cities.find((item) => item.title === currentOffer.city.name);
@@ -124,7 +137,6 @@ function Offer({cities, authorizationStatus}: TOfferProps): JSX.Element {
                 <b className="offer__price-value">&euro;{currentOffer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
-              {/**/}
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
@@ -148,13 +160,10 @@ function Offer({cities, authorizationStatus}: TOfferProps): JSX.Element {
                   <p className="offer__text">
                     {currentOffer.description}
                   </p>
-                  <p className="offer__text">
-                    {currentOffer.description}
-                  </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <Reviews reviews={comments} isAuth={authorizationStatus === AuthorizationStatus.Auth}/>
+                <Reviews reviews={comments} isAuth={authorizationStatus === AuthorizationStatus.Auth} offerId={offerId} />
               </section>
             </div>
           </div>

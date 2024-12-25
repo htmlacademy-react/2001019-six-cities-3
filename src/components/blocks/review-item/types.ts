@@ -1,4 +1,4 @@
-import {Nullable} from "vitest";
+import {Nullable} from 'vitest';
 
 export type TUser = {
   name: string;
@@ -15,6 +15,6 @@ export type TReview = {
 }
 
 export type TComments = {
-  reviews: TReview[],
-  offerId: Nullable<string>,
+  reviews: TReview[];
+  offerId: Nullable<string>;
 }

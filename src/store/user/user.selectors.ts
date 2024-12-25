@@ -6,3 +6,4 @@ export const getIsAuth = (state: State) => state[NameSpace.User].authorizationSt
 export const getAuthorizationStatus = (state: State) => state[NameSpace.User].authorizationStatus;
 
 export const getIsLoginLoading = (state: State): boolean => state[NameSpace.User].status === RequestStatus.Loading;
+

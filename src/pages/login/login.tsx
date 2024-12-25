@@ -11,7 +11,7 @@ function Login(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
-  const validPassword = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+  const ValidPasswordRegularExpression = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
   const isAuth = useAppSelector(getIsAuth);
   const isLoginLoading = useAppSelector(getIsLoginLoading);
 
@@ -24,7 +24,7 @@ function Login(): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (passwordRef.current !== null && !validPassword) {
+    if (passwordRef.current !== null && !(ValidPasswordRegularExpression.test(passwordRef.current?.value))) {
       toast.warn('Invalid email or password');
       return;
     }
