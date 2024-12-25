@@ -1,16 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, RequestStatus} from '../../const.tsx';
-import {fetchNearOfferAction, fetchOfferAction, fetchOffersAction} from '../api-actions.ts';
+import {fetchCommentsAction, fetchNearOfferAction, fetchOfferAction, fetchOffersAction} from '../api-actions.ts';
 import {TNearbyOffers, TOffer} from '../../components/blocks/offer-card/types.ts';
 import {Nullable} from "vitest";
+import {TComments} from "../../components/blocks/review-item/types.ts";
 
 export type OfferDataSlice = {
   offer: Nullable<TOffer>;
   offers: TOffer[];
   nearbyOffers: TNearbyOffers;
+  comments: TComments;
   nearbyOffersStatus: RequestStatus;
   offersStatus: RequestStatus;
   offerStatus: RequestStatus;
+  commentsStatus: RequestStatus;
 }
 
 const initialState: OfferDataSlice = {
@@ -20,9 +23,14 @@ const initialState: OfferDataSlice = {
     offers: [],
     offerId: null,
   },
+  comments: {
+    reviews: [],
+    offerId: null,
+  },
   nearbyOffersStatus: RequestStatus.Idle,
   offersStatus: RequestStatus.Idle,
   offerStatus: RequestStatus.Idle,
+  commentsStatus: RequestStatus.Idle,
 };
 
 export const offerData = createSlice({
@@ -64,6 +72,20 @@ export const offerData = createSlice({
       })
       .addCase(fetchNearOfferAction.rejected, (state) => {
         state.nearbyOffersStatus = RequestStatus.Failed;
+      })
+      .addCase(fetchCommentsAction.pending, (state) => {
+        state.commentsStatus = RequestStatus.Loading;
+      })
+      .addCase(fetchCommentsAction.fulfilled, (state, action) => {
+        const {reviews, offerId} = action.payload;
+        state.comments = {
+          reviews: reviews.slice(0, 3),
+          offerId: offerId
+        };
+        state.commentsStatus = RequestStatus.Success;
+      })
+      .addCase(fetchCommentsAction.rejected, (state) => {
+        state.commentsStatus = RequestStatus.Failed;
       })
   }
 });

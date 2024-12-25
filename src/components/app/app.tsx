@@ -12,7 +12,6 @@ import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
 import ErrorScreen from '../../pages/error/error-screen.tsx';
 import {getOffersErrorStatus, getIsOffersDataLoading, getOffers} from '../../store/offer-data/offer-data.selectors.ts';
-import {mockComments} from '../../mock/comments.ts';
 import {getCities} from '../../store/app/app.selectors.ts';
 import {getAuthorizationStatus} from '../../store/user/user.selectors.ts';
 
@@ -21,7 +20,6 @@ function App() : JSX.Element {
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
   const cities = useAppSelector(getCities);
   const offers = useAppSelector(getOffers);
-  const reviews = mockComments;
   const hasError = useAppSelector(getOffersErrorStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
@@ -55,7 +53,6 @@ function App() : JSX.Element {
           element={(
             <Offer
               cities={cities}
-              reviews={reviews}
               authorizationStatus={authorizationStatus}
             />
           )}

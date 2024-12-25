@@ -9,13 +9,15 @@ import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 import Layout from '../../components/layout/layout.tsx';
 import {useAppSelector} from "../../hooks";
 import {
+  getComments,
+  getIsCommentsDataLoading,
   getIsNearbyOffersDataLoading,
   getIsOfferDataLoading,
   getNearbyOffers,
   getOffer
 } from "../../store/offer-data/offer-data.selectors.ts";
 import {store} from "../../store";
-import {fetchNearOfferAction, fetchOfferAction} from "../../store/api-actions.ts";
+import {fetchCommentsAction, fetchNearOfferAction, fetchOfferAction} from "../../store/api-actions.ts";
 import LoadingScreen from "../loading/loading-screen.tsx";
 
 type TOfferProps = {
@@ -32,16 +34,21 @@ function OfferInsideGoodsItem({goodsItem}: {goodsItem: string}): JSX.Element {
   );
 }
 
-function Offer({cities, authorizationStatus, reviews}: TOfferProps): JSX.Element {
+function Offer({cities, authorizationStatus}: TOfferProps): JSX.Element {
   const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
   const isNearbyOffersDataLoading = useAppSelector(getIsNearbyOffersDataLoading);
+  const isCommentsDataLoading = useAppSelector(getIsCommentsDataLoading);
   const currentOffer = useAppSelector(getOffer);
   const nearbyOffersData = useAppSelector(getNearbyOffers);
+  const commentsData = useAppSelector(getComments);
   const params = useParams();
   const offerId = params.id;
   const isCorrectOffer = currentOffer && currentOffer.id === offerId;
   const nearbyOffers = nearbyOffersData.offers;
   const isCorrectNearbyOffers = nearbyOffersData.offerId === offerId;
+  const isCorrectComments = commentsData.offerId === offerId;
+  const comments = commentsData.reviews;
+  console.log(comments);
 
   if (!offerId) {
     return (
@@ -49,9 +56,11 @@ function Offer({cities, authorizationStatus, reviews}: TOfferProps): JSX.Element
     )
   }
 
-  if (!isOfferDataLoading && !isNearbyOffersDataLoading && !isCorrectOffer && !isCorrectNearbyOffers) {
+
+  if (!isOfferDataLoading && !isNearbyOffersDataLoading && !isCorrectOffer && !isCorrectNearbyOffers && !isCorrectComments && !isCommentsDataLoading) {
     store.dispatch(fetchOfferAction({id: offerId}));
     store.dispatch(fetchNearOfferAction({id: offerId}));
+    store.dispatch(fetchCommentsAction({id: offerId}));
   }
 
   if (!isCorrectOffer && !isCorrectNearbyOffers) {
@@ -145,7 +154,7 @@ function Offer({cities, authorizationStatus, reviews}: TOfferProps): JSX.Element
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <Reviews reviews={reviews} isAuth={authorizationStatus === AuthorizationStatus.Auth}/>
+                <Reviews reviews={comments} isAuth={authorizationStatus === AuthorizationStatus.Auth}/>
               </section>
             </div>
           </div>

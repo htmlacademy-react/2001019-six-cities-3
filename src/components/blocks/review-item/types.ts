@@ -1,3 +1,5 @@
+import {Nullable} from "vitest";
+
 export type TUser = {
   name: string;
   avatarUrl: string;
@@ -10,4 +12,9 @@ export type TReview = {
   user: TUser;
   comment: string;
   rating: number;
+}
+
+export type TComments = {
+  reviews: TReview[],
+  offerId: Nullable<string>,
 }

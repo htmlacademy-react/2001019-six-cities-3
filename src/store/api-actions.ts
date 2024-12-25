@@ -8,6 +8,7 @@ import {UserData} from '../types/user-data.ts';
 import {AuthData} from '../types/auth-data.ts';
 import {dropToken, saveToken} from '../services/token.ts';
 import {generatePath} from "react-router-dom";
+import {TComments, TReview} from "../components/blocks/review-item/types.ts";
 
 export const fetchOffersAction = createAsyncThunk<TOffer[], undefined, {
   dispatch: AppDispatch;
@@ -31,6 +32,21 @@ export const fetchNearOfferAction = createAsyncThunk<TNearbyOffers, {id: string}
         const {data} = await api.get<TOffer[]>(generatePath(APIRoute.NearOffers, {id}), {});
         return {
             offers: data,
+            offerId: id,
+        };
+    },
+);
+
+export const fetchCommentsAction = createAsyncThunk<TComments, {id: string}, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+}>(
+    'data/fetchComments',
+    async ({id}, {extra: api}) => {
+        const {data} = await api.get<TReview[]>(generatePath(APIRoute.Comments, {id}), {});
+        return {
+            reviews: data,
             offerId: id,
         };
     },
