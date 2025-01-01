@@ -1,8 +1,8 @@
 import {ChangeEvent, FormEvent, Fragment, useRef, useState} from 'react';
 import {RATINGS, ReviewLength} from './const.tsx';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
-import {postReviewAction} from '../../../store/api-actions.ts';
 import {getIsReviewLoading} from '../../../store/offer-data/offer-data.selectors.ts';
+import {postReviewAction} from '@/store/user/user.api-actions.ts';
 
 function ReviewForm({offerId}: {offerId: string}): JSX.Element {
   const initialState = {rating: 0, review: ''};

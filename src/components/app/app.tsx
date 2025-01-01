@@ -12,13 +12,11 @@ import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '@/browser-history.ts';
 import ErrorScreen from '@/pages/error/error-screen.tsx';
 import {getOffersErrorStatus, getIsOffersDataLoading, getOffers} from '@/store/offer-data';
-import {getCities} from '@/store/app/';
 import {getAuthorizationStatus} from '@/store/user';
 
 function App() : JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
-  const cities = useAppSelector(getCities);
   const offers = useAppSelector(getOffers);
   const hasError = useAppSelector(getOffersErrorStatus);
 
@@ -52,7 +50,6 @@ function App() : JSX.Element {
           path={AppRoute.Offer}
           element={(
             <Offer
-              cities={cities}
               authorizationStatus={authorizationStatus}
             />
           )}

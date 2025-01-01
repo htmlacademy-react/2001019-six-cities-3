@@ -1,23 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, RequestStatus} from '../../const.tsx';
+import {TOffer} from '../../components/blocks/offer-card/types.ts';
+import {Nullable} from 'vitest';
+import {TReview} from '../../components/blocks/review-item/types.ts';
 import {
   fetchCommentsAction,
   fetchNearOfferAction,
   fetchOfferAction,
-  fetchOffersAction,
-  postReviewAction
-} from '../api-actions.ts';
-import {TNearbyOffers, TOffer} from '../../components/blocks/offer-card/types.ts';
-import {Nullable} from 'vitest';
-import {TComments} from '../../components/blocks/review-item/types.ts';
-//import {ReviewData} from "../../types/review-data.ts";
-
+  fetchOffersAction
+} from '@/store/offer-data/offer-data.api-actions.ts';
+import {postReviewAction} from '@/store/user/user.api-actions.ts';
 export type OfferDataSlice = {
   offer: Nullable<TOffer>;
   offers: TOffer[];
-  nearbyOffers: TNearbyOffers;
-  comments: TComments;
-  //newReview: Nullable<ReviewData>
+  nearbyOffers: TOffer[];
+  comments: TReview[];
   nearbyOffersStatus: RequestStatus;
   offersStatus: RequestStatus;
   offerStatus: RequestStatus;
@@ -28,15 +25,8 @@ export type OfferDataSlice = {
 const initialState: OfferDataSlice = {
   offer: null,
   offers: [],
-  nearbyOffers: {
-    offers: [],
-    offerId: null,
-  },
-  comments: {
-    reviews: [],
-    offerId: null,
-  },
-  //newReview: null,
+  nearbyOffers: [],
+  comments: [],
   nearbyOffersStatus: RequestStatus.Idle,
   offersStatus: RequestStatus.Idle,
   offerStatus: RequestStatus.Idle,
@@ -74,11 +64,7 @@ export const offerData = createSlice({
         state.nearbyOffersStatus = RequestStatus.Loading;
       })
       .addCase(fetchNearOfferAction.fulfilled, (state, action) => {
-        const {offers, offerId} = action.payload;
-        state.nearbyOffers = {
-          offers: offers.slice(0, 3),
-          offerId: offerId
-        };
+        state.nearbyOffers = action.payload;
         state.nearbyOffersStatus = RequestStatus.Success;
       })
       .addCase(fetchNearOfferAction.rejected, (state) => {
@@ -88,11 +74,7 @@ export const offerData = createSlice({
         state.commentsStatus = RequestStatus.Loading;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
-        const {reviews, offerId} = action.payload;
-        state.comments = {
-          reviews: reviews.slice(0, 3),
-          offerId: offerId
-        };
+        state.comments = action.payload;
         state.commentsStatus = RequestStatus.Success;
       })
       .addCase(fetchCommentsAction.rejected, (state) => {

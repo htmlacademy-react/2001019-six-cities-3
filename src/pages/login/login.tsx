@@ -1,25 +1,16 @@
 import Layout from '../../components/layout/layout.tsx';
 import {FormEvent, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {loginAction} from '../../store/api-actions.ts';
-import {getIsAuth, getIsLoginLoading} from '../../store/user/user.selectors.ts';
-import {AppRoute} from '../../const.tsx';
-import {Navigate} from 'react-router-dom';
+import {getIsLoginLoading} from '../../store/user/user.selectors.ts';
+import {ValidPasswordRegularExpression} from '../../const.tsx';
 import {toast} from 'react-toastify';
+import {loginAction} from '@/store/user/user.api-actions.ts';
 
 function Login(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
-  const ValidPasswordRegularExpression = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
-  const isAuth = useAppSelector(getIsAuth);
   const isLoginLoading = useAppSelector(getIsLoginLoading);
-
-  if (isAuth) {
-    return (
-      <Navigate to={AppRoute.Root} />
-    );
-  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

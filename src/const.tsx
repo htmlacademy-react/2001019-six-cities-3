@@ -98,3 +98,5 @@ export enum AuthorizationStatus {
 
 const RatingStepPercent = 20;
 export const GetRatingPercent = (rating: number) : number => rating * RatingStepPercent;
+
+export const ValidPasswordRegularExpression = /^(?=.*[a-zA-Z])(?=.*\d).+$/;

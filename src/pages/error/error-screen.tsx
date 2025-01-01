@@ -1,6 +1,6 @@
-import {fetchOffersAction} from '../../store/api-actions.ts';
 import {store} from '../../store';
 import './error-screen.css';
+import {fetchOffersAction} from '@/store/offer-data/offer-data.api-actions.ts';
 
 function ErrorScreen(): JSX.Element {
 
@@ -11,7 +11,7 @@ function ErrorScreen(): JSX.Element {
       </p>
       <button
         onClick={() => {
-          store.dispatch(fetchOffersAction());
+          store.dispatch(fetchOffersAction()); //
         }}
         className="replay replay--error"
         type="button"
