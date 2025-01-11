@@ -1,29 +1,26 @@
 import Layout from '../../components/layout/layout.tsx';
 import {FormEvent, useRef} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {loginAction} from '../../store/api-actions.ts';
-import {getIsAuth, getIsLoginLoading} from '../../store/user/user.selectors.ts';
-import {AppRoute} from '../../const.tsx';
-import {Navigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '@/hooks';
+import {getIsLoginLoading} from '@/store/user';
+import {toast} from 'react-toastify';
+import {loginAction} from '@/store/user/user.api-actions.ts';
+const VALID_PASSWORD_REGULAR_EXPRESSION = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
 
 function Login(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
-  const validPassword = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
-  const isAuth = useAppSelector(getIsAuth);
   const isLoginLoading = useAppSelector(getIsLoginLoading);
-
-  if (isAuth) {
-    return (
-      <Navigate to={AppRoute.Root} />
-    );
-  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null && validPassword) {
+    if (passwordRef.current !== null && !(VALID_PASSWORD_REGULAR_EXPRESSION.test(passwordRef.current?.value))) {
+      toast.warn('Invalid email or password');
+      return;
+    }
+
+    if (loginRef.current !== null && passwordRef.current !== null) {
       dispatch(loginAction({
         login: loginRef.current.value,
         password: passwordRef.current.value,

@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../../const.tsx';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
-import {logoutAction} from '../../../store/api-actions.ts';
 import {getIsAuth} from '../../../store/user/user.selectors.ts';
+import {logoutAction} from '@/store/user/user.api-actions.ts';
 
 export default function UserNavigation(): JSX.Element {
   const isAuth = useAppSelector(getIsAuth);

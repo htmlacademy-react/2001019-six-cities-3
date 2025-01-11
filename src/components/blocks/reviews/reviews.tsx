@@ -5,14 +5,15 @@ import ReviewsList from '../review-list/review-list.tsx';
 type TReviewsProps = {
   isAuth: boolean;
   reviews: TReview[];
+  offerId: string;
 }
 
-function Reviews({isAuth, reviews}: TReviewsProps): JSX.Element {
+function Reviews({isAuth, reviews, offerId}: TReviewsProps): JSX.Element {
 
   return (
     <>
       <ReviewsList reviews={reviews} />
-      {isAuth && <ReviewForm />}
+      {isAuth && <ReviewForm offerId={offerId} />}
     </>
   );
 }

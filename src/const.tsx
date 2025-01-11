@@ -9,6 +9,8 @@ export enum AppRoute {
 export enum APIRoute {
   Offers = '/offers',
   Offer = '/offers/:id',
+  NearOffers = '/offers/:id/nearby',
+  Comments = '/comments/:id',
   Login = '/login',
   Logout = '/logout',
 }
@@ -94,5 +96,9 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-const RatingStepPercent = 20;
-export const GetRatingPercent = (rating: number) : number => rating * RatingStepPercent;
+const MAX_RATING = 5;
+
+const getRatingStep = () => 100 / MAX_RATING;
+
+export const getRatingPercent = (rating: number) : number => rating * getRatingStep();
+

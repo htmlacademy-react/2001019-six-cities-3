@@ -5,14 +5,12 @@ export type appSlice = {
   activeSorting: SortValue;
   activeOfferId: string | null;
   city: TCity;
-  cities: TCity[];
 }
 
 const initialState: appSlice = {
   activeSorting: 'Popular',
   activeOfferId: null,
   city: CITIES[0],
-  cities: CITIES,
 };
 
 export const appSlice = createSlice({

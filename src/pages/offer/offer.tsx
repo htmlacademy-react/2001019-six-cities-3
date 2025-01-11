@@ -1,19 +1,28 @@
 import OfferGallery from '../../components/blocks/offer-gallery/offer-gallery.tsx';
 import Map from '../../components/blocks/map/map.tsx';
 import {useParams} from 'react-router-dom';
-import {TOffer} from '../../components/blocks/offer-card/types.ts';
-import NotFound from '../not-found/not-found.tsx';
 import Reviews from '../../components/blocks/reviews/reviews.tsx';
-import {AuthorizationStatus, GetRatingPercent, TCity} from '../../const.tsx';
-import {TReview} from '../../components/blocks/review-item/types.ts';
-import {getNearOffers} from './utils.ts';
+import {AuthorizationStatus, CITIES, getRatingPercent} from '../../const.tsx';
 import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 import Layout from '../../components/layout/layout.tsx';
+import {useAppDispatch, useAppSelector} from '@/hooks';
+import {
+  getCutNearbyOffers,
+  getIsCommentsDataLoading,
+  getIsNearbyOffersDataLoading,
+  getIsOfferDataLoading,
+  getOffer, getOfferErrorStatus, selectSortedComments
+} from '@/store/offer-data';
+import LoadingScreen from '../loading/loading-screen.tsx';
+import ErrorScreen from '@/pages/error/error-screen.tsx';
+import {useEffect} from 'react';
+import {
+  fetchCommentsAction,
+  fetchNearOfferAction,
+  fetchOfferAction
+} from '@/store/offer-data/offer-data.api-actions.ts';
 
 type TOfferProps = {
-  offers: TOffer[];
-  cities: TCity[];
-  reviews: TReview[];
   authorizationStatus: AuthorizationStatus;
 };
 
@@ -25,22 +34,39 @@ function OfferInsideGoodsItem({goodsItem}: {goodsItem: string}): JSX.Element {
   );
 }
 
-function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX.Element {
+function Offer({authorizationStatus}: TOfferProps): JSX.Element {
+  const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
+  const isNearbyOffersDataLoading = useAppSelector(getIsNearbyOffersDataLoading);
+  const isCommentsDataLoading = useAppSelector(getIsCommentsDataLoading);
+  const currentOffer = useAppSelector(getOffer);
+  const nearbyOffersData = useAppSelector(getCutNearbyOffers);
+  const commentsData = useAppSelector(selectSortedComments);
+  const dispatch = useAppDispatch();
+  const offerHasError = useAppSelector(getOfferErrorStatus);
   const params = useParams();
-  const currentOffer = offers.find((item: TOffer) => item.id === params.id) ?? (offers[0] ?? null);
-  let city = cities.find((item) => item.title === currentOffer.city.name);
+  const offerId = params.id;
 
-  if (!city) {
-    city = cities[0];
+  useEffect(() => {
+    if (offerId) {
+      dispatch(fetchOfferAction({id: offerId}));
+      dispatch(fetchNearOfferAction({id: offerId}));
+      dispatch(fetchCommentsAction({id: offerId}));
+    }
+  }, [offerId, dispatch]);
+
+  if (offerHasError) {
+    return (
+      <ErrorScreen />);
   }
 
-  if (!currentOffer) {
-    return <NotFound />;
+  if (isOfferDataLoading || isCommentsDataLoading || isNearbyOffersDataLoading || !currentOffer) {
+    return (
+      <LoadingScreen />
+    );
   }
 
-  const nearOffers = getNearOffers(currentOffer);
-  const nearOffersPlusCurrent = [...getNearOffers(currentOffer), currentOffer];
-
+  const city = CITIES.find((item) => item.title === currentOffer.city.name) ?? CITIES[0];
+  const nearOffersPlusCurrent = [...nearbyOffersData, currentOffer]; //slice
 
   return (
     <Layout page='offer'>
@@ -63,7 +89,7 @@ function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: `${GetRatingPercent(currentOffer.rating)}%`}}></span>
+                  <span style={{width: `${getRatingPercent(currentOffer.rating)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
@@ -83,7 +109,6 @@ function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX
                 <b className="offer__price-value">&euro;{currentOffer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
-              {/**/}
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
@@ -94,10 +119,10 @@ function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="offer__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">
-                    Angelina
+                    {currentOffer.host.name}
                   </span>
                   <span className="offer__user-status">
                     Pro
@@ -107,13 +132,10 @@ function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX
                   <p className="offer__text">
                     {currentOffer.description}
                   </p>
-                  <p className="offer__text">
-                    {currentOffer.description}
-                  </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <Reviews reviews={reviews} isAuth={authorizationStatus === AuthorizationStatus.Auth}/>
+                {offerId && <Reviews reviews={commentsData} isAuth={authorizationStatus === AuthorizationStatus.Auth} offerId={offerId} />}
               </section>
             </div>
           </div>
@@ -124,7 +146,7 @@ function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {
-                nearOffers.map((offer) => (
+                nearbyOffersData.map((offer) => (
                   <OfferCard
                     title={offer.title}
                     type={offer.type}
@@ -134,7 +156,8 @@ function Offer({cities, offers, authorizationStatus, reviews}: TOfferProps): JSX
                     rating={offer.rating}
                     key={offer.id}
                     cardType='near'
-                    isFavorite={offer.isFavorite} isPremium={offer.isPremium}
+                    isFavorite={offer.isFavorite}
+                    isPremium={offer.isPremium}
                   />))
               }
             </div>
