@@ -1,10 +1,10 @@
 import Layout from '../../components/layout/layout.tsx';
 import {FormEvent, useRef} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {getIsLoginLoading} from '../../store/user/user.selectors.ts';
-import {ValidPasswordRegularExpression} from '../../const.tsx';
+import {useAppDispatch, useAppSelector} from '@/hooks';
+import {getIsLoginLoading} from '@/store/user';
 import {toast} from 'react-toastify';
 import {loginAction} from '@/store/user/user.api-actions.ts';
+const VALID_PASSWORD_REGULAR_EXPRESSION = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
 
 function Login(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -15,7 +15,7 @@ function Login(): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (passwordRef.current !== null && !(ValidPasswordRegularExpression.test(passwordRef.current?.value))) {
+    if (passwordRef.current !== null && !(VALID_PASSWORD_REGULAR_EXPRESSION.test(passwordRef.current?.value))) {
       toast.warn('Invalid email or password');
       return;
     }

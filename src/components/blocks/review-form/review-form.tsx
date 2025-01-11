@@ -1,34 +1,35 @@
-import {ChangeEvent, FormEvent, Fragment, useRef, useState} from 'react';
+import {ChangeEvent, FormEvent, Fragment, useState} from 'react';
 import {RATINGS, ReviewLength} from './const.tsx';
-import {useAppDispatch, useAppSelector} from '../../../hooks';
-import {getIsReviewLoading} from '../../../store/offer-data/offer-data.selectors.ts';
+import {useAppDispatch, useAppSelector} from '@/hooks';
+import {getIsReviewLoading} from '@/store/offer-data';
 import {postReviewAction} from '@/store/user/user.api-actions.ts';
 
+const INITIAL_STATE = {rating: '0', review: ''};
+
 function ReviewForm({offerId}: {offerId: string}): JSX.Element {
-  const initialState = {rating: 0, review: ''};
-  const [review, setReview] = useState(initialState);
-  const reviewRef = useRef<HTMLTextAreaElement | null>(null);
-  const ratingRef = useRef<HTMLInputElement | null>(null);
+  const [formState, setReview] = useState(INITIAL_STATE);
   const dispatch = useAppDispatch();
   const isReviewLoading = useAppSelector(getIsReviewLoading);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
-    setReview({...review, [name]: value});
+
+    setReview({...formState, [name]: value});
   };
-  const isInvalid = review.review.length < ReviewLength.Min || review.rating === 0 || review.review.length > ReviewLength.Max;
+
+  const clearReviewForm = () => setReview(INITIAL_STATE);
+
+  const isInvalid = formState.review.length < ReviewLength.Min || formState.rating === '0' || formState.review.length > ReviewLength.Max;
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (reviewRef && reviewRef.current && ratingRef && ratingRef.current) {
-      dispatch(postReviewAction({
-        comment: reviewRef.current.value,
-        rating: Number.parseInt(ratingRef.current.value, 10),
-        offerId: offerId
-      }));
-      evt.currentTarget.reset();
-      setReview(initialState);
-    }
+    dispatch(postReviewAction({
+      comment: formState.review,
+      rating: Number.parseInt(formState.rating, 10),
+      offerId: offerId,
+      clearReviewForm: clearReviewForm
+    }));
   };
 
   return (
@@ -45,11 +46,12 @@ function ReviewForm({offerId}: {offerId: string}): JSX.Element {
             <input
               className="form__rating-input visually-hidden"
               name="rating"
-              defaultValue={value}
+              value={value}
               id={`${value}-stars`}
               type="radio"
               onChange={handleChange}
-              ref={ratingRef}
+              checked={value === Number.parseInt(formState.rating, 10)}
+              disabled={isReviewLoading}
             />
             <label
               htmlFor={`${value}-stars`}
@@ -69,8 +71,8 @@ function ReviewForm({offerId}: {offerId: string}): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChange}
-        defaultValue={''}
-        ref={reviewRef}
+        value={formState.review}
+        disabled={isReviewLoading}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

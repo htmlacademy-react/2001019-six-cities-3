@@ -96,7 +96,9 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-const RatingStepPercent = 20;
-export const GetRatingPercent = (rating: number) : number => rating * RatingStepPercent;
+const MAX_RATING = 5;
 
-export const ValidPasswordRegularExpression = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+const getRatingStep = () => 100 / MAX_RATING;
+
+export const getRatingPercent = (rating: number) : number => rating * getRatingStep();
+

@@ -9,11 +9,13 @@ import {dropToken, saveToken} from '@/services/token.ts';
 import {ReviewData} from '@/types/review-data.ts';
 import {generatePath} from 'react-router-dom';
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+type ThunkOptions = {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
-}>(
+}
+
+export const checkAuthAction = createAsyncThunk<void, undefined, ThunkOptions>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     try {
@@ -25,11 +27,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
+export const loginAction = createAsyncThunk<void, AuthData, ThunkOptions>(
   'user/login',
   async ({login: email, password: password}, {dispatch, extra: api}) => {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
@@ -39,11 +37,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   },
 );
 
-export const logoutAction = createAsyncThunk<void, void, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
+export const logoutAction = createAsyncThunk<void, void, ThunkOptions>(
   'user/logout',
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
@@ -52,14 +46,11 @@ export const logoutAction = createAsyncThunk<void, void, {
   },
 );
 
-export const postReviewAction = createAsyncThunk<void, ReviewData, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
+export const postReviewAction = createAsyncThunk<void, ReviewData, ThunkOptions>(
   'data/review',
-  async ({comment, rating, offerId}, {dispatch, extra: api}) => {
+  async ({comment, rating, offerId, clearReviewForm}, {dispatch, extra: api}) => {
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     await api.post(generatePath(APIRoute.Comments, {id: offerId}), {comment, rating});
+    clearReviewForm();
   },
 );

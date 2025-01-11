@@ -2,7 +2,7 @@ import OfferGallery from '../../components/blocks/offer-gallery/offer-gallery.ts
 import Map from '../../components/blocks/map/map.tsx';
 import {useParams} from 'react-router-dom';
 import Reviews from '../../components/blocks/reviews/reviews.tsx';
-import {AuthorizationStatus, CITIES, GetRatingPercent} from '../../const.tsx';
+import {AuthorizationStatus, CITIES, getRatingPercent} from '../../const.tsx';
 import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 import Layout from '../../components/layout/layout.tsx';
 import {useAppDispatch, useAppSelector} from '@/hooks';
@@ -89,7 +89,7 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: `${GetRatingPercent(currentOffer.rating)}%`}}></span>
+                  <span style={{width: `${getRatingPercent(currentOffer.rating)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
