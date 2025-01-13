@@ -4,7 +4,7 @@ import {TOffer} from '../../components/blocks/offer-card/types.ts';
 import {Nullable} from 'vitest';
 import {TReview} from '../../components/blocks/review-item/types.ts';
 import {
-  fetchCommentsAction,
+  fetchCommentsAction, fetchFavoritesAction,
   fetchNearOfferAction,
   fetchOfferAction,
   fetchOffersAction
@@ -13,11 +13,13 @@ import {postReviewAction} from '@/store/user/user.api-actions.ts';
 export type OfferDataSlice = {
   offer: Nullable<TOffer>;
   offers: TOffer[];
+  favorites: TOffer[];
   nearbyOffers: TOffer[];
   comments: TReview[];
   nearbyOffersStatus: RequestStatus;
   offersStatus: RequestStatus;
   offerStatus: RequestStatus;
+  favoritesStatus: RequestStatus;
   commentsStatus: RequestStatus;
   reviewStatus: RequestStatus;
 }
@@ -25,6 +27,7 @@ export type OfferDataSlice = {
 const initialState: OfferDataSlice = {
   offer: null,
   offers: [],
+  favorites: [],
   nearbyOffers: [],
   comments: [],
   nearbyOffersStatus: RequestStatus.Idle,
@@ -32,6 +35,7 @@ const initialState: OfferDataSlice = {
   offerStatus: RequestStatus.Idle,
   commentsStatus: RequestStatus.Idle,
   reviewStatus: RequestStatus.Idle,
+  favoritesStatus: RequestStatus.Idle,
 };
 
 export const offerData = createSlice({
@@ -59,6 +63,16 @@ export const offerData = createSlice({
       })
       .addCase(fetchOfferAction.rejected, (state) => {
         state.offerStatus = RequestStatus.Failed;
+      })
+      .addCase(fetchFavoritesAction.pending, (state) => {
+        state.favoritesStatus = RequestStatus.Loading;
+      })
+      .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
+        state.favoritesStatus = RequestStatus.Success;
+      })
+      .addCase(fetchFavoritesAction.rejected, (state) => {
+        state.favoritesStatus = RequestStatus.Failed;
       })
       .addCase(fetchNearOfferAction.pending, (state) => {
         state.nearbyOffersStatus = RequestStatus.Loading;

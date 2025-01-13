@@ -1,5 +1,5 @@
-import './loading-screen.css';
-function LoadingScreen(): JSX.Element {
+import './loading.css';
+function Loading(): JSX.Element {
 
   return (
     <section className="loading-screen__section">
@@ -10,4 +10,4 @@ function LoadingScreen(): JSX.Element {
   );
 }
 
-export default LoadingScreen;
+export default Loading;

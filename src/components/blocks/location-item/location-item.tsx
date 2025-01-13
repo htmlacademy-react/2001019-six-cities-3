@@ -1,6 +1,6 @@
-import {useAppDispatch} from '../../../hooks';
-import {changeCity} from '../../../store/app/app.slice.ts';
-import {TCity} from '../../../const.tsx';
+import {useAppDispatch} from '@/hooks';
+import {changeCity} from '@/store/app';
+import {TCity} from '@/const.tsx';
 
 type LocationItemProps = {
   city: TCity;

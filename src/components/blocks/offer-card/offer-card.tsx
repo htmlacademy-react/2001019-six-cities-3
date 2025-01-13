@@ -82,7 +82,7 @@ function OfferCard({id, price, rating, title, type, onHover, image, isPremium, c
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <Bookmark isFavorite={isFavorite}/>
+          <Bookmark isFavorite={isFavorite} offerId={id}/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

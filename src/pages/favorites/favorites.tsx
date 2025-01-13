@@ -1,16 +1,15 @@
-import {TOffer} from '../../components/blocks/offer-card/types.ts';
+import {TOffer} from '@/components/blocks/offer-card/types.ts';
 import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 import Layout from '../../components/layout/layout.tsx';
-
-type TFavorites = {
-  offers: TOffer[];
-};
+import {useAppSelector} from '@/hooks';
+import {getFavorites} from '@/store/offer-data';
 
 interface ICityOffers {
   [key: string]: TOffer[];
 }
 
-function Favorites({offers}: TFavorites): JSX.Element {
+function Favorites(): JSX.Element {
+  const offers = useAppSelector(getFavorites);
   const cityOffers : ICityOffers = {};
 
   offers.map((offerItem) => {

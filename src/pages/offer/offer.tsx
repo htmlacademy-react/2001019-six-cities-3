@@ -13,8 +13,8 @@ import {
   getIsOfferDataLoading,
   getOffer, getOfferErrorStatus, selectSortedComments
 } from '@/store/offer-data';
-import LoadingScreen from '../loading/loading-screen.tsx';
-import ErrorScreen from '@/pages/error/error-screen.tsx';
+import Loading from '../loading/loading.tsx';
+import Error from '@/pages/error/error.tsx';
 import {useEffect} from 'react';
 import {
   fetchCommentsAction,
@@ -56,17 +56,17 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
 
   if (offerHasError) {
     return (
-      <ErrorScreen />);
+      <Error />);
   }
 
   if (isOfferDataLoading || isCommentsDataLoading || isNearbyOffersDataLoading || !currentOffer) {
     return (
-      <LoadingScreen />
+      <Loading />
     );
   }
 
   const city = CITIES.find((item) => item.title === currentOffer.city.name) ?? CITIES[0];
-  const nearOffersPlusCurrent = [...nearbyOffersData, currentOffer]; //slice
+  const nearOffersPlusCurrent = [...nearbyOffersData, currentOffer];
 
   return (
     <Layout page='offer'>

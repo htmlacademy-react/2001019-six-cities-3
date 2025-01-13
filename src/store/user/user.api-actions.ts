@@ -1,6 +1,4 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AppDispatch, State} from '@/types/state.ts';
-import {AxiosInstance} from 'axios';
 import {APIRoute, AppRoute, AuthorizationStatus} from '@/const.tsx';
 import {redirectToRoute, requireAuthorization} from '@/store/action.ts';
 import {AuthData} from '@/types/auth-data.ts';
@@ -8,12 +6,7 @@ import {UserData} from '@/types/user-data.ts';
 import {dropToken, saveToken} from '@/services/token.ts';
 import {ReviewData} from '@/types/review-data.ts';
 import {generatePath} from 'react-router-dom';
-
-type ThunkOptions = {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}
+import {ThunkOptions} from '@/types/thunk-options.ts';
 
 export const checkAuthAction = createAsyncThunk<void, undefined, ThunkOptions>(
   'user/checkAuth',

@@ -1,12 +1,19 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../../const.tsx';
-import {useAppDispatch, useAppSelector} from '../../../hooks';
-import {getIsAuth} from '../../../store/user/user.selectors.ts';
+import {AppRoute} from '@/const.tsx';
+import {useAppDispatch, useAppSelector} from '@/hooks';
+import {getIsAuth} from '@/store/user';
 import {logoutAction} from '@/store/user/user.api-actions.ts';
+import {getFavoritesCount} from '@/store/offer-data';
+import {useEffect} from 'react';
 
 export default function UserNavigation(): JSX.Element {
   const isAuth = useAppSelector(getIsAuth);
   const dispatch = useAppDispatch();
+  const favoritesCount = useAppSelector(getFavoritesCount);
+
+  useEffect(() => {
+
+  }, []);
 
   return (
     <nav className="header__nav">
@@ -21,7 +28,7 @@ export default function UserNavigation(): JSX.Element {
             {isAuth && (
               <>
                 <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                <span className="header__favorite-count">3</span>
+                {favoritesCount > 0 && (<span className="header__favorite-count">{favoritesCount}</span>)}
               </>
             )}
             {!isAuth && <span className="header__login">Sign in</span>}

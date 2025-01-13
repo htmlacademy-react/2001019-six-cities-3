@@ -7,10 +7,10 @@ import NotFound from '@/pages/not-found/not-found.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import Favorites from '@/pages/favorites/favorites.tsx';
 import {useAppSelector} from '@/hooks';
-import LoadingScreen from '@/pages/loading/loading-screen.tsx';
+import Loading from '@/pages/loading/loading.tsx';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '@/browser-history.ts';
-import ErrorScreen from '@/pages/error/error-screen.tsx';
+import Error from '@/pages/error/error.tsx';
 import {getOffersErrorStatus, getIsOffersDataLoading, getOffers} from '@/store/offer-data';
 import {getAuthorizationStatus} from '@/store/user';
 
@@ -22,13 +22,13 @@ function App() : JSX.Element {
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return(
-      <LoadingScreen />
+      <Loading />
     );
   }
 
   if (hasError) {
     return (
-      <ErrorScreen />);
+      <Error />);
   }
 
   return (
@@ -42,7 +42,7 @@ function App() : JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute redirectTo={AppRoute.Login} condition={authorizationStatus === AuthorizationStatus.Auth}>
-              <Favorites offers={offers} />
+              <Favorites />
             </PrivateRoute>
           }
         />
