@@ -57,6 +57,7 @@ export const addFavoriteAction = createAsyncThunk<void, FavoriteData, ThunkOptio
   async ({status, offerId, handleAdd}, {dispatch, extra: api}) => {
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     await api.post(generatePath(APIRoute.Favorite, {offerId: offerId,status: status.toString()}), {});
+    dispatch(fetchFavoritesAction());
     handleAdd();
   },
 );
