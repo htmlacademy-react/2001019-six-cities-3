@@ -1,39 +1,14 @@
 import {TOffer} from '@/components/blocks/offer-card/types.ts';
 import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 import Layout from '../../components/layout/layout.tsx';
-import {useAppDispatch, useAppSelector} from '@/hooks';
-import {getFavorites, getIsFavoritesDataFailed, getIsFavoritesDataLoading} from '@/store/offer-data';
-import {useEffect} from 'react';
-import {fetchFavoritesAction} from '@/store/offer-data/offer-data.api-actions.ts';
-import Loading from '@/pages/loading/loading.tsx';
-import Error from '@/pages/error/error.tsx';
-
+import {useAppSelector} from '@/hooks';
+import {getFavorites} from '@/store/offer-data';
 interface ICityOffers {
   [key: string]: TOffer[];
 }
 
 function Favorites(): JSX.Element {
-  const dispatch = useAppDispatch();
   const offers = useAppSelector(getFavorites);
-  const isDataLoading = useAppSelector(getIsFavoritesDataLoading);
-  const isDataFailed = useAppSelector(getIsFavoritesDataFailed);
-
-  useEffect(() => {
-    dispatch(fetchFavoritesAction());
-  }, [dispatch]);
-
-  if (isDataLoading) {
-    return (
-      <Loading />
-    );
-  }
-
-  if (isDataFailed) {
-    return (
-      <Error />
-    );
-  }
-
   const cityOffers : ICityOffers = {};
 
   offers.map((offerItem) => {

@@ -52,12 +52,12 @@ export const fetchOfferAction = createAsyncThunk<TOffer, {id: string}, ThunkOpti
   },
 );
 
-export const addFavoriteAction = createAsyncThunk<void, FavoriteData, ThunkOptions>(
+export const addFavoriteAction = createAsyncThunk<TOffer, FavoriteData, ThunkOptions>(
   'data/favorite',
-  async ({status, offerId, handleAdd}, {dispatch, extra: api}) => {
+  async ({status, offerId}, {dispatch, extra: api}) => {
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    await api.post(generatePath(APIRoute.Favorite, {offerId: offerId,status: status.toString()}), {});
+    const {data} = await api.post<TOffer>(generatePath(APIRoute.Favorite, {offerId: offerId,status: status.toString()}), {});
     dispatch(fetchFavoritesAction());
-    handleAdd();
+    return data;
   },
 );

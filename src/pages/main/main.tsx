@@ -7,7 +7,7 @@ import {useAppSelector} from '@/hooks';
 import Layout from '../../components/layout/layout.tsx';
 import {getSortedOffers} from './utils.tsx';
 import {getActiveCity, getActiveSorting} from '@/store/app';
-import Empty from '@/components/blocks/empty/empty.tsx';
+import EmptyList from '@/components/blocks/empty-list/empty-list.tsx';
 import {clsx} from 'clsx';
 
 type TMain = {
@@ -23,11 +23,11 @@ function Main({offers}: TMain): JSX.Element {
   return (
     <Layout page='main'>
       <div className="page page--gray page--main">
-        <main className={clsx((filteredOffers.length === 0 && 'page__main--index-empty'), 'page__main', 'page__main--index')}>
+        <main className={clsx((filteredOffers.length === 0 && 'page__main--index-empty-list'), 'page__main', 'page__main--index')}>
           <h1 className="visually-hidden">Cities</h1>
           <LocationList city={city}/>
           <div className="cities">
-            <div className={clsx((filteredOffers.length === 0 && 'cities__places-container--empty'), 'cities__places-container', 'container')}>
+            <div className={clsx((filteredOffers.length === 0 && 'cities__places-container--empty-list'), 'cities__places-container', 'container')}>
               {filteredOffers.length > 0 &&
                 <>
                   <section className="cities__places places">
@@ -40,7 +40,7 @@ function Main({offers}: TMain): JSX.Element {
                     <Map city={city} offers={sortedOffers} className='cities__map'/>
                   </div>
                 </>}
-              {filteredOffers.length === 0 && <Empty />}
+              {filteredOffers.length === 0 && <EmptyList />}
             </div>
           </div>
         </main>

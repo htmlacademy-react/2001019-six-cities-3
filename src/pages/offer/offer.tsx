@@ -21,6 +21,7 @@ import {
   fetchNearOfferAction,
   fetchOfferAction
 } from '@/store/offer-data/offer-data.api-actions.ts';
+import Bookmark from '@/components/ui/bookmark/bookmark.tsx';
 
 type TOfferProps = {
   authorizationStatus: AuthorizationStatus;
@@ -80,12 +81,7 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
                 <h1 className="offer__name">
                   {currentOffer.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <Bookmark isFavorite={currentOffer.isFavorite} offerId={currentOffer.id} />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">

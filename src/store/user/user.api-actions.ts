@@ -7,15 +7,21 @@ import {dropToken, saveToken} from '@/services/token.ts';
 import {ReviewData} from '@/types/review-data.ts';
 import {generatePath} from 'react-router-dom';
 import {ThunkOptions} from '@/types/thunk-options.ts';
+import {CheckAuthData} from '@/types/check-auth-data.ts';
+import {Nullable} from 'vitest';
 
-export const checkAuthAction = createAsyncThunk<void, undefined, ThunkOptions>(
+export const checkAuthAction = createAsyncThunk<Nullable<string>, undefined, ThunkOptions>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     try {
-      await api.get(APIRoute.Login);
+      const {data} = await api.get<CheckAuthData>(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
+
+      return data.email;
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+
+      return null;
     }
   },
 );
