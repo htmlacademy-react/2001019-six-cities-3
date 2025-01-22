@@ -1,9 +1,10 @@
-import {SortingOptionsDictionary, SortType, SortValue} from '../../../const.tsx';
+import {SortingOptionsDictionary, SortType, SortValue} from '@/const.tsx';
 import { clsx } from 'clsx';
-import {useAppDispatch} from '../../../hooks';
+import {useAppDispatch} from '@/hooks';
 import {useRef, useState} from 'react';
 import useOnClickOutside from 'use-onclickoutside';
-import {setActiveSorting} from '../../../store/app/app.slice.ts';
+import {setActiveSorting} from '@/store/app';
+import {memo} from 'react';
 
 export type TSorting = {
   activeSorting: SortValue;
@@ -59,4 +60,4 @@ function Sorting({activeSorting}: TSorting): JSX.Element {
   );
 }
 
-export default Sorting;
+export default memo(Sorting);

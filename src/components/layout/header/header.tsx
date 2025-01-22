@@ -1,7 +1,11 @@
 import Logo from '../../blocks/logo/logo.tsx';
 import UserNavigation from '../../blocks/user-navigation/user-navigation.tsx';
+import {memo} from 'react';
 
-export default function Header(): JSX.Element {
+type THeaderProps = {
+  shouldRenderUser: boolean;
+}
+function Header({shouldRenderUser}: THeaderProps): JSX.Element {
 
   return (
     <header className="header">
@@ -10,9 +14,11 @@ export default function Header(): JSX.Element {
           <div className="header__left">
             <Logo logoType={'header'}/>
           </div>
-          <UserNavigation/>
+          {shouldRenderUser && <UserNavigation/>}
         </div>
       </div>
     </header>
   );
 }
+
+export default memo(Header);

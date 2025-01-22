@@ -22,6 +22,7 @@ import {
   fetchOfferAction
 } from '@/store/offer-data/offer-data.api-actions.ts';
 import Bookmark from '@/components/ui/bookmark/bookmark.tsx';
+import {clsx} from 'clsx';
 
 type TOfferProps = {
   authorizationStatus: AuthorizationStatus;
@@ -81,11 +82,11 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
                 <h1 className="offer__name">
                   {currentOffer.title}
                 </h1>
-                <Bookmark isFavorite={currentOffer.isFavorite} offerId={currentOffer.id} />
+                <Bookmark offerId={currentOffer.id} cardType={'favorite'} />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: `${getRatingPercent(currentOffer.rating)}%`}}></span>
+                  <span style={{width: `${getRatingPercent(Math.round(currentOffer.rating))}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
@@ -114,15 +115,13 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={clsx((currentOffer.host.isPro && 'offer__avatar-wrapper--pro'), 'offer__avatar-wrapper', 'user__avatar-wrapper')}>
                     <img className="offer__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">
                     {currentOffer.host.name}
                   </span>
-                  <span className="offer__user-status">
-                    Pro
-                  </span>
+                  {currentOffer.host.isPro && <span className="offer__user-status"> Pro </span>}
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
@@ -135,7 +134,7 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map city={city} offers={nearOffersPlusCurrent} className='offer__map'/>
+          <Map city={city} offers={nearOffersPlusCurrent} currentOfferId={currentOffer.id} className='offer__map'/>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -152,7 +151,6 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
                     rating={offer.rating}
                     key={offer.id}
                     cardType='near'
-                    isFavorite={offer.isFavorite}
                     isPremium={offer.isPremium}
                   />))
               }

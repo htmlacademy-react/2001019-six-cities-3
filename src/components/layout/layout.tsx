@@ -1,6 +1,8 @@
 import Footer from './footer/footer.tsx';
 import Header from './header/header.tsx';
 import React from 'react';
+import {useAppSelector} from '@/hooks';
+import {getFavorites} from '@/store/offer-data';
 import {clsx} from 'clsx';
 
 type LayoutProps = {
@@ -33,10 +35,11 @@ const layoutProps = {
 
 export default function Layout ({children, page} : LayoutProps) {
   const {rootClassName, shouldRenderUser, shouldRenderFooter} = layoutProps[page];
+  const favoriteOffers = useAppSelector(getFavorites);
 
   return (
-    <div className={clsx('page', ...rootClassName)}>
-      {shouldRenderUser && <Header />}
+    <div className={clsx('page', ...rootClassName, (favoriteOffers.length === 0 && 'page--favorites-empty'))}>
+      <Header shouldRenderUser={shouldRenderUser} />
       {children}
       {shouldRenderFooter && <Footer />}
     </div>

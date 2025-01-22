@@ -1,7 +1,7 @@
 import OfferCard from '../offer-card/offer-card.tsx';
 import {TOffer} from '../offer-card/types.ts';
-import {useAppDispatch} from '../../../hooks';
-import {setActiveOfferId} from '../../../store/app/app.slice.ts';
+import {useAppDispatch} from '@/hooks';
+import {setActiveOfferId} from '@/store/app';
 
 type TOfferList = {
   offers: TOffer[];
@@ -12,8 +12,7 @@ function OfferList({offers}: TOfferList): JSX.Element {
 
   const handleHover = (offerId : string | null) => {
     if (offerId) {
-      const offer = offers.find((item) => item.id === offerId);
-      dispatch(setActiveOfferId({offerId: offer?.id || null}));
+      dispatch(setActiveOfferId({ offerId }));
     } else {
       dispatch(setActiveOfferId({offerId: null}));
     }
@@ -33,7 +32,6 @@ function OfferList({offers}: TOfferList): JSX.Element {
             rating={offer.rating}
             isPremium={offer.isPremium}
             cardType={'main'}
-            isFavorite={offer.isFavorite}
             onHover={handleHover}
           />))
       }

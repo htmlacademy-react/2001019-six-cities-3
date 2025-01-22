@@ -3,6 +3,7 @@ import { clsx } from 'clsx';
 import Badge from '../../ui/badge/badge.tsx';
 import Bookmark from '../../ui/bookmark/bookmark.tsx';
 import {AppRoute, getRatingPercent} from '@/const.tsx';
+import {memo} from 'react';
 
 type PlaceCardProps = {
   image: string;
@@ -12,7 +13,6 @@ type PlaceCardProps = {
   title: string;
   type: string;
   id: string;
-  isFavorite: boolean;
   cardType: 'favorite' | 'main' | 'near';
   onHover?: (offerId: string | null) => void;
 }
@@ -50,7 +50,7 @@ const imgSize = {
   },
 };
 
-function OfferCard({id, price, rating, title, type, onHover, image, isPremium, cardType, isFavorite}: PlaceCardProps): JSX.Element {
+function OfferCard({id, price, rating, title, type, onHover, image, isPremium, cardType}: PlaceCardProps): JSX.Element {
   const cardClasses = classes[cardType];
   const cardSize = imgSize[cardType];
   const handleMouseEnter = () => onHover?.(id);
@@ -82,21 +82,24 @@ function OfferCard({id, price, rating, title, type, onHover, image, isPremium, c
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <Bookmark isFavorite={isFavorite} offerId={id}/>
+          <Bookmark offerId={id} cardType={'main'}/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${getRatingPercent(rating)}%`}}></span>
+            <span style={{width: `${getRatingPercent(Math.round(rating))}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
+        {/*<h2 className="place-card__name">*/}
+        {/*  {title}*/}
+        {/*</h2>*/}
+        <Link to={generatePath(AppRoute.Offer, {id})} className="place-card__name">
           {title}
-        </h2>
+        </Link>
         <p className="place-card__type">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
       </div>
     </article>
   );
 }
 
-export default OfferCard;
+export default memo(OfferCard);

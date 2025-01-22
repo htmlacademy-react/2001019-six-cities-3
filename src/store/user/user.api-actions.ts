@@ -9,6 +9,10 @@ import {generatePath} from 'react-router-dom';
 import {ThunkOptions} from '@/types/thunk-options.ts';
 import {CheckAuthData} from '@/types/check-auth-data.ts';
 import {Nullable} from 'vitest';
+import {
+  clearFavorites,
+  fetchFavoritesAction,
+} from '@/store/offer-data';
 
 export const checkAuthAction = createAsyncThunk<Nullable<string>, undefined, ThunkOptions>(
   'user/checkAuth',
@@ -26,22 +30,27 @@ export const checkAuthAction = createAsyncThunk<Nullable<string>, undefined, Thu
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, ThunkOptions>(
+export const loginAction = createAsyncThunk<Nullable<string>, AuthData, ThunkOptions>(
   'user/login',
   async ({login: email, password: password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(token);
+    const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+    saveToken(data.token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Root));
+    dispatch(fetchFavoritesAction);
+
+    return data.email;
   },
 );
 
 export const logoutAction = createAsyncThunk<void, void, ThunkOptions>(
   'user/logout',
   async (_arg, {dispatch, extra: api}) => {
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(clearFavorites());
   },
 );
 

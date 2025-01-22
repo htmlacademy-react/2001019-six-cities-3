@@ -1,7 +1,7 @@
 import {ChangeEvent, FormEvent, Fragment, useState} from 'react';
 import {RATINGS, ReviewLength} from './const.tsx';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {getIsReviewLoading} from '@/store/offer-data';
+import {fetchCommentsAction, getIsReviewLoading} from '@/store/offer-data';
 import {postReviewAction} from '@/store/user/user.api-actions.ts';
 
 const INITIAL_STATE = {rating: '0', review: ''};
@@ -17,7 +17,10 @@ function ReviewForm({offerId}: {offerId: string}): JSX.Element {
     setReview({...formState, [name]: value});
   };
 
-  const clearReviewForm = () => setReview(INITIAL_STATE);
+  const clearReviewForm = () => {
+    dispatch(fetchCommentsAction({id: offerId}));
+    setReview(INITIAL_STATE);
+  };
 
   const isInvalid = formState.review.length < ReviewLength.Min || formState.rating === '0' || formState.review.length > ReviewLength.Max;
 

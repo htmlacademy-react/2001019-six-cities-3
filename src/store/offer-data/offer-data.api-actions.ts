@@ -6,6 +6,7 @@ import {TReview} from '@/components/blocks/review-item/types.ts';
 import {redirectToRoute, requireAuthorization} from '@/store/action.ts';
 import {FavoriteData} from '@/types/favorite-data.ts';
 import {ThunkOptions} from '@/types/thunk-options.ts';
+import {Nullable} from 'vitest';
 
 export const fetchOffersAction = createAsyncThunk<TOffer[], undefined, ThunkOptions>(
   'data/fetchOffers',
@@ -52,12 +53,13 @@ export const fetchOfferAction = createAsyncThunk<TOffer, {id: string}, ThunkOpti
   },
 );
 
-export const addFavoriteAction = createAsyncThunk<TOffer, FavoriteData, ThunkOptions>(
+export const addFavoriteAction = createAsyncThunk<Nullable<TOffer>, FavoriteData, ThunkOptions>(
   'data/favorite',
   async ({status, offerId}, {dispatch, extra: api}) => {
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     const {data} = await api.post<TOffer>(generatePath(APIRoute.Favorite, {offerId: offerId,status: status.toString()}), {});
     dispatch(fetchFavoritesAction());
+
     return data;
   },
 );

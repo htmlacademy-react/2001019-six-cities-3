@@ -46,13 +46,18 @@ const initialState: OfferDataSlice = {
 export const offerData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {},
+  reducers: {
+    clearFavorites: (state) => {
+      state.favorites = [];
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
         state.offersStatus = RequestStatus.Loading;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
+        //state.offers = [];
         state.offers = action.payload;
         state.offersStatus = RequestStatus.Success;
       })
@@ -85,10 +90,12 @@ export const offerData = createSlice({
       .addCase(addFavoriteAction.fulfilled, (state, action) => {
         const currentOffer = action.payload;
 
-        if (currentOffer.isFavorite) {
-          state.favorites.push();
-        } else {
-          state.favorites = state.favorites.filter((offer) => offer.id !== currentOffer.id);
+        if (currentOffer) {
+          if (currentOffer.isFavorite) {
+            state.favorites.push();
+          } else {
+            state.favorites = state.favorites.filter((offer) => offer.id !== currentOffer.id);
+          }
         }
 
         state.addFavoriteStatus = RequestStatus.Success;
@@ -127,3 +134,5 @@ export const offerData = createSlice({
       });
   }
 });
+
+export const {clearFavorites} = offerData.actions;

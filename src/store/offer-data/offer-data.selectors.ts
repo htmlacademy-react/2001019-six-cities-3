@@ -22,7 +22,8 @@ export const getOffer = (state: State): Nullable<TOffer> => state[NameSpace.Data
 
 export const getNearbyOffers = (state: State): TOffer[] => state[NameSpace.Data].nearbyOffers;
 export const getCutNearbyOffers = (state: State): TOffer[] => state[NameSpace.Data].nearbyOffers.slice(0,3);
-export const getCutComments = (state: State): TReview[] => state[NameSpace.Data].comments.slice(0, 10);
+export const getCutComments = (state: State): TReview[] => state[NameSpace.Data].comments;
+// export const getCutComments = (state: State): TReview[] => state[NameSpace.Data].comments.slice(0, 10);
 
 export const selectSortedComments = createSelector(
   [getCutComments],

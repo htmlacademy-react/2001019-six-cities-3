@@ -1,7 +1,7 @@
 import LocationItem from '../location-item/location-item.tsx';
-import {TCity} from '../../../const.tsx';
-
-import {CITIES} from '../../../const.tsx';
+import {TCity} from '@/const.tsx';
+import {CITIES} from '@/const.tsx';
+import {memo} from 'react';
 
 type TLocationListProps = {
     city: TCity;
@@ -24,4 +24,4 @@ function LocationList({city}: TLocationListProps): JSX.Element {
   );
 }
 
-export default LocationList;
+export default memo(LocationList);

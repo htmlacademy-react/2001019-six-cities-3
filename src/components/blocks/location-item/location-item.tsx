@@ -1,6 +1,7 @@
 import {useAppDispatch} from '@/hooks';
 import {changeCity} from '@/store/app';
 import {TCity} from '@/const.tsx';
+import {memo} from 'react';
 
 type LocationItemProps = {
   city: TCity;
@@ -25,4 +26,4 @@ function LocationItem({isActive, city}: LocationItemProps): JSX.Element {
   );
 }
 
-export default LocationItem;
+export default memo(LocationItem);

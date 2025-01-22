@@ -5,8 +5,9 @@ import {getIsAuth, getLogin} from '@/store/user';
 import {logoutAction} from '@/store/user/user.api-actions.ts';
 import {fetchFavoritesAction, getFavoritesCount} from '@/store/offer-data';
 import {useEffect} from 'react';
+import {memo} from 'react';
 
-export default function UserNavigation(): JSX.Element {
+function UserNavigation(): JSX.Element {
   const isAuth = useAppSelector(getIsAuth);
   const dispatch = useAppDispatch();
   const favoritesCount = useAppSelector(getFavoritesCount);
@@ -31,7 +32,7 @@ export default function UserNavigation(): JSX.Element {
             {isAuth && (
               <>
                 <span className="header__user-name user__name">{userName}</span>
-                {favoritesCount > 0 && (<span className="header__favorite-count">{favoritesCount}</span>)}
+                <span className="header__favorite-count">{favoritesCount}</span>
               </>
             )}
             {!isAuth && <span className="header__login">Sign in</span>}
@@ -39,7 +40,8 @@ export default function UserNavigation(): JSX.Element {
         </li>
         {isAuth && (
           <li className="header__nav-item">
-            <a className="header__nav-link" href="#" onClick={() => {
+            <a className="header__nav-link" href="#" onClick={(e) => {
+              e.preventDefault();
               dispatch(logoutAction());
             }}
             >
@@ -51,3 +53,5 @@ export default function UserNavigation(): JSX.Element {
     </nav>
   );
 }
+
+export default memo(UserNavigation);

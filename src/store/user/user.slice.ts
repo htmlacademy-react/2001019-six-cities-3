@@ -31,8 +31,9 @@ export const userProcess = createSlice({
       .addCase(loginAction.pending, (state) => {
         state.status = RequestStatus.Loading;
       })
-      .addCase(loginAction.fulfilled, (state) => {
+      .addCase(loginAction.fulfilled, (state, action) => {
         state.status = RequestStatus.Success;
+        state.email = action.payload;
       })
       .addCase(loginAction.rejected, (state) => {
         state.status = RequestStatus.Failed;
