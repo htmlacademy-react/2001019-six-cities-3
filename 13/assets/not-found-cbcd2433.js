@@ -1,0 +1,1 @@
+import{j as e}from"./index-8f900b68.js";function t(){return e.jsxs("section",{style:{display:"flex",flexDirection:"column",height:"100vh",padding:"52px",alignItems:"center"},children:[e.jsx("h1",{children:"404. Page not found"}),e.jsx("a",{href:"/",children:"Вернуться на главную"})]})}export{t as default};
