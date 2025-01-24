@@ -13,6 +13,7 @@ import {
   clearFavorites,
   fetchFavoritesAction,
 } from '@/store/offer-data';
+import {TReview} from '@/components/blocks/review-item/types.ts';
 
 export const checkAuthAction = createAsyncThunk<Nullable<string>, undefined, ThunkOptions>(
   'user/checkAuth',
@@ -54,11 +55,13 @@ export const logoutAction = createAsyncThunk<void, void, ThunkOptions>(
   },
 );
 
-export const postReviewAction = createAsyncThunk<void, ReviewData, ThunkOptions>(
+export const postReviewAction = createAsyncThunk<TReview, ReviewData, ThunkOptions>(
   'data/review',
   async ({comment, rating, offerId, clearReviewForm}, {dispatch, extra: api}) => {
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    await api.post(generatePath(APIRoute.Comments, {id: offerId}), {comment, rating});
+    const {data} = await api.post<TReview>(generatePath(APIRoute.Comments, {id: offerId}), {comment, rating});
     clearReviewForm();
+
+    return data;
   },
 );

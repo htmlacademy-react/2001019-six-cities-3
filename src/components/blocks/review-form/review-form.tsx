@@ -1,7 +1,7 @@
 import {ChangeEvent, FormEvent, Fragment, useState} from 'react';
 import {RATINGS, ReviewLength} from './const.tsx';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {fetchCommentsAction, getIsReviewLoading} from '@/store/offer-data';
+import {getIsReviewLoading} from '@/store/offer-data';
 import {postReviewAction} from '@/store/user/user.api-actions.ts';
 
 const INITIAL_STATE = {rating: '0', review: ''};
@@ -18,7 +18,6 @@ function ReviewForm({offerId}: {offerId: string}): JSX.Element {
   };
 
   const clearReviewForm = () => {
-    dispatch(fetchCommentsAction({id: offerId}));
     setReview(INITIAL_STATE);
   };
 

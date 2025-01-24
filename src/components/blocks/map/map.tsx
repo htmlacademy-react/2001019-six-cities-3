@@ -4,10 +4,10 @@ import useMap from './useMap';
 import leaflet, {LayerGroup} from 'leaflet';
 import {TOffer} from '../offer-card/types.ts';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
-import {useAppSelector} from '../../../hooks';
+import {useAppSelector} from '@/hooks';
 import {clsx} from 'clsx';
-import {TCity} from '../../../const.tsx';
-import {getActiveOfferId} from '../../../store/app/app.selectors.ts';
+import {TCity} from '@/const.tsx';
+import {getActiveOfferId} from '@/store/app';
 import {Nullable} from 'vitest';
 
 type TMapProps = {

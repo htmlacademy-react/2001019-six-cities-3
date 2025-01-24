@@ -15,7 +15,6 @@ function Main(): JSX.Element {
   const activeSorting = useAppSelector(getActiveSorting);
   const city = useAppSelector(getActiveCity);
   const offers = useAppSelector(getOffers);
-  //const offers = [];
 
   const currentOffers = useMemo(() => {
     const filteredOffers = offers.filter((offer) => offer.city.name === city.title);
@@ -40,7 +39,7 @@ function Main(): JSX.Element {
                     <OfferList offers={currentOffers} />
                   </section>
                   <div className="cities__right-section">
-                    <Map city={city} offers={currentOffers} className='cities__map'/>
+                    <Map city={city} offers={currentOffers} className='cities__map' currentOfferId={null}/>
                   </div>
                 </>}
               {currentOffers.length === 0 && <EmptyList />}

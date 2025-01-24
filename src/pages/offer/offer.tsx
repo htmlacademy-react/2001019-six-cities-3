@@ -8,7 +8,6 @@ import Layout from '../../components/layout/layout.tsx';
 import {useAppDispatch, useAppSelector} from '@/hooks';
 import {
   getCutNearbyOffers,
-  getIsCommentsDataLoading,
   getIsNearbyOffersDataLoading,
   getIsOfferDataLoading,
   getOffer, getOfferErrorStatus, selectSortedComments
@@ -39,7 +38,6 @@ function OfferInsideGoodsItem({goodsItem}: {goodsItem: string}): JSX.Element {
 function Offer({authorizationStatus}: TOfferProps): JSX.Element {
   const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
   const isNearbyOffersDataLoading = useAppSelector(getIsNearbyOffersDataLoading);
-  const isCommentsDataLoading = useAppSelector(getIsCommentsDataLoading);
   const currentOffer = useAppSelector(getOffer);
   const nearbyOffersData = useAppSelector(getCutNearbyOffers);
   const commentsData = useAppSelector(selectSortedComments);
@@ -61,7 +59,7 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
       <Error />);
   }
 
-  if (isOfferDataLoading || isCommentsDataLoading || isNearbyOffersDataLoading || !currentOffer) {
+  if (isOfferDataLoading || isNearbyOffersDataLoading || !currentOffer) {
     return (
       <Loading />
     );

@@ -54,7 +54,6 @@ function Favorites(): JSX.Element {
                               type={cityOffer.type}
                               id={cityOffer.id}
                               cardType='favorite'
-                            //isFavorite
                             />
                           ))
                         }

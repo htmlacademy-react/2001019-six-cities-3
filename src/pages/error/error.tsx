@@ -11,7 +11,7 @@ function Error(): JSX.Element {
       </p>
       <button
         onClick={() => {
-          store.dispatch(fetchOffersAction()); //
+          store.dispatch(fetchOffersAction());
         }}
         className="replay replay--error"
         type="button"

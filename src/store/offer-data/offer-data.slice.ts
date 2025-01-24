@@ -57,7 +57,6 @@ export const offerData = createSlice({
         state.offersStatus = RequestStatus.Loading;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
-        //state.offers = [];
         state.offers = action.payload;
         state.offersStatus = RequestStatus.Success;
       })
@@ -123,11 +122,14 @@ export const offerData = createSlice({
       .addCase(fetchCommentsAction.rejected, (state) => {
         state.commentsStatus = RequestStatus.Failed;
       })
+
+
       .addCase(postReviewAction.pending, (state) => {
         state.reviewStatus = RequestStatus.Loading;
       })
-      .addCase(postReviewAction.fulfilled, (state) => {
+      .addCase(postReviewAction.fulfilled, (state, action) => {
         state.reviewStatus = RequestStatus.Success;
+        state.comments.push(action.payload);
       })
       .addCase(postReviewAction.rejected, (state) => {
         state.reviewStatus = RequestStatus.Failed;

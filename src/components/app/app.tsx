@@ -9,8 +9,8 @@ import browserHistory from '@/browser-history.ts';
 import Error from '@/pages/error/error.tsx';
 import {getOffersErrorStatus, getIsOffersDataLoading} from '@/store/offer-data';
 import {getAuthorizationStatus} from '@/store/user';
+import Main from '@/pages/main/main.tsx';
 
-const Main = lazy(() => import('@/pages/main/main.tsx'));
 const Login = lazy(() => import('@/pages/login/login.tsx'));
 const Offer = lazy(() => import('@/pages/offer/offer.tsx'));
 const NotFound = lazy(() => import('@/pages/not-found/not-found.tsx'));
@@ -34,7 +34,7 @@ function App() : JSX.Element {
 
   return (
     <HistoryRouter history={browserHistory}>
-      <Suspense>
+      <Suspense fallback={<Loading />}>
         <Routes>
           <Route
             index

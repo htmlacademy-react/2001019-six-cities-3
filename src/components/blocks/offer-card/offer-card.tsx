@@ -90,9 +90,6 @@ function OfferCard({id, price, rating, title, type, onHover, image, isPremium, c
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        {/*<h2 className="place-card__name">*/}
-        {/*  {title}*/}
-        {/*</h2>*/}
         <Link to={generatePath(AppRoute.Offer, {id})} className="place-card__name">
           {title}
         </Link>
