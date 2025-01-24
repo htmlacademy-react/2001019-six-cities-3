@@ -1,8 +1,8 @@
 import {store} from '../../store';
-import './error-screen.css';
+import './error.css';
 import {fetchOffersAction} from '@/store/offer-data/offer-data.api-actions.ts';
 
-function ErrorScreen(): JSX.Element {
+function Error(): JSX.Element {
 
   return (
     <section className="error">
@@ -11,7 +11,7 @@ function ErrorScreen(): JSX.Element {
       </p>
       <button
         onClick={() => {
-          store.dispatch(fetchOffersAction()); //
+          store.dispatch(fetchOffersAction());
         }}
         className="replay replay--error"
         type="button"
@@ -22,4 +22,4 @@ function ErrorScreen(): JSX.Element {
   );
 }
 
-export default ErrorScreen;
+export default Error;

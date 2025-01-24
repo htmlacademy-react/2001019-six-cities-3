@@ -8,19 +8,20 @@ import Layout from '../../components/layout/layout.tsx';
 import {useAppDispatch, useAppSelector} from '@/hooks';
 import {
   getCutNearbyOffers,
-  getIsCommentsDataLoading,
   getIsNearbyOffersDataLoading,
   getIsOfferDataLoading,
   getOffer, getOfferErrorStatus, selectSortedComments
 } from '@/store/offer-data';
-import LoadingScreen from '../loading/loading-screen.tsx';
-import ErrorScreen from '@/pages/error/error-screen.tsx';
+import Loading from '../loading/loading.tsx';
+import Error from '@/pages/error/error.tsx';
 import {useEffect} from 'react';
 import {
   fetchCommentsAction,
   fetchNearOfferAction,
   fetchOfferAction
 } from '@/store/offer-data/offer-data.api-actions.ts';
+import Bookmark from '@/components/ui/bookmark/bookmark.tsx';
+import {clsx} from 'clsx';
 
 type TOfferProps = {
   authorizationStatus: AuthorizationStatus;
@@ -37,7 +38,6 @@ function OfferInsideGoodsItem({goodsItem}: {goodsItem: string}): JSX.Element {
 function Offer({authorizationStatus}: TOfferProps): JSX.Element {
   const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
   const isNearbyOffersDataLoading = useAppSelector(getIsNearbyOffersDataLoading);
-  const isCommentsDataLoading = useAppSelector(getIsCommentsDataLoading);
   const currentOffer = useAppSelector(getOffer);
   const nearbyOffersData = useAppSelector(getCutNearbyOffers);
   const commentsData = useAppSelector(selectSortedComments);
@@ -56,17 +56,17 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
 
   if (offerHasError) {
     return (
-      <ErrorScreen />);
+      <Error />);
   }
 
-  if (isOfferDataLoading || isCommentsDataLoading || isNearbyOffersDataLoading || !currentOffer) {
+  if (isOfferDataLoading || isNearbyOffersDataLoading || !currentOffer) {
     return (
-      <LoadingScreen />
+      <Loading />
     );
   }
 
   const city = CITIES.find((item) => item.title === currentOffer.city.name) ?? CITIES[0];
-  const nearOffersPlusCurrent = [...nearbyOffersData, currentOffer]; //slice
+  const nearOffersPlusCurrent = [...nearbyOffersData, currentOffer];
 
   return (
     <Layout page='offer'>
@@ -80,16 +80,11 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
                 <h1 className="offer__name">
                   {currentOffer.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <Bookmark offerId={currentOffer.id} cardType={'favorite'} />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: `${getRatingPercent(currentOffer.rating)}%`}}></span>
+                  <span style={{width: `${getRatingPercent(Math.round(currentOffer.rating))}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
@@ -118,15 +113,13 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={clsx((currentOffer.host.isPro && 'offer__avatar-wrapper--pro'), 'offer__avatar-wrapper', 'user__avatar-wrapper')}>
                     <img className="offer__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">
                     {currentOffer.host.name}
                   </span>
-                  <span className="offer__user-status">
-                    Pro
-                  </span>
+                  {currentOffer.host.isPro && <span className="offer__user-status"> Pro </span>}
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
@@ -139,7 +132,7 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map city={city} offers={nearOffersPlusCurrent} className='offer__map'/>
+          <Map city={city} offers={nearOffersPlusCurrent} currentOfferId={currentOffer.id} className='offer__map'/>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -156,7 +149,6 @@ function Offer({authorizationStatus}: TOfferProps): JSX.Element {
                     rating={offer.rating}
                     key={offer.id}
                     cardType='near'
-                    isFavorite={offer.isFavorite}
                     isPremium={offer.isPremium}
                   />))
               }

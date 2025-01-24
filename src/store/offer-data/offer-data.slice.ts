@@ -1,23 +1,29 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, RequestStatus} from '../../const.tsx';
-import {TOffer} from '../../components/blocks/offer-card/types.ts';
+import {TOffer} from '@/components/blocks/offer-card/types.ts';
 import {Nullable} from 'vitest';
-import {TReview} from '../../components/blocks/review-item/types.ts';
+import {TReview} from '@/components/blocks/review-item/types.ts';
 import {
+  addFavoriteAction,
   fetchCommentsAction,
+  fetchFavoritesAction,
   fetchNearOfferAction,
   fetchOfferAction,
   fetchOffersAction
 } from '@/store/offer-data/offer-data.api-actions.ts';
 import {postReviewAction} from '@/store/user/user.api-actions.ts';
+
 export type OfferDataSlice = {
   offer: Nullable<TOffer>;
   offers: TOffer[];
+  favorites: TOffer[];
+  addFavoriteStatus: RequestStatus;
   nearbyOffers: TOffer[];
   comments: TReview[];
   nearbyOffersStatus: RequestStatus;
   offersStatus: RequestStatus;
   offerStatus: RequestStatus;
+  favoritesStatus: RequestStatus;
   commentsStatus: RequestStatus;
   reviewStatus: RequestStatus;
 }
@@ -25,6 +31,8 @@ export type OfferDataSlice = {
 const initialState: OfferDataSlice = {
   offer: null,
   offers: [],
+  favorites: [],
+  addFavoriteStatus: RequestStatus.Idle,
   nearbyOffers: [],
   comments: [],
   nearbyOffersStatus: RequestStatus.Idle,
@@ -32,12 +40,17 @@ const initialState: OfferDataSlice = {
   offerStatus: RequestStatus.Idle,
   commentsStatus: RequestStatus.Idle,
   reviewStatus: RequestStatus.Idle,
+  favoritesStatus: RequestStatus.Idle,
 };
 
 export const offerData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {},
+  reducers: {
+    clearFavorites: (state) => {
+      state.favorites = [];
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -60,6 +73,35 @@ export const offerData = createSlice({
       .addCase(fetchOfferAction.rejected, (state) => {
         state.offerStatus = RequestStatus.Failed;
       })
+      .addCase(fetchFavoritesAction.pending, (state) => {
+        state.favoritesStatus = RequestStatus.Loading;
+      })
+      .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
+        state.favoritesStatus = RequestStatus.Success;
+      })
+      .addCase(fetchFavoritesAction.rejected, (state) => {
+        state.favoritesStatus = RequestStatus.Failed;
+      })
+      .addCase(addFavoriteAction.pending, (state) => {
+        state.addFavoriteStatus = RequestStatus.Loading;
+      })
+      .addCase(addFavoriteAction.fulfilled, (state, action) => {
+        const currentOffer = action.payload;
+
+        if (currentOffer) {
+          if (currentOffer.isFavorite) {
+            state.favorites.push();
+          } else {
+            state.favorites = state.favorites.filter((offer) => offer.id !== currentOffer.id);
+          }
+        }
+
+        state.addFavoriteStatus = RequestStatus.Success;
+      })
+      .addCase(addFavoriteAction.rejected, (state) => {
+        state.addFavoriteStatus = RequestStatus.Failed;
+      })
       .addCase(fetchNearOfferAction.pending, (state) => {
         state.nearbyOffersStatus = RequestStatus.Loading;
       })
@@ -80,14 +122,19 @@ export const offerData = createSlice({
       .addCase(fetchCommentsAction.rejected, (state) => {
         state.commentsStatus = RequestStatus.Failed;
       })
+
+
       .addCase(postReviewAction.pending, (state) => {
         state.reviewStatus = RequestStatus.Loading;
       })
-      .addCase(postReviewAction.fulfilled, (state) => {
+      .addCase(postReviewAction.fulfilled, (state, action) => {
         state.reviewStatus = RequestStatus.Success;
+        state.comments.push(action.payload);
       })
       .addCase(postReviewAction.rejected, (state) => {
         state.reviewStatus = RequestStatus.Failed;
       });
   }
 });
+
+export const {clearFavorites} = offerData.actions;

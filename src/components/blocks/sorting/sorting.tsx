@@ -1,9 +1,10 @@
-import {SortingOptionsDictionary, SortType, SortValue} from '../../../const.tsx';
+import {SortingOptionsDictionary, SortType, SortValue} from '@/const.tsx';
 import { clsx } from 'clsx';
-import {useAppDispatch} from '../../../hooks';
+import {useAppDispatch, useAppSelector} from '@/hooks';
 import {useRef, useState} from 'react';
 import useOnClickOutside from 'use-onclickoutside';
-import {setActiveSorting} from '../../../store/app/app.slice.ts';
+import {getActiveSorting, setActiveSorting} from '@/store/app';
+import {memo} from 'react';
 
 export type TSorting = {
   activeSorting: SortValue;
@@ -13,6 +14,7 @@ function Sorting({activeSorting}: TSorting): JSX.Element {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   const dispatch = useAppDispatch();
+  const activeSortingName = useAppSelector(getActiveSorting);
 
   const handleClick = (sortType: SortValue) => {
     setOpen(false);
@@ -33,7 +35,7 @@ function Sorting({activeSorting}: TSorting): JSX.Element {
         tabIndex={0}
         onClick={ () => setOpen(true) }
       >
-          Popular
+        {SortingOptionsDictionary[activeSortingName]}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -59,4 +61,4 @@ function Sorting({activeSorting}: TSorting): JSX.Element {
   );
 }
 
-export default Sorting;
+export default memo(Sorting);

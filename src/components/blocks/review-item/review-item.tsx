@@ -30,7 +30,7 @@ function ReviewItem({name, comment, avatarUrl, rating, date} : TReviewProps): JS
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={date}>{dayjs(date).format('MMMM YYYY')}</time>
+        <time className="reviews__time" dateTime={dayjs(date).format('YYYY-MM-DD')}>{dayjs(date).format('MMMM YYYY')}</time>
       </div>
     </li>
   );

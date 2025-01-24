@@ -1,16 +1,16 @@
-import {TOffer} from '../../components/blocks/offer-card/types.ts';
+import {TOffer} from '@/components/blocks/offer-card/types.ts';
 import OfferCard from '../../components/blocks/offer-card/offer-card.tsx';
 import Layout from '../../components/layout/layout.tsx';
-
-type TFavorites = {
-  offers: TOffer[];
-};
-
+import {useAppSelector} from '@/hooks';
+import {getFavorites} from '@/store/offer-data';
+import EmptyFavoritesList from '@/components/blocks/empty-favorites-list/empty-favorites-list.tsx';
+import {clsx} from 'clsx';
 interface ICityOffers {
   [key: string]: TOffer[];
 }
 
-function Favorites({offers}: TFavorites): JSX.Element {
+function Favorites(): JSX.Element {
+  const offers = useAppSelector(getFavorites);
   const cityOffers : ICityOffers = {};
 
   offers.map((offerItem) => {
@@ -23,44 +23,46 @@ function Favorites({offers}: TFavorites): JSX.Element {
 
   return (
     <Layout page={'favorites'}>
-      <main className="page__main page__main--favorites">
+      <main className={clsx((offers.length === 0 && 'page__main--favorites-empty'), 'page__main', 'page__main--favorites')}>
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {
-                Object.keys(cityOffers).map((city) => (
-                  <li className="favorites__locations-items" key={city}>
-                    <div className="favorites__locations locations locations--current">
-                      <div className="locations__item">
-                        <a className="locations__item-link" href="#">
-                          <span>{city}</span>
-                        </a>
+          {offers.length === 0 ?
+            <EmptyFavoritesList />
+            :
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
+                {
+                  Object.keys(cityOffers).map((city) => (
+                    <li className="favorites__locations-items" key={city}>
+                      <div className="favorites__locations locations locations--current">
+                        <div className="locations__item">
+                          <a className="locations__item-link" href="#">
+                            <span>{city}</span>
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                    <div className="favorites__places">
-                      {
-                        cityOffers[city].map((cityOffer) => (
-                          <OfferCard
-                            key={cityOffer.id}
-                            image={cityOffer.previewImage}
-                            isPremium={cityOffer.isPremium}
-                            price={cityOffer.price}
-                            rating={cityOffer.rating}
-                            title={cityOffer.title}
-                            type={cityOffer.type}
-                            id={cityOffer.id}
-                            cardType='favorite'
-                            isFavorite
-                          />
-                        ))
-                      }
-                    </div>
-                  </li>
-                ))
-              }
-            </ul>
-          </section>
+                      <div className="favorites__places">
+                        {
+                          cityOffers[city].map((cityOffer) => (
+                            <OfferCard
+                              key={cityOffer.id}
+                              image={cityOffer.previewImage}
+                              isPremium={cityOffer.isPremium}
+                              price={cityOffer.price}
+                              rating={cityOffer.rating}
+                              title={cityOffer.title}
+                              type={cityOffer.type}
+                              id={cityOffer.id}
+                              cardType='favorite'
+                            />
+                          ))
+                        }
+                      </div>
+                    </li>
+                  ))
+                }
+              </ul>
+            </section>}
         </div>
       </main>
     </Layout>

@@ -4,15 +4,17 @@ import useMap from './useMap';
 import leaflet, {LayerGroup} from 'leaflet';
 import {TOffer} from '../offer-card/types.ts';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from './const.ts';
-import {useAppSelector} from '../../../hooks';
+import {useAppSelector} from '@/hooks';
 import {clsx} from 'clsx';
-import {TCity} from '../../../const.tsx';
-import {getActiveOfferId} from '../../../store/app/app.selectors.ts';
+import {TCity} from '@/const.tsx';
+import {getActiveOfferId} from '@/store/app';
+import {Nullable} from 'vitest';
 
 type TMapProps = {
   city: TCity;
   offers?: TOffer[];
   className?: string;
+  currentOfferId: Nullable<string>;
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -27,11 +29,15 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-function Map({city, offers, className}: TMapProps) :JSX.Element {
+function Map({city, offers, className, currentOfferId}: TMapProps) :JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
   const markerLayerGroup = useRef<LayerGroup>(leaflet.layerGroup());
   const activeOfferId = useAppSelector(getActiveOfferId);
+
+  if (!currentOfferId) {
+    currentOfferId = activeOfferId;
+  }
 
   useEffect(() => {
     if (map) {
@@ -58,7 +64,7 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           },{
-            icon: offer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
+            icon: offer.id === currentOfferId ? currentCustomIcon : defaultCustomIcon,
           })
           .addTo(map);
       });
@@ -67,7 +73,7 @@ function Map({city, offers, className}: TMapProps) :JSX.Element {
     return () => {
       markerLayerGroup.current.clearLayers();
     };
-  }, [map, offers, activeOfferId]);
+  }, [map, offers, currentOfferId]);
 
   return (
     <section

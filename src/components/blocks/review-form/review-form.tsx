@@ -17,7 +17,9 @@ function ReviewForm({offerId}: {offerId: string}): JSX.Element {
     setReview({...formState, [name]: value});
   };
 
-  const clearReviewForm = () => setReview(INITIAL_STATE);
+  const clearReviewForm = () => {
+    setReview(INITIAL_STATE);
+  };
 
   const isInvalid = formState.review.length < ReviewLength.Min || formState.rating === '0' || formState.review.length > ReviewLength.Max;
 

@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import {clsx} from 'clsx';
+import {memo} from 'react';
 
 type LogoProps = {
   logoType: 'footer' | 'header';
@@ -42,4 +43,4 @@ function Logo({logoType}: LogoProps): JSX.Element {
   );
 }
 
-export default Logo;
+export default memo(Logo);
